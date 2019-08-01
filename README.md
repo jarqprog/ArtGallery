@@ -1,0 +1,2 @@
+# ArtGallery
+Spring MVC project
