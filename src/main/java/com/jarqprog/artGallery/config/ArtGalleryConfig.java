@@ -10,8 +10,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("com.jarqprog.artGallery")
-@EnableJpaRepositories(basePackages = {"com.jarqprog.artGallery.repository"})
+@ComponentScan(ConfigConstants.APP_PACKAGE)
+//@EnableJpaRepositories(basePackages = {ConfigConstants.APP_PACKAGE + ".repository"})
 public class ArtGalleryConfig {
 
     @Bean

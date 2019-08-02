@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface  PictureRepository extends Repository<Picture, Long> {
 
-    Optional<Picture> findById(Long id);
+//    Optional<Picture> findById(Long id);
 
     Picture save(Picture picture);
 
