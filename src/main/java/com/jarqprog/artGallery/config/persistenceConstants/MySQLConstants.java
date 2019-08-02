@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.config.dev;
+package com.jarqprog.artGallery.config.persistenceConstants;
 
 public interface MySQLConstants {
 

@@ -2,6 +2,7 @@ package com.jarqprog.artGallery.config.dev;
 
 
 import com.jarqprog.artGallery.config.ConfigConstants;
+import com.jarqprog.artGallery.config.persistenceConstants.H2Constants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-public class PersistenceJPAConfig {
+public class DevJPAConfig {
 
     @Bean
     public DataSource dataSource() {
