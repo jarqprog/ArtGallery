@@ -1,4 +1,4 @@
-package com.jarqprog.app;
+package com.jarqprog.artGallery;
 
 import static org.junit.Assert.assertTrue;
 

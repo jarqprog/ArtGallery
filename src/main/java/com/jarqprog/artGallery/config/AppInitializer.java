@@ -1,4 +1,4 @@
-package com.jarqprog.app.config;
+package com.jarqprog.artGallery.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -9,7 +9,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     protected Class<?>[] getServletConfigClasses() {
         return new Class[] {
-
+            ArtGalleryConfig.class
         };
     }
 
