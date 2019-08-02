@@ -1,19 +1,18 @@
 package com.jarqprog.artGallery.repository;
 
 import com.jarqprog.artGallery.domain.Picture;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface  PictureRepository extends Repository<Picture, Long> {
+public interface PictureRepository extends CrudRepository<Picture, Long> {
 
-//    Optional<Picture> findById(Long id);
-
-    Picture save(Picture picture);
-
+    Optional<Picture> findById(Long id);
+    <P extends Picture> P save(P picture);
     List<Picture> findByTitle(String title);
-
+    List<Picture> findTop5ByTitle(String title);
+    List<Picture> findByTitleIsNull(String title);
     List<Picture> findAll();
 
 }
