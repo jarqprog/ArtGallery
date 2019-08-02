@@ -8,7 +8,6 @@ import java.util.List;
 @RestController
 public interface PictureController {
 
-
     List<Picture> getAllPictures();
     <P extends Picture> P save(P picture);
 

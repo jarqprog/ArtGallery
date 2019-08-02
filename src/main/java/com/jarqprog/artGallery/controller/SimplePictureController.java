@@ -2,6 +2,9 @@ package com.jarqprog.artGallery.controller;
 
 import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.service.PictureService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +14,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class SimplePictureController implements PictureController {
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+public class SimplePictureController implements PictureController  {
 
-    private final PictureService pictureService;
-
-    public SimplePictureController(PictureService pictureService) {
-        this.pictureService = pictureService;
-    }
+    private PictureService pictureService;
 
     @Override
     @GetMapping("/pictures")
