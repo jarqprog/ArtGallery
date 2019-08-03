@@ -13,5 +13,4 @@ public interface PictureController {
     List<Picture> getAllPictures();
     <P extends Picture> P save(@RequestBody P picture);
     void remove(@PathVariable("id") Long id);
-
 }

@@ -2,7 +2,7 @@ package com.jarqprog.artGallery.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.domain.Picture;
-import com.jarqprog.artGallery.service.PictureService;
+import com.jarqprog.artGallery.service.picture.PictureService;
 
 import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("/api")
 public class SimplePictureController implements PictureController  {
 
     private final PictureService pictureService;
