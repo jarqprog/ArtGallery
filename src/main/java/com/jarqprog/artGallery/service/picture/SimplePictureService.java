@@ -1,8 +1,6 @@
 package com.jarqprog.artGallery.service.picture;
 
-import com.jarqprog.artGallery.domain.Contact;
 import com.jarqprog.artGallery.domain.Picture;
-import com.jarqprog.artGallery.domain.User;
 import com.jarqprog.artGallery.repository.ContactRepository;
 import com.jarqprog.artGallery.repository.PictureRepository;
 import com.jarqprog.artGallery.repository.UserRepository;
@@ -43,12 +41,6 @@ public class SimplePictureService implements PictureService {
     public <P extends Picture> P save(P picture) {
         P created = pictureRepository.save(picture);
         entityMetadataService.create(created);  // todo maybe use aspect? jarq
-
-//        Contact jarek = new Contact("jarek@jarek.com");
-//        contactRepository.save(jarek);
-//
-//        User jaro = new User(jarek, "987987");
-//        userRepository.save(jaro);
         return created;
     }
 
