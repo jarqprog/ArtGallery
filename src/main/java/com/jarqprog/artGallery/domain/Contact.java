@@ -5,13 +5,13 @@ import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Setter
 @Getter
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name="contacts")
 public class Contact implements MetadataSupplier {
 
@@ -29,8 +29,13 @@ public class Contact implements MetadataSupplier {
     @JsonView(View.JsonContact.class)
     private String lastName;
 
+    @NotNull
     @JsonView(View.JsonContact.class)
     private String email;
+
+    public Contact(@NotNull String email) {
+        this.email = email;
+    }
 
     @Override
     public long getId() {
