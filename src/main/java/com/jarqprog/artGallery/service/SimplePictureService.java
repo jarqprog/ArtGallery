@@ -2,9 +2,7 @@ package com.jarqprog.artGallery.service;
 
 import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.repository.PictureRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,12 +10,14 @@ import java.util.Optional;
 
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
 public class SimplePictureService implements PictureService {
 
-    private PictureRepository pictureRepository;
+    private final PictureRepository pictureRepository;
+
+    @Autowired
+    public SimplePictureService(PictureRepository pictureRepository) {
+        this.pictureRepository = pictureRepository;
+    }
 
     @Override
     public List<Picture> getAllPictures() {

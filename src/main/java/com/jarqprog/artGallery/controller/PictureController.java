@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.controller;
 
 import com.jarqprog.artGallery.domain.Picture;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -9,6 +10,6 @@ import java.util.List;
 public interface PictureController {
 
     List<Picture> getAllPictures();
-    <P extends Picture> P save(P picture);
+    <P extends Picture> P save(@RequestBody P picture);
 
 }

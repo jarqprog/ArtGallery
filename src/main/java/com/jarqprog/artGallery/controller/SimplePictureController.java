@@ -2,24 +2,24 @@ package com.jarqprog.artGallery.controller;
 
 import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.service.PictureService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.Lombok;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
-@RequestMapping("/api")
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
 public class SimplePictureController implements PictureController  {
 
-    private PictureService pictureService;
+    private final PictureService pictureService;
+
+    @Autowired
+    public SimplePictureController(PictureService pictureService) {
+        this.pictureService = pictureService;
+    }
 
     @Override
     @GetMapping("/pictures")
@@ -29,7 +29,7 @@ public class SimplePictureController implements PictureController  {
 
     @Override
     @PostMapping("/pictures")
-    public <P extends Picture> P save(P picture) {
+    public <P extends Picture> P save(@RequestBody P picture) {
         return pictureService.save(picture);
     }
 }
