@@ -3,9 +3,11 @@ package com.jarqprog.artGallery.config.dev;
 
 import com.jarqprog.artGallery.config.ConfigConstants;
 import com.jarqprog.artGallery.config.persistenceConstants.H2Constants;
+import com.jarqprog.artGallery.config.persistenceConstants.MySQLConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -20,15 +22,16 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = ConfigConstants.APP_PACKAGE + ".repository" )
 public class DevJPAConfig {
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(H2Constants.DRIVER_CLASS);
-        dataSource.setUrl(H2Constants.URL);
-        dataSource.setUsername(H2Constants.USER);
-        dataSource.setPassword(H2Constants.PASSWORD);
+        dataSource.setDriverClassName(MySQLConstants.DRIVER_CLASS);
+        dataSource.setUrl(MySQLConstants.URL);
+        dataSource.setUsername(MySQLConstants.USER);
+        dataSource.setPassword(MySQLConstants.PASSWORD);
         return dataSource;
     }
 
@@ -48,7 +51,9 @@ public class DevJPAConfig {
     private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        properties.setProperty("hibernate.dialect", MySQLConstants.HIBERNATE_DIALECT);
+        properties.setProperty("spring.h2.console.enabled", "true");
+        properties.setProperty("spring.jpa.generate-ddl", "true");
         return properties;
     }
 

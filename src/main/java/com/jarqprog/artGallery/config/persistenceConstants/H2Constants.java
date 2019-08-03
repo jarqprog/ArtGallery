@@ -6,4 +6,5 @@ public interface H2Constants {
     String URL = "jdbc:h2:mem:test";
     String USER = "sa";
     String PASSWORD = "sa";
+    String HIBERNATE_DIALECT = "org.hibernate.dialect.H2Dialect";
 }
