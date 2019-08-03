@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.domain;
+package com.jarqprog.artGallery.config;
 
 public interface EntityNumberConstants {
 
@@ -6,5 +6,6 @@ public interface EntityNumberConstants {
     long USER = 102;
     long COMMENTARY = 103;
     long CONTACT = 104;
+    long AUTHOR = 105;
 
 }

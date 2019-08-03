@@ -1,9 +1,7 @@
 package com.jarqprog.artGallery.config.dev;
 
-import com.jarqprog.artGallery.domain.Contact;
-import com.jarqprog.artGallery.domain.User;
-import com.jarqprog.artGallery.repository.ContactRepository;
-import com.jarqprog.artGallery.repository.UserRepository;
+import com.jarqprog.artGallery.domain.*;
+import com.jarqprog.artGallery.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -23,6 +21,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private ContactRepository contactRepository;
 
+    @Autowired
+    private PictureRepository pictureRepository;
+
+    @Autowired
+    private CommentaryRepository commentaryRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
+
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -33,8 +40,35 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         Contact adminContact = new Contact("admin");
         contactRepository.save(adminContact);
-
         userRepository.save(new User(adminContact, "admin", "admin"));
+
+        initJelena();
+
         alreadySetup = true;
+    }
+
+
+    /**
+     * Jelena is my wife and artist. I'm developing this app for her :)
+     */
+    private void initJelena() {
+        Contact jelena = new Contact("Jelena", "Kucharczyk");
+        jelena.setNickname("Alenka");
+        contactRepository.save(jelena);
+
+        User userJelena = new User(jelena, "login", "pass");
+        userRepository.save(userJelena);
+
+        Author authorJelena = new Author(jelena);
+        authorJelena.setArtisticNickname("Alenka");
+        authorRepository.save(authorJelena);
+
+        Picture spring = new Picture();
+        spring.setTitle("Wiosna");
+        spring.setAuthor(authorJelena);
+        pictureRepository.save(spring);
+
+        Commentary commentary = new Commentary("Zapraszam do ogladania", userJelena, spring);
+        commentaryRepository.save(commentary);
     }
 }
