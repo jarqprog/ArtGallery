@@ -10,4 +10,6 @@ public class View {
 
     public interface JsonContact {}
 
+    public interface JsonAuthor {}
+
 }
