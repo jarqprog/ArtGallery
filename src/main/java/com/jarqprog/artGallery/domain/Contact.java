@@ -1,8 +1,10 @@
 package com.jarqprog.artGallery.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.jarqprog.artGallery.config.EntityNumberConstants;
 import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,9 +14,9 @@ import javax.validation.constraints.NotNull;
 @Getter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name="contacts")
 public class Contact implements MetadataSupplier {
-
 
     private static final long ENTITY_NUMBER = EntityNumberConstants.CONTACT;
 
@@ -31,13 +33,28 @@ public class Contact implements MetadataSupplier {
     private String lastName;
 
     @JsonView(View.JsonContact.class)
+    private String nickname;
+
+    @JsonView(View.JsonContact.class)
     private String email;
 
+    //todo Addressee
+
+    @Nullable
     @OneToOne(mappedBy = "contact")
     private User user;
 
+    @Nullable
+    @OneToOne(mappedBy = "contact")
+    private Author author;
+
     public Contact(@NotNull String firstName) {
         this.firstName = firstName;
+    }
+
+    public Contact(@NotNull String firstName, String lastName) {
+        this(firstName);
+        this.lastName = lastName;
     }
 
     @Override

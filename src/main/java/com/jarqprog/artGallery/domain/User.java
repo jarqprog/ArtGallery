@@ -2,10 +2,9 @@ package com.jarqprog.artGallery.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.jarqprog.artGallery.config.EntityNumberConstants;
 import com.jarqprog.artGallery.view.jsonView.View;
-import lombok.AllArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,7 +12,9 @@ import java.util.Set;
 
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
+@Getter
 @ToString
 @Table(name="users")
 public class User implements MetadataSupplier {
@@ -26,19 +27,18 @@ public class User implements MetadataSupplier {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable=false)
+    @JoinColumn(name="contact_id", referencedColumnName="id", nullable=false)
     @JsonView(View.JsonUser.class)
-    private final Contact contact;
+    private Contact contact;
 
     @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+    @ToString.Exclude
     private Set<Commentary> commentaries;
 
     @JsonView(View.JsonUser.class)
-    @NotNull
     private String login;
 
     @JsonView(View.JsonUser.class)
-    @NotNull
     private String password;
 
     @JsonView(View.JsonUser.class)

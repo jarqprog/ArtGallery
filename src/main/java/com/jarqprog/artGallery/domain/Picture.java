@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.domain;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.jarqprog.artGallery.config.EntityNumberConstants;
 import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
@@ -26,7 +27,15 @@ public class Picture implements MetadataSupplier {
     @JsonView(View.JsonPicture.class)
     private String title;
 
-    @OneToMany(mappedBy="picture", fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name="author_id")
+    @ToString.Exclude
+    @JsonView(View.JsonPicture.class)
+    private Author author;
+
+    @OneToMany(mappedBy="picture", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @JsonView(View.JsonPicture.class)
     private Set<Commentary> commentaries;
 
     @Override

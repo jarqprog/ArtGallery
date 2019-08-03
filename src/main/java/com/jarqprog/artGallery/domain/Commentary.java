@@ -2,6 +2,7 @@ package com.jarqprog.artGallery.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.jarqprog.artGallery.config.EntityNumberConstants;
 import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name="commentaries")
 public class Commentary implements MetadataSupplier {
 
@@ -29,13 +31,15 @@ public class Commentary implements MetadataSupplier {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private final User user;
+    @ToString.Exclude
+    private User user;
 
     @ManyToOne
     @JoinColumn(name="picture_id")
-    private final Picture picture;
+    @ToString.Exclude
+    private Picture picture;
 
-    public Commentary(@NotNull String content, @NotNull User user, @NotNull Picture picture) {
+    public Commentary(String content, User user, Picture picture) {
         this.content = content;
         this.user = user;
         this.picture = picture;
