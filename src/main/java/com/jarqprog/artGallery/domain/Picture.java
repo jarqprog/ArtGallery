@@ -5,6 +5,7 @@ import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Setter
@@ -24,6 +25,9 @@ public class Picture implements MetadataSupplier {
 
     @JsonView(View.JsonPicture.class)
     private String title;
+
+    @OneToMany(mappedBy="picture", fetch = FetchType.EAGER)
+    private Set<Commentary> commentaries;
 
     @Override
     public long getId() {

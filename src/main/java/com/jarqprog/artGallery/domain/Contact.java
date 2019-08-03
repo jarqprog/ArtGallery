@@ -23,21 +23,21 @@ public class Contact implements MetadataSupplier {
     @JsonView(View.JsonContact.class)
     private long id;
 
+    @NotNull
     @JsonView(View.JsonContact.class)
     private String firstName;
 
     @JsonView(View.JsonContact.class)
     private String lastName;
 
-    @NotNull
     @JsonView(View.JsonContact.class)
     private String email;
 
     @OneToOne(mappedBy = "contact")
     private User user;
 
-    public Contact(@NotNull String email) {
-        this.email = email;
+    public Contact(@NotNull String firstName) {
+        this.firstName = firstName;
     }
 
     @Override

@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -25,10 +26,16 @@ public class User implements MetadataSupplier {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @NotNull
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable=false)
     @JsonView(View.JsonUser.class)
     private final Contact contact;
+
+    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
+    private Set<Commentary> commentaries;
+
+    @JsonView(View.JsonUser.class)
+    @NotNull
+    private String login;
 
     @JsonView(View.JsonUser.class)
     @NotNull
@@ -40,8 +47,9 @@ public class User implements MetadataSupplier {
     @JsonView(View.JsonUser.class)
     private boolean tokenExpired;
 
-    public User(@NotNull Contact contact, @NotNull String password) {
+    public User(@NotNull Contact contact, @NotNull String login, @NotNull String password) {
         this.contact = contact;
+        this.login = login;
         this.password = password;
     }
 
