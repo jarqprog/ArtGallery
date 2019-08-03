@@ -2,18 +2,32 @@ package com.jarqprog.artGallery.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="pictures")
-public class Picture extends AbstractEntity {
+public class Picture implements DomainEntity {
+
+    private static final long entityNumber = 101;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     private String title;
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public long getEntityNumber() {
+        return entityNumber;
+    }
 
 }
