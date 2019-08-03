@@ -32,22 +32,22 @@ public class EntityMetadata {
     private boolean isRemovedEntity;
 
     @NonNull
-    private final long domainEntityId;
+    private final long entityId;
 
     @NonNull
-    private final long domainEntityNumber;
+    private final long entityNumber;
 
     @Setter
     private String archivedEntityAsString;
 
     public EntityMetadata(MetadataSupplier metadataSupplier) {
-        this.domainEntityId = metadataSupplier.getId();
-        this.domainEntityNumber = metadataSupplier.getEntityNumber();
+        this.entityId = metadataSupplier.getId();
+        this.entityNumber = metadataSupplier.getEntityNumber();
     }
 
     public EntityMetadata(MetadataSupplier removedMetadataSupplier, String removedEntityAsString) {
-        this.domainEntityId = removedMetadataSupplier.getId();
-        this.domainEntityNumber = removedMetadataSupplier.getEntityNumber();
+        this.entityId = removedMetadataSupplier.getId();
+        this.entityNumber = removedMetadataSupplier.getEntityNumber();
         this.isRemovedEntity = true;
         this.archivedEntityAsString = removedEntityAsString;
     }

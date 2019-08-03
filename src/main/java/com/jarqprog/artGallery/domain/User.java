@@ -1,25 +1,43 @@
 package com.jarqprog.artGallery.domain;
 
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.jarqprog.artGallery.view.jsonView.View;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
-@Table(name = "gallery_users")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class GalleryUser extends User implements MetadataSupplier {
+@AllArgsConstructor
+@Setter
+@ToString
+@Table(name="users")
+public class User implements MetadataSupplier {
 
-    private static final long ENTITY_NUMBER = EntityNumberConstants.GALLERY_USER;
+    private static final long ENTITY_NUMBER = EntityNumberConstants.USER;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(View.JsonUser.class)
     private long id;
 
-    public GalleryUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+    @OneToOne
+    private final Contact contact;
+
+    @JsonView(View.JsonUser.class)
+    private String password;
+
+    @JsonView(View.JsonUser.class)
+    private boolean enabled;
+
+    @JsonView(View.JsonUser.class)
+    private boolean tokenExpired;
+
+    public User(Contact contact, String password) {
+        this.contact = contact;
+        this.password = password;
     }
 
     @Override

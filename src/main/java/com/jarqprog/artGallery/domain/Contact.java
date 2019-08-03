@@ -12,18 +12,25 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="pictures")
-public class Picture implements MetadataSupplier {
+@Table(name="contacts")
+public class Contact implements MetadataSupplier {
 
-    private static final long ENTITY_NUMBER = EntityNumberConstants.PICTURE;
+
+    private static final long ENTITY_NUMBER = EntityNumberConstants.CONTACT;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(View.JsonPicture.class)
+    @JsonView(View.JsonContact.class)
     private long id;
 
-    @JsonView(View.JsonPicture.class)
-    private String title;
+    @JsonView(View.JsonContact.class)
+    private String firstName;
+
+    @JsonView(View.JsonContact.class)
+    private String lastName;
+
+    @JsonView(View.JsonContact.class)
+    private String email;
 
     @Override
     public long getId() {
@@ -34,4 +41,5 @@ public class Picture implements MetadataSupplier {
     public long getEntityNumber() {
         return ENTITY_NUMBER;
     }
+
 }

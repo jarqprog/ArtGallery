@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
@@ -12,18 +13,15 @@ import javax.persistence.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="pictures")
-public class Picture implements MetadataSupplier {
+@Table(name="commentaries")
+public class Commentary implements MetadataSupplier {
 
-    private static final long ENTITY_NUMBER = EntityNumberConstants.PICTURE;
+    private static final long ENTITY_NUMBER = EntityNumberConstants.COMMENTARY;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(View.JsonPicture.class)
+    @JsonView(View.JsonCommentary.class)
     private long id;
-
-    @JsonView(View.JsonPicture.class)
-    private String title;
 
     @Override
     public long getId() {
