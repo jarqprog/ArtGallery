@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.config.EntityNumberConstants;
 import com.jarqprog.artGallery.view.jsonView.View;
@@ -36,6 +37,7 @@ public class Picture implements MetadataSupplier {
     @OneToMany(mappedBy="picture", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @ToString.Exclude
     @JsonView(View.JsonPicture.class)
+    @JsonManagedReference
     private Set<Commentary> commentaries;
 
     @Override

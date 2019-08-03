@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.config.EntityNumberConstants;
 import com.jarqprog.artGallery.view.jsonView.View;
@@ -33,6 +34,7 @@ public class User implements MetadataSupplier {
 
     @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
     @ToString.Exclude
+    @JsonManagedReference
     private Set<Commentary> commentaries;
 
     @JsonView(View.JsonUser.class)

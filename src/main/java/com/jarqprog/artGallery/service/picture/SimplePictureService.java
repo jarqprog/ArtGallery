@@ -38,6 +38,13 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
+    public Picture findById(Long id) throws EntityNotFoundException {
+        return pictureRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
+    }
+
+    @Override
     public <P extends Picture> P save(P picture) {
         P created = pictureRepository.save(picture);
         entityMetadataService.create(created);  // todo maybe use aspect? jarq
@@ -45,16 +52,11 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
-    public Optional<Picture> findById(Long id) {
-        return pictureRepository.findById(id);
-    }
-
-    @Override
     public boolean remove(Long id) {
         boolean isRemoved = false;
         try {
             log.info("Removing picture with id: " + id);
-            Picture picture = findById(id).orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
+            Picture picture = findById(id);
             entityMetadataService.markDiscontinued(picture);
             pictureRepository.delete(picture);
             isRemoved = true;

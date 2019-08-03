@@ -11,6 +11,7 @@ import java.util.List;
 public interface PictureController {
 
     List<Picture> getAllPictures();
-    <P extends Picture> P save(@RequestBody P picture);
+    Picture findById(Long id);
+    Picture save(@RequestBody Picture picture);
     void remove(@PathVariable("id") Long id);
 }

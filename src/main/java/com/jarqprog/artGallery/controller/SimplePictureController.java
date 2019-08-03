@@ -31,9 +31,15 @@ public class SimplePictureController implements PictureController  {
     }
 
     @Override
+    @GetMapping("/pictures/{id}")
+    public Picture findById(@PathVariable("id") Long id) {
+        return pictureService.findById(id);
+    }
+
+    @Override
     @PostMapping("/pictures")
     @JsonView(View.JsonPicture.class)
-    public <P extends Picture> P save(@RequestBody P picture) {
+    public Picture save(@RequestBody Picture picture) {
         return pictureService.save(picture);
     }
 
