@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,15 +44,16 @@ public class SimplePictureService implements PictureService {
     @Override
     public boolean remove(Long id) {
         boolean isRemoved = false;
-//        try {
-//            Picture picture = findById(id).orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
-//            picture.setDiscontinueDate(LocalDateTime.now());
-//            save(picture);
-//            log.info(picture + " is removed");
-//            isRemoved = true;
-//        } catch (EntityNotFoundException e) {
-//            log.error("Not found picture with id: " + id);
-//        }
+        try {
+            log.info("Removing picture with id: " + id);
+            Picture picture = findById(id).orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
+            entityMetadataService.markDiscontinued(picture, picture.toString());
+            pictureRepository.delete(picture);
+            isRemoved = true;
+            log.info("Picture removed");
+        } catch (EntityNotFoundException e) {
+            log.warn(e.getMessage());
+        }
         return isRemoved;
     }
 

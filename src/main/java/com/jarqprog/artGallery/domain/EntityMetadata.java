@@ -3,12 +3,13 @@ package com.jarqprog.artGallery.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
-        import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-        import javax.persistence.*;
-        import java.time.LocalDateTime;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,7 +29,7 @@ public class EntityMetadata {
 //    @CreatedBy
 //    private GalleryUser user;
 
-    private LocalDateTime discontinueDate;
+    private boolean isRemovedEntity;
 
     @NonNull
     private final long domainEntityId;
@@ -36,8 +37,18 @@ public class EntityMetadata {
     @NonNull
     private final long domainEntityNumber;
 
-    public EntityMetadata(DomainEntity domainEntity) {
-        this.domainEntityId = domainEntity.getId();
-        this.domainEntityNumber = domainEntity.getEntityNumber();
+    @Setter
+    private String archivedEntityAsString;
+
+    public EntityMetadata(MetadataSupplier metadataSupplier) {
+        this.domainEntityId = metadataSupplier.getId();
+        this.domainEntityNumber = metadataSupplier.getEntityNumber();
+    }
+
+    public EntityMetadata(MetadataSupplier removedMetadataSupplier, String removedEntityAsString) {
+        this.domainEntityId = removedMetadataSupplier.getId();
+        this.domainEntityNumber = removedMetadataSupplier.getEntityNumber();
+        this.isRemovedEntity = true;
+        this.archivedEntityAsString = removedEntityAsString;
     }
 }

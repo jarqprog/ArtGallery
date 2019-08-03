@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
-public interface DomainEntity {
+public interface MetadataSupplier {
 
     long getId();
     long getEntityNumber();

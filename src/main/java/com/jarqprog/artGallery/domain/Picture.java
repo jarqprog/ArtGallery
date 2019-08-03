@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="pictures")
-public class Picture implements DomainEntity {
+public class Picture implements MetadataSupplier {
 
     private static final long entityNumber = 101;
 

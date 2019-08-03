@@ -9,7 +9,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "gallery_users")
-public class GalleryUser extends User implements DomainEntity {
+public class GalleryUser extends User implements MetadataSupplier {
 
     private static final long entityNumber = 102;
 
