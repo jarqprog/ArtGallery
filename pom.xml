@@ -31,6 +31,7 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+      <scope>runtime</scope>
       <version>1.4.199</version>
     </dependency>
 
@@ -41,13 +42,6 @@
       <artifactId>spring-webmvc</artifactId>
       <version>5.1.7.RELEASE</version>
     </dependency>
-
-<!--    &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-orm &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>org.springframework</groupId>-->
-<!--      <artifactId>spring-orm</artifactId>-->
-<!--      <version>5.1.7.RELEASE</version>-->
-<!--    </dependency>-->
 
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
     <dependency>
