@@ -9,9 +9,10 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "gallery_users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class GalleryUser extends User implements MetadataSupplier {
 
-    private static final long entityNumber = 102;
+    private static final long ENTITY_NUMBER = EntityNumberConstants.GALLERY_USER;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,6 +29,6 @@ public class GalleryUser extends User implements MetadataSupplier {
 
     @Override
     public long getEntityNumber() {
-        return entityNumber;
+        return ENTITY_NUMBER;
     }
 }

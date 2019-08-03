@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.service;
+package com.jarqprog.artGallery.service.metadata;
 
 import com.jarqprog.artGallery.domain.MetadataSupplier;
 import com.jarqprog.artGallery.domain.EntityMetadata;

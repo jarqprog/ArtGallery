@@ -1,14 +1,15 @@
-package com.jarqprog.artGallery.service;
+package com.jarqprog.artGallery.service.picture;
 
 import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.repository.PictureRepository;
+import com.jarqprog.artGallery.repository.UserRepository;
+import com.jarqprog.artGallery.service.metadata.EntityMetadataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -16,12 +17,15 @@ public class SimplePictureService implements PictureService {
 
     private final PictureRepository pictureRepository;
     private final EntityMetadataService entityMetadataService;
+    private final UserRepository userRepository;
 
     @Autowired
     public SimplePictureService(PictureRepository pictureRepository,
-                                EntityMetadataService entityMetadataService) {
+                                EntityMetadataService entityMetadataService,
+                                UserRepository userRepository) {
         this.pictureRepository = pictureRepository;
         this.entityMetadataService = entityMetadataService;
+        this.userRepository = userRepository;
     }
 
     @Override

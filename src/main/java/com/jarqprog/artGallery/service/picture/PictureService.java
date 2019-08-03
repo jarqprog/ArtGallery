@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.service;
+package com.jarqprog.artGallery.service.picture;
 
 import com.jarqprog.artGallery.domain.Picture;
 import org.springframework.stereotype.Service;
