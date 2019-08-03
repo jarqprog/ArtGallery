@@ -12,6 +12,6 @@ public interface PictureService {
     List<Picture> getAllPictures();
     <P extends Picture> P save(P picture);
     Optional<Picture> findById(Long id);
-    void remove(Long id);
+    boolean remove(Long id);
 
 }
