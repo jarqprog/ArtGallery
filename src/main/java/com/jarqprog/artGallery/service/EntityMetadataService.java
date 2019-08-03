@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 public interface EntityMetadataService {
 
     EntityMetadata create(MetadataSupplier metadataSupplier);
-    EntityMetadata markDiscontinued(MetadataSupplier metadataSupplier, String removedEntityData);
+    EntityMetadata markDiscontinued(MetadataSupplier metadataSupplier);
 
 }

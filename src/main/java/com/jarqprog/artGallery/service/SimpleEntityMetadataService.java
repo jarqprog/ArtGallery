@@ -25,8 +25,9 @@ public class SimpleEntityMetadataService implements EntityMetadataService {
     }
 
     @Override
-    public EntityMetadata markDiscontinued(MetadataSupplier metadataSupplier, String removedEntityData) {
+    public EntityMetadata markDiscontinued(MetadataSupplier metadataSupplier) {
+        //todo we can specify which data to store (for now it's just toString())
+        String removedEntityData = metadataSupplier.toString();
         return entityMetadataRepository.save(new EntityMetadata(metadataSupplier, removedEntityData));
     }
-
 }

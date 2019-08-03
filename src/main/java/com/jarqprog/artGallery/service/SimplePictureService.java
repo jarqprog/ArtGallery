@@ -47,7 +47,7 @@ public class SimplePictureService implements PictureService {
         try {
             log.info("Removing picture with id: " + id);
             Picture picture = findById(id).orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
-            entityMetadataService.markDiscontinued(picture, picture.toString());
+            entityMetadataService.markDiscontinued(picture);
             pictureRepository.delete(picture);
             isRemoved = true;
             log.info("Picture removed");
