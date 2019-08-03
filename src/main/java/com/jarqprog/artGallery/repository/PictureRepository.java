@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.persistence.TransactionRequiredException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,8 @@ public interface PictureRepository extends JpaRepository<Picture, Long> {
     List<Picture> findAll();
 
     @Modifying(clearAutomatically = true)
-    @Query("update Picture p set p.discontinueDate = getDate() where p.id =:pictureId")
-    void deleteById(@Param("pictureId") Long pictureId);
+    @Query("UPDATE Picture p SET p.discontinueDate =:discontinueDate WHERE p.id =:pictureId")
+    void deleteById(@Param("pictureId") Long pictureId, @Param("discontinueDate") LocalDateTime discontinueDate)
+            throws TransactionRequiredException;
 
 }

@@ -5,6 +5,8 @@ import com.jarqprog.artGallery.repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.TransactionRequiredException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +34,16 @@ public class SimplePictureService implements PictureService {
     @Override
     public Optional<Picture> findById(Long id) {
         return pictureRepository.findById(id);
+    }
+
+    @Override
+    public void remove(Long id) {
+        LocalDateTime discontinueDate = LocalDateTime.now();
+        try {
+            pictureRepository.deleteById(id, discontinueDate);
+        } catch (TransactionRequiredException e) {
+            // not used todo
+        }
     }
 
 }

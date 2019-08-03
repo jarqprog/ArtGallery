@@ -32,4 +32,10 @@ public class SimplePictureController implements PictureController  {
     public <P extends Picture> P save(@RequestBody P picture) {
         return pictureService.save(picture);
     }
+
+    @Override
+    @DeleteMapping("/pictures/{id}")
+    public void remove(@PathVariable("id") Long id) {
+        pictureService.remove(id);
+    }
 }
