@@ -24,7 +24,10 @@ public class User implements MetadataSupplier {
     @JsonView(View.JsonUser.class)
     private long id;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @NotNull
+    @JsonView(View.JsonUser.class)
     private final Contact contact;
 
     @JsonView(View.JsonUser.class)

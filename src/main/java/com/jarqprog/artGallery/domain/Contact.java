@@ -33,6 +33,9 @@ public class Contact implements MetadataSupplier {
     @JsonView(View.JsonContact.class)
     private String email;
 
+    @OneToOne(mappedBy = "contact")
+    private User user;
+
     public Contact(@NotNull String email) {
         this.email = email;
     }
