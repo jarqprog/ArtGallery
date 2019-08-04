@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Table(name="users")
-public class User implements MetadataSupplier {
+public class User implements DomainEntity {
 
     private static final long ENTITY_NUMBER = EntityNumberConstants.USER;
 

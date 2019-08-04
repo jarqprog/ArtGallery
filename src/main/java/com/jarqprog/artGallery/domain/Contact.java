@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="contacts")
-public class Contact implements MetadataSupplier {
+public class Contact implements DomainEntity {
 
     private static final long ENTITY_NUMBER = EntityNumberConstants.CONTACT;
 

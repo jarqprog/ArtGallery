@@ -40,14 +40,14 @@ public class EntityMetadata {
     @Setter
     private String archivedEntityAsString;
 
-    public EntityMetadata(MetadataSupplier metadataSupplier) {
-        this.entityId = metadataSupplier.getId();
-        this.entityNumber = metadataSupplier.getEntityNumber();
+    public EntityMetadata(DomainEntity domainEntity) {
+        this.entityId = domainEntity.getId();
+        this.entityNumber = domainEntity.getEntityNumber();
     }
 
-    public EntityMetadata(MetadataSupplier removedMetadataSupplier, String removedEntityAsString) {
-        this.entityId = removedMetadataSupplier.getId();
-        this.entityNumber = removedMetadataSupplier.getEntityNumber();
+    public EntityMetadata(DomainEntity removedDomainEntity, String removedEntityAsString) {
+        this.entityId = removedDomainEntity.getId();
+        this.entityNumber = removedDomainEntity.getEntityNumber();
         this.isRemovedEntity = true;
         this.archivedEntityAsString = removedEntityAsString;
     }

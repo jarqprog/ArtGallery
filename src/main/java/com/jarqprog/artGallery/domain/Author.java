@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="authors")
-public class Author implements MetadataSupplier {
+public class Author implements DomainEntity {
 
     private static final long ENTITY_NUMBER = EntityNumberConstants.AUTHOR;
 

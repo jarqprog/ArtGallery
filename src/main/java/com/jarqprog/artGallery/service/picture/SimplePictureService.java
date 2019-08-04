@@ -2,11 +2,9 @@ package com.jarqprog.artGallery.service.picture;
 
 import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.dto.PictureDTO;
-import com.jarqprog.artGallery.repository.ContactRepository;
+import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.repository.PictureRepository;
-import com.jarqprog.artGallery.repository.UserRepository;
 import com.jarqprog.artGallery.service.metadata.EntityMetadataService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,31 +17,29 @@ public class SimplePictureService implements PictureService {
 
     @Autowired private PictureRepository pictureRepository;
     @Autowired private EntityMetadataService entityMetadataService;
-//    @Autowired private UserRepository userRepository;
-//    @Autowired private ContactRepository contactRepository;
-    @Autowired private ModelMapper modelMapper;
+    @Autowired private DtoEntityConverter dtoEntityConverter;
 
 
     @Override
     public List<PictureDTO> getAllPictures() {
         return pictureRepository.findAll()
                 .stream()
-                .map(this::convertPictureToDto)
+                .map(p -> dtoEntityConverter.convertEntityToDto(p, PictureDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public PictureDTO findById(long id) throws EntityNotFoundException {
         Picture picture = findPictureById(id);
-        return convertPictureToDto(picture);
+        return dtoEntityConverter.convertEntityToDto(picture, PictureDTO.class);
     }
 
     @Override
     public PictureDTO save(PictureDTO pictureDTO) {
-        Picture picture = convertPictureDTOToEntity(pictureDTO);
+        Picture picture = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(picture);
         entityMetadataService.createMetadata(saved);
-        return convertPictureToDto(saved);
+        return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
     }
 
     @Override
@@ -58,14 +54,6 @@ public class SimplePictureService implements PictureService {
             //todo
         }
         return isRemoved;
-    }
-
-    private PictureDTO convertPictureToDto(Picture picture) {
-        return modelMapper.map(picture, PictureDTO.class);
-    }
-
-    private Picture convertPictureDTOToEntity(PictureDTO pictureDTO) {
-        return modelMapper.map(pictureDTO, Picture.class);
     }
 
     private Picture findPictureById(Long id) throws EntityNotFoundException {

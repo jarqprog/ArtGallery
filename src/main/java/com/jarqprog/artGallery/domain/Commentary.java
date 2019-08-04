@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="commentaries")
-public class Commentary implements MetadataSupplier {
+public class Commentary implements DomainEntity {
 
     private static final long ENTITY_NUMBER = EntityNumberConstants.COMMENTARY;
 

@@ -12,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="pictures")
-public class Picture implements MetadataSupplier {
+public class Picture implements DomainEntity {
 
     private static final long ENTITY_NUMBER = EntityNumberConstants.PICTURE;
 

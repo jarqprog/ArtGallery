@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.service.metadata;
 
-import com.jarqprog.artGallery.domain.MetadataSupplier;
+import com.jarqprog.artGallery.domain.DomainEntity;
 import com.jarqprog.artGallery.domain.EntityMetadata;
 import com.jarqprog.artGallery.repository.EntityMetadataRepository;
 
@@ -15,13 +15,13 @@ public class SimpleEntityMetadataService implements EntityMetadataService {
     private EntityMetadataRepository entityMetadataRepository;
 
     @Override
-    public EntityMetadata createMetadata(MetadataSupplier metadataSupplier) {
-        return entityMetadataRepository.save(new EntityMetadata(metadataSupplier));
+    public EntityMetadata createMetadata(DomainEntity domainEntity) {
+        return entityMetadataRepository.save(new EntityMetadata(domainEntity));
     }
 
     @Override
-    public EntityMetadata markDiscontinued(MetadataSupplier metadataSupplier) {
-        String entity = metadataSupplier.toString();
-        return entityMetadataRepository.save(new EntityMetadata(metadataSupplier, entity));
+    public EntityMetadata markDiscontinued(DomainEntity domainEntity) {
+        String entity = domainEntity.toString();
+        return entityMetadataRepository.save(new EntityMetadata(domainEntity, entity));
     }
 }
