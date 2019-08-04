@@ -11,7 +11,8 @@ public interface ContactService {
 
     List<ContactDTO> getAllContacts();
     ContactDTO findById(long id) throws EntityNotFoundException;
-    ContactDTO save(ContactDTO contactDTO);
+    ContactDTO add(ContactDTO contactDTO);
+    ContactDTO update(long id, ContactDTO contactDTO) throws EntityNotFoundException;
     boolean remove(long id);
 
 }

@@ -36,9 +36,19 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public ContactDTO save(ContactDTO contactDTO) {
+    public ContactDTO add(ContactDTO contactDTO) {
         Contact contact = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(contact);
+        entityMetadataService.createMetadata(saved);
+        return dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
+    }
+
+    @Override
+    public ContactDTO update(long id, ContactDTO contactDTO) throws EntityNotFoundException {
+        findContactById(id);// throws exception if not founded
+        contactDTO.setId(id);
+        Contact updated = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
+        Contact saved = contactRepository.save(updated);
         entityMetadataService.createMetadata(saved);
         return dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
     }
