@@ -2,6 +2,7 @@ package com.jarqprog.artGallery.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.domain.Picture;
+import com.jarqprog.artGallery.dto.PictureDTO;
 import com.jarqprog.artGallery.service.picture.PictureService;
 
 import com.jarqprog.artGallery.view.jsonView.View;
@@ -26,20 +27,20 @@ public class SimplePictureController implements PictureController  {
     @Override
     @GetMapping("/pictures")
     @JsonView(View.JsonPicture.class)
-    public List<Picture> getAllPictures() {
+    public List<PictureDTO> getAllPictures() {
         return pictureService.getAllPictures();
     }
 
     @Override
     @GetMapping("/pictures/{id}")
-    public Picture findById(@PathVariable("id") Long id) {
+    public PictureDTO findById(@PathVariable("id") Long id) {
         return pictureService.findById(id);
     }
 
     @Override
     @PostMapping("/pictures")
     @JsonView(View.JsonPicture.class)
-    public Picture save(@RequestBody Picture picture) {
+    public PictureDTO save(@RequestBody PictureDTO picture) {
         return pictureService.save(picture);
     }
 

@@ -37,7 +37,7 @@ public class SimpleUserService implements UserService {
     @Override
     public <P extends User> P save(P user) {
         P created = userRepository.save(user);
-        entityMetadataService.create(created);  // todo maybe use aspect? jarq
+        entityMetadataService.createMetadata(created);  // todo maybe use aspect? jarq
         return created;
     }
 

@@ -20,7 +20,7 @@ public class SimpleEntityMetadataService implements EntityMetadataService {
     }
 
     @Override
-    public EntityMetadata create(MetadataSupplier metadataSupplier) {
+    public EntityMetadata createMetadata(MetadataSupplier metadataSupplier) {
         return entityMetadataRepository.save(new EntityMetadata(metadataSupplier));
     }
 

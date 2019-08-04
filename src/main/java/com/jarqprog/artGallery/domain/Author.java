@@ -1,9 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.config.EntityNumberConstants;
-import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,20 +19,16 @@ public class Author implements MetadataSupplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(View.JsonAuthor.class)
     private long id;
 
-    @JsonView(View.JsonAuthor.class)
     private String artisticNickname;
 
     @OneToOne
     @JoinColumn(name="contact_id", referencedColumnName="id", nullable=false)
-    @JsonView(View.JsonAuthor.class)
     private Contact contact;
 
     @OneToMany(mappedBy="author", fetch = FetchType.EAGER)
     @ToString.Exclude
-    @JsonManagedReference
     private Set<Picture> arts;
 
     public Author(Contact contact) {

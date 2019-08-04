@@ -1,9 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
-
-import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.config.EntityNumberConstants;
-import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,11 +19,9 @@ public class Commentary implements MetadataSupplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(View.JsonCommentary.class)
     private long id;
 
     @NotNull
-    @JsonView(View.JsonCommentary.class)
     private String content;
 
     @ManyToOne
