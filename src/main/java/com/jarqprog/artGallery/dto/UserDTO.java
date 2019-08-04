@@ -4,12 +4,11 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.Set;
 
 @Getter
 @Setter
-public class UserDTO implements Serializable {
+public class UserDTO implements DTO {
 
     private long id;
     private ContactDTO contact;
