@@ -10,9 +10,9 @@ import java.util.List;
 public interface PictureService {
 
     List<PictureDTO> getAllPictures();
-    PictureDTO findById(long id) throws EntityNotFoundException;
-    PictureDTO save(PictureDTO pictureDTO);
-    PictureDTO update(long id, PictureDTO pictureDTO) throws EntityNotFoundException;
-    boolean remove(long id) throws EntityNotFoundException;
+    PictureDTO findPictureById(long id) throws EntityNotFoundException;
+    PictureDTO addPicture(PictureDTO pictureDTO);
+    PictureDTO updatePicture(long id, PictureDTO pictureDTO) throws EntityNotFoundException;
+    boolean removePicture(long id) throws EntityNotFoundException;
 
 }

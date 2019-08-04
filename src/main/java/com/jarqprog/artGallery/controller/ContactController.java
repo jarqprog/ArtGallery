@@ -12,8 +12,8 @@ import java.util.List;
 public interface ContactController {
 
     List<ContactDTO> getAllContacts();
-    ContactDTO findById(@PathVariable("id") long id);
+    ContactDTO findContactById(@PathVariable("id") long id);
     ContactDTO addContact(@RequestBody ContactDTO contactDTO);
     ContactDTO updateContact(@PathVariable("id") long id, @RequestBody ContactDTO contactDTO);
-    void remove(@PathVariable("id") long id);
+    void removeContact(@PathVariable("id") long id);
 }

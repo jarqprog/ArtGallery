@@ -29,13 +29,13 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
-    public PictureDTO findById(long id) throws EntityNotFoundException {
-        Picture picture = findPictureById(id);
+    public PictureDTO findPictureById(long id) throws EntityNotFoundException {
+        Picture picture = findById(id);
         return dtoEntityConverter.convertEntityToDto(picture, PictureDTO.class);
     }
 
     @Override
-    public PictureDTO save(PictureDTO pictureDTO) {
+    public PictureDTO addPicture(PictureDTO pictureDTO) {
         Picture picture = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(picture);
         entityMetadataService.createMetadata(saved);
@@ -43,8 +43,8 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
-    public PictureDTO update(long id, PictureDTO pictureDTO) throws EntityNotFoundException {
-        findPictureById(id);// throws exception if not founded
+    public PictureDTO updatePicture(long id, PictureDTO pictureDTO) throws EntityNotFoundException {
+        findById(id);// throws exception if not founded
         pictureDTO.setId(id);
         Picture updated = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(updated);
@@ -53,10 +53,10 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
-    public boolean remove(long id) {
+    public boolean removePicture(long id) {
         boolean isRemoved = false;
         try {
-            Picture picture = findPictureById(id);
+            Picture picture = findById(id);
             entityMetadataService.markDiscontinued(picture);
             pictureRepository.delete(picture);
             isRemoved = true;
@@ -66,7 +66,7 @@ public class SimplePictureService implements PictureService {
         return isRemoved;
     }
 
-    private Picture findPictureById(Long id) throws EntityNotFoundException {
+    private Picture findById(Long id) throws EntityNotFoundException {
         return pictureRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));

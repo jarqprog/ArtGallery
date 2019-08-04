@@ -30,13 +30,13 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public ContactDTO findById(long id) throws EntityNotFoundException {
-        Contact contact = findContactById(id);
+    public ContactDTO findContactById(long id) throws EntityNotFoundException {
+        Contact contact = findById(id);
         return dtoEntityConverter.convertEntityToDto(contact, ContactDTO.class);
     }
 
     @Override
-    public ContactDTO add(ContactDTO contactDTO) {
+    public ContactDTO addContact(ContactDTO contactDTO) {
         Contact contact = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(contact);
         entityMetadataService.createMetadata(saved);
@@ -44,8 +44,8 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public ContactDTO update(long id, ContactDTO contactDTO) throws EntityNotFoundException {
-        findContactById(id);// throws exception if not founded
+    public ContactDTO updateContact(long id, ContactDTO contactDTO) throws EntityNotFoundException {
+        findById(id);// throws exception if not founded
         contactDTO.setId(id);
         Contact updated = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(updated);
@@ -54,10 +54,10 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public boolean remove(long id) {
+    public boolean removeContact(long id) throws EntityNotFoundException {
         boolean isRemoved = false;
         try {
-            Contact contact = findContactById(id);
+            Contact contact = findById(id);
             entityMetadataService.markDiscontinued(contact);
             contactRepository.delete(contact);
             isRemoved = true;
@@ -67,7 +67,7 @@ public class SimpleContactService implements ContactService {
         return isRemoved;
     }
 
-    private Contact findContactById(Long id) throws EntityNotFoundException {
+    private Contact findById(Long id) throws EntityNotFoundException {
         return contactRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));

@@ -52,7 +52,7 @@ public class Commentary implements DomainEntity {
         return "Commentary{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", userId=" + user.getId() +
+//                ", userId=" + user.getId() +//todo uncomment after user development
                 ", pictureId=" + picture.getId() +
                 '}';
     }

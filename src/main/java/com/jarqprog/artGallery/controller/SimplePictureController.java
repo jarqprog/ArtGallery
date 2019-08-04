@@ -23,25 +23,25 @@ public class SimplePictureController implements PictureController  {
 
     @Override
     @GetMapping("/{id}")
-    public PictureDTO findById(@PathVariable("id") long id) {
-        return pictureService.findById(id);
+    public PictureDTO findPictureById(@PathVariable("id") long id) {
+        return pictureService.findPictureById(id);
     }
 
     @Override
     @PostMapping
-    public PictureDTO save(@RequestBody PictureDTO pictureDTO) {
-        return pictureService.save(pictureDTO);
+    public PictureDTO addPicture(@RequestBody PictureDTO pictureDTO) {
+        return pictureService.addPicture(pictureDTO);
     }
 
     @Override
     @PutMapping("/{id}")
-    public PictureDTO update(@PathVariable("id")long id, @RequestBody PictureDTO pictureDTO) {
-        return null;
+    public PictureDTO updatePicture(@PathVariable("id")long id, @RequestBody PictureDTO pictureDTO) {
+        return pictureService.updatePicture(id, pictureDTO);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public void remove(@PathVariable("id") long id) {
-        pictureService.remove(id);
+    public void removePicture(@PathVariable("id") long id) {
+        pictureService.removePicture(id);
     }
 }

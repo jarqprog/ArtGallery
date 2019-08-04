@@ -10,9 +10,9 @@ import java.util.List;
 public interface ContactService {
 
     List<ContactDTO> getAllContacts();
-    ContactDTO findById(long id) throws EntityNotFoundException;
-    ContactDTO add(ContactDTO contactDTO);
-    ContactDTO update(long id, ContactDTO contactDTO) throws EntityNotFoundException;
-    boolean remove(long id);
+    ContactDTO findContactById(long id) throws EntityNotFoundException;
+    ContactDTO addContact(ContactDTO contactDTO);
+    ContactDTO updateContact(long id, ContactDTO contactDTO) throws EntityNotFoundException;
+    boolean removeContact(long id) throws EntityNotFoundException;
 
 }

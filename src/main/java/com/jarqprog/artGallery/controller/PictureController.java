@@ -11,8 +11,8 @@ import java.util.List;
 public interface PictureController {
 
     List<PictureDTO> getAllPictures();
-    PictureDTO findById(@PathVariable("id") long id);
-    PictureDTO save(@RequestBody PictureDTO pictureDTO);
-    PictureDTO update(@PathVariable("id") long id, @RequestBody PictureDTO pictureDTO);
-    void remove(@PathVariable("id") long id);
+    PictureDTO findPictureById(@PathVariable("id") long id);
+    PictureDTO addPicture(@RequestBody PictureDTO pictureDTO);
+    PictureDTO updatePicture(@PathVariable("id") long id, @RequestBody PictureDTO pictureDTO);
+    void removePicture(@PathVariable("id") long id);
 }

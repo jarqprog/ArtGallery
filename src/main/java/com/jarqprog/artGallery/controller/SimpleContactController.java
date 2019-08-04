@@ -21,25 +21,25 @@ public class SimpleContactController implements ContactController {
 
     @Override
     @GetMapping("/{id}")
-    public ContactDTO findById(@PathVariable("id") long id) {
-        return contactService.findById(id);
+    public ContactDTO findContactById(@PathVariable("id") long id) {
+        return contactService.findContactById(id);
     }
 
     @Override
     @PostMapping
     public ContactDTO addContact(@RequestBody ContactDTO contactDTO) {
-        return contactService.add(contactDTO);
+        return contactService.addContact(contactDTO);
     }
 
     @Override
     @PutMapping("/{id}")
     public ContactDTO updateContact(@PathVariable("id") long id, @RequestBody ContactDTO contactDTO) {
-        return contactService.update(id, contactDTO);
+        return contactService.updateContact(id, contactDTO);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public void remove(@PathVariable("id") long id) {
-        contactService.remove(id);
+    public void removeContact(@PathVariable("id") long id) {
+        contactService.removeContact(id);
     }
 }
