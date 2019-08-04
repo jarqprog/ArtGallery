@@ -1,6 +1,8 @@
 package com.jarqprog.artGallery.config;
 
 
+import com.jarqprog.artGallery.helper.DtoEntityConverter;
+import com.jarqprog.artGallery.helper.SimpleDtoEntityConverter;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -21,5 +23,10 @@ public class ArtGalleryConfig {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    @Bean
+    public DtoEntityConverter dtoEntityConverter() {
+        return new SimpleDtoEntityConverter();
     }
 }
