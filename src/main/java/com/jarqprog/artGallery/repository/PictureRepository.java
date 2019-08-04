@@ -11,9 +11,4 @@ import java.util.List;
 @Repository
 @EnableTransactionManagement
 public interface PictureRepository extends JpaRepository<Picture, Long> {
-
-    List<Picture> findByTitle(String title);
-    List<Picture> findTop5ByTitle(String title);
-    List<Picture> findByTitleIsNull();
-
 }
