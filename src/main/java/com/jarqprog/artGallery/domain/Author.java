@@ -9,7 +9,6 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="authors")
@@ -28,7 +27,6 @@ public class Author implements MetadataSupplier {
     private Contact contact;
 
     @OneToMany(mappedBy="author", fetch = FetchType.EAGER)
-    @ToString.Exclude
     private Set<Picture> arts;
 
     public Author(Contact contact) {
@@ -43,5 +41,15 @@ public class Author implements MetadataSupplier {
     @Override
     public long getEntityNumber() {
         return ENTITY_NUMBER;
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", artisticNickname='" + artisticNickname + '\'' +
+                ", contact=" + contact +
+                ", arts=" + arts +
+                '}';
     }
 }

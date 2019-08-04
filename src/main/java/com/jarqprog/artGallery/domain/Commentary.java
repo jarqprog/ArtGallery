@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="commentaries")
@@ -26,12 +25,10 @@ public class Commentary implements MetadataSupplier {
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    @ToString.Exclude
     private User user;
 
     @ManyToOne
     @JoinColumn(name="picture_id")
-    @ToString.Exclude
     private Picture picture;
 
     public Commentary(String content, User user, Picture picture) {
@@ -48,5 +45,15 @@ public class Commentary implements MetadataSupplier {
     @Override
     public long getEntityNumber() {
         return ENTITY_NUMBER;
+    }
+
+    @Override
+    public String toString() {
+        return "Commentary{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", userId=" + user.getId() +
+                ", pictureId=" + picture.getId() +
+                '}';
     }
 }

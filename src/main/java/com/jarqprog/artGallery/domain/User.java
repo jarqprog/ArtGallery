@@ -1,10 +1,7 @@
 package com.jarqprog.artGallery.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.config.EntityNumberConstants;
-import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,7 +13,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString
 @Table(name="users")
 public class User implements MetadataSupplier {
 
@@ -24,29 +20,21 @@ public class User implements MetadataSupplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(View.JsonUser.class)
     private long id;
 
     @OneToOne
     @JoinColumn(name="contact_id", referencedColumnName="id", nullable=false)
-    @JsonView(View.JsonUser.class)
     private Contact contact;
 
     @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
-    @ToString.Exclude
-    @JsonManagedReference
     private Set<Commentary> commentaries;
 
-    @JsonView(View.JsonUser.class)
     private String login;
 
-    @JsonView(View.JsonUser.class)
     private String password;
 
-    @JsonView(View.JsonUser.class)
     private boolean enabled;
 
-    @JsonView(View.JsonUser.class)
     private boolean tokenExpired;
 
     public User(@NotNull Contact contact, @NotNull String login, @NotNull String password) {
@@ -63,5 +51,18 @@ public class User implements MetadataSupplier {
     @Override
     public long getEntityNumber() {
         return ENTITY_NUMBER;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", contact=" + contact +
+                ", commentaries=" + commentaries +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                ", tokenExpired=" + tokenExpired +
+                '}';
     }
 }

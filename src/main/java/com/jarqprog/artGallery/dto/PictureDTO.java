@@ -1,7 +1,6 @@
 package com.jarqprog.artGallery.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +13,6 @@ public class PictureDTO implements Serializable {
 
     private long id;
     private String title;
-    @JsonBackReference private AuthorDTO author;
-    @JsonManagedReference private Set<CommentaryDTO> commentaries;
+    private AuthorDTO author;
+    @JsonIgnore private Set<CommentaryDTO> commentaries;
 }

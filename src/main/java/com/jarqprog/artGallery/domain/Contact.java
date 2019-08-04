@@ -1,8 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.config.EntityNumberConstants;
-import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
@@ -12,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="contacts")
@@ -22,20 +19,15 @@ public class Contact implements MetadataSupplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(View.JsonContact.class)
     private long id;
 
     @NotNull
-    @JsonView(View.JsonContact.class)
     private String firstName;
 
-    @JsonView(View.JsonContact.class)
     private String lastName;
 
-    @JsonView(View.JsonContact.class)
     private String nickname;
 
-    @JsonView(View.JsonContact.class)
     private String email;
 
     //todo Addressee
@@ -67,4 +59,16 @@ public class Contact implements MetadataSupplier {
         return ENTITY_NUMBER;
     }
 
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", email='" + email + '\'' +
+                ", user=" + user +
+                ", author=" + author +
+                '}';
+    }
 }

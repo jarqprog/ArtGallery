@@ -1,9 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.jarqprog.artGallery.config.EntityNumberConstants;
-import com.jarqprog.artGallery.view.jsonView.View;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,7 +9,6 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="pictures")
@@ -22,22 +18,15 @@ public class Picture implements MetadataSupplier {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(View.JsonPicture.class)
     private long id;
 
-    @JsonView(View.JsonPicture.class)
     private String title;
 
     @ManyToOne
     @JoinColumn(name="author_id")
-    @ToString.Exclude
-    @JsonView(View.JsonPicture.class)
     private Author author;
 
     @OneToMany(mappedBy="picture", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
-    @ToString.Exclude
-    @JsonView(View.JsonPicture.class)
-    @JsonManagedReference
     private Set<Commentary> commentaries;
 
     @Override
@@ -48,5 +37,15 @@ public class Picture implements MetadataSupplier {
     @Override
     public long getEntityNumber() {
         return ENTITY_NUMBER;
+    }
+
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", authorId=" + author.getId() +
+                ", commentaries=" + commentaries +
+                '}';
     }
 }

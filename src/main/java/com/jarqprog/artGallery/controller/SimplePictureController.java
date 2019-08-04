@@ -1,52 +1,41 @@
 package com.jarqprog.artGallery.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.dto.PictureDTO;
 import com.jarqprog.artGallery.service.picture.PictureService;
 
-import com.jarqprog.artGallery.view.jsonView.View;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/api")
 public class SimplePictureController implements PictureController  {
 
-    private final PictureService pictureService;
-
     @Autowired
-    public SimplePictureController(PictureService pictureService) {
-        this.pictureService = pictureService;
-    }
+    private PictureService pictureService;
 
     @Override
     @GetMapping("/pictures")
-    @JsonView(View.JsonPicture.class)
     public List<PictureDTO> getAllPictures() {
         return pictureService.getAllPictures();
     }
 
     @Override
     @GetMapping("/pictures/{id}")
-    public PictureDTO findById(@PathVariable("id") Long id) {
+    public PictureDTO findById(@PathVariable("id") long id) {
         return pictureService.findById(id);
     }
 
     @Override
     @PostMapping("/pictures")
-    @JsonView(View.JsonPicture.class)
-    public PictureDTO save(@RequestBody PictureDTO picture) {
-        return pictureService.save(picture);
+    public PictureDTO save(@RequestBody PictureDTO pictureDTO) {
+        return pictureService.save(pictureDTO);
     }
 
     @Override
     @DeleteMapping("/pictures/{id}")
-    public void remove(@PathVariable("id") Long id) {
+    public void remove(@PathVariable("id") long id) {
         pictureService.remove(id);
     }
 }

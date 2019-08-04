@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.dto;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import java.util.Set;
 public class UserDTO implements Serializable {
 
     private long id;
-    @JsonManagedReference private ContactDTO contact;
-    @JsonManagedReference private Set<CommentaryDTO> commentaries;
+    private ContactDTO contact;
+    @JsonIgnore private Set<CommentaryDTO> commentaries;
     private String login;
 }

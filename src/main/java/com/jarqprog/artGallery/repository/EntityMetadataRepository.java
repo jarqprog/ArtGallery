@@ -9,7 +9,4 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Repository
 @EnableTransactionManagement
 public interface EntityMetadataRepository extends JpaRepository<EntityMetadata, Long> {
-
-//    EntityMetadata findBy
-
 }
