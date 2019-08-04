@@ -43,6 +43,16 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
+    public PictureDTO update(long id, PictureDTO pictureDTO) throws EntityNotFoundException {
+        findPictureById(id);// throws exception if not founded
+        pictureDTO.setId(id);
+        Picture updated = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
+        Picture saved = pictureRepository.save(updated);
+        entityMetadataService.createMetadata(saved);
+        return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
+    }
+
+    @Override
     public boolean remove(long id) {
         boolean isRemoved = false;
         try {

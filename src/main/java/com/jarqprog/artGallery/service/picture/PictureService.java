@@ -11,7 +11,8 @@ public interface PictureService {
 
     List<PictureDTO> getAllPictures();
     PictureDTO findById(long id) throws EntityNotFoundException;
-    PictureDTO save(PictureDTO picture);
-    boolean remove(long id);
+    PictureDTO save(PictureDTO pictureDTO);
+    PictureDTO update(long id, PictureDTO pictureDTO) throws EntityNotFoundException;
+    boolean remove(long id) throws EntityNotFoundException;
 
 }
