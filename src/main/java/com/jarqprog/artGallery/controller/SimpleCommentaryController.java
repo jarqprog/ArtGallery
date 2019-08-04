@@ -4,44 +4,61 @@ import com.jarqprog.artGallery.dto.CommentaryDTO;
 import com.jarqprog.artGallery.service.commentary.CommentaryService;
 import com.jarqprog.artGallery.service.picture.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@RequestMapping("/api/pictures/")
 public class SimpleCommentaryController implements CommentaryController {
 
     @Autowired private PictureService pictureService;
     @Autowired private CommentaryService commentaryService;
 
     @Override
+    @GetMapping("commentaries")
     public List<CommentaryDTO> getAllCommentaries() {
-        return null;
+        return commentaryService.getAllCommentaries();
     }
 
     @Override
-    public List<CommentaryDTO> getAllCommentariesByPicture(long pictureId) {
-        return null;
+    @GetMapping("{pictureId}/commentaries")
+    public List<CommentaryDTO> getAllCommentariesByPicture(@PathVariable("pictureId") long pictureId) {
+        return commentaryService.getAllCommentariesByPicture(pictureId);
     }
 
     @Override
-    public CommentaryDTO findById(long id) {
-        return null;
+    @GetMapping("commentaries/{id}")
+    public CommentaryDTO findCommentaryById(@PathVariable("id") long id) {
+        return commentaryService.findCommentaryById(id);
     }
 
     @Override
-    public CommentaryDTO addCommentary(long pictureId, CommentaryDTO commentaryDTO) {
-        return null;
+    @PostMapping("{pictureId}/commentaries")
+    public CommentaryDTO addCommentary(@PathVariable("pictureId") long pictureId,
+                                       @RequestBody CommentaryDTO commentaryDTO) {
+        return commentaryService.addCommentary(pictureId, commentaryDTO);
     }
 
     @Override
-    public CommentaryDTO updateContact(long pictureId, long commentaryId, CommentaryDTO commentaryDTO) {
-        return null;
+    @PutMapping("{pictureId}/commentaries/{commentaryId}")
+    public CommentaryDTO updateContact(@PathVariable("pictureId") long pictureId,
+                                       @PathVariable("commentaryId") long commentaryId,
+                                       @RequestBody CommentaryDTO commentaryDTO) {
+        return commentaryService.updateCommentary(pictureId, commentaryId, commentaryDTO);
     }
 
     @Override
-    public void remove(long id) {
+    @DeleteMapping("commentaries/{id}")
+    public void removeCommentary(@PathVariable("id") long id) {
+        commentaryService.removeCommentary(id);
+    }
 
+    @Override
+    @DeleteMapping("{pictureId}/commentaries/{commentaryId}")
+    public void removeCommentary(@PathVariable("pictureId") long pictureId,
+                                 @PathVariable("commentaryId") long commentaryId) {
+        //todo
     }
 }
