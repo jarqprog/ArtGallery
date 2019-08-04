@@ -67,8 +67,6 @@ public class Contact implements DomainEntity {
                 ", lastName='" + lastName + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
-                ", user=" + user +
-                ", author=" + author +
                 '}';
     }
 }
