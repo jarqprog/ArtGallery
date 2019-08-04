@@ -16,3 +16,13 @@ PICTURES:
         "title": "some title"
     }
 * DELETE http://host:port/artgallery/api/pictures/{ID} - to delete picture by id
+
+
+***
+todo (next iterations):
+* add service and controllers for commentary domain
+* add unit and integration tests
+* exception handling, exception logging
+* users identification and authorisation (security)
+* -- at this moment API will be finished
+* add frontend
