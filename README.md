@@ -22,6 +22,16 @@ PICTURES:
     }
 * DELETE http://host:port/artgallery/api/pictures/{ID} - to delete picture by id
 
+***
+CONTACTS:
+* GET http://host:port/artgallery/api/contacts - to see all contacts data
+* GET http://host:port/artgallery/api/contacts/{ID} - to see contact with given id
+* POST http://host:port/artgallery/api/contacts - to add contacts, ex. json:
+    {
+      "firstName":"Nick","lastName":"Smith","nickname":"nicky"
+    }
+* PUT http://host:port/artgallery/api/contacts/{ID} - to update contact with given id
+* DELETE http://host:port/artgallery/api/contacts/{ID} - to delete contact by id
 
 ***
 todo (next iterations):
@@ -29,6 +39,8 @@ todo (next iterations):
 * remove interfaces with constants, add 'supplier' class which stores and shares given configuration (to encapsulate parameters, remove globals)
 * add unit and integration tests
 * exception handling, exception logging
+* add service and controllers for author domain
+* add service and controllers for user domain
 * users identification and authorisation (security)
 * -- at this moment API will be finished
 * add frontend
