@@ -41,6 +41,11 @@ todo (next iterations):
 * exception handling, exception logging
 * add service and controllers for author domain
 * add service and controllers for user domain
-* users identification and authorisation (security)
+* add users identification and authorisation (security), roles, privileges
+* add user to picture and commentary methods (services, controllers)
 * -- at this moment API will be finished
-* add frontend
+* add simple frontend
+
+todo (future)
+* add better frontend
+* add auctions and online shop
