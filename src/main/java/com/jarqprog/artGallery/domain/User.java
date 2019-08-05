@@ -1,7 +1,5 @@
 package com.jarqprog.artGallery.domain;
 
-
-import com.jarqprog.artGallery.config.EntityNumberConstants;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,8 +13,6 @@ import java.util.Set;
 @Getter
 @Table(name="users")
 public class User implements DomainEntity {
-
-    private static final long ENTITY_NUMBER = EntityNumberConstants.USER;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,11 +37,6 @@ public class User implements DomainEntity {
         this.contact = contact;
         this.login = login;
         this.password = password;
-    }
-
-    @Override
-    public long getEntityNumber() {
-        return ENTITY_NUMBER;
     }
 
     @Override

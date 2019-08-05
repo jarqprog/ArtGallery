@@ -1,6 +1,5 @@
 package com.jarqprog.artGallery.domain;
 
-import com.jarqprog.artGallery.config.EntityNumberConstants;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
@@ -14,8 +13,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Table(name="contacts")
 public class Contact implements DomainEntity {
-
-    private static final long ENTITY_NUMBER = EntityNumberConstants.CONTACT;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,11 +44,6 @@ public class Contact implements DomainEntity {
     public Contact(@NotNull String firstName, String lastName) {
         this(firstName);
         this.lastName = lastName;
-    }
-
-    @Override
-    public long getEntityNumber() {
-        return ENTITY_NUMBER;
     }
 
     @Override

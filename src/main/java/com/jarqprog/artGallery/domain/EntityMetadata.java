@@ -35,19 +35,19 @@ public class EntityMetadata {
     private final long entityId;
 
     @NonNull
-    private final long entityNumber;
+    private final String entityClass;
 
     @Setter
     private String archivedEntityAsString;
 
     public EntityMetadata(DomainEntity domainEntity) {
         this.entityId = domainEntity.getId();
-        this.entityNumber = domainEntity.getEntityNumber();
+        this.entityClass = domainEntity.getClass().getSimpleName();
     }
 
     public EntityMetadata(DomainEntity removedDomainEntity, String removedEntityAsString) {
         this.entityId = removedDomainEntity.getId();
-        this.entityNumber = removedDomainEntity.getEntityNumber();
+        this.entityClass = removedDomainEntity.getClass().getSimpleName();
         this.isRemovedEntity = true;
         this.archivedEntityAsString = removedEntityAsString;
     }

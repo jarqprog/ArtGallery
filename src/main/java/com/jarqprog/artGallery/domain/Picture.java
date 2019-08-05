@@ -1,6 +1,5 @@
 package com.jarqprog.artGallery.domain;
 
-import com.jarqprog.artGallery.config.EntityNumberConstants;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,8 +13,6 @@ import java.util.Set;
 @Table(name="pictures")
 public class Picture implements DomainEntity {
 
-    private static final long ENTITY_NUMBER = EntityNumberConstants.PICTURE;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -28,11 +25,6 @@ public class Picture implements DomainEntity {
 
     @OneToMany(mappedBy="picture", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private Set<Commentary> commentaries;
-
-    @Override
-    public long getEntityNumber() {
-        return ENTITY_NUMBER;
-    }
 
     @Override
     public String toString() {

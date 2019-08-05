@@ -1,6 +1,5 @@
 package com.jarqprog.artGallery.domain;
 
-import com.jarqprog.artGallery.config.EntityNumberConstants;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,8 +12,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Table(name="commentaries")
 public class Commentary implements DomainEntity {
-
-    private static final long ENTITY_NUMBER = EntityNumberConstants.COMMENTARY;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,11 +32,6 @@ public class Commentary implements DomainEntity {
         this.content = content;
         this.user = user;
         this.picture = picture;
-    }
-
-    @Override
-    public long getEntityNumber() {
-        return ENTITY_NUMBER;
     }
 
     @Override
