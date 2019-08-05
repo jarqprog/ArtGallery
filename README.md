@@ -1,4 +1,4 @@
-# ArtGallery
+# ArtGallery - REST API
 Spring Data / MVC / Security project. Java 8.
 
 To run this application you will need MySQL server. Postman would be handy for POST, PUT and DELETE requests.
@@ -26,7 +26,7 @@ PICTURES:
 
 ***
 CONTACTS:
-* GET http://host:port/artgallery/api/contacts - to see get all contacts
+* GET http://host:port/artgallery/api/contacts - to get all contacts
 * GET http://host:port/artgallery/api/contacts/{ID} - to get contact with given id
 * POST http://host:port/artgallery/api/contacts - to add contact, ex. json:
     {
@@ -58,7 +58,7 @@ COMMENTARIES:
 * DELETE http://host:port/artgallery/api/pictures/commentaries/{commentaryID} - to delete commentary having given commentaryID
 
 todo (next iterations):
-* add service and controllers for commentary domain
+* add service and controllers for commentary domain - DONE
 * remove interfaces with constants, add 'supplier' class which stores and shares given configuration (to encapsulate parameters, remove globals)
 * add unit and integration tests
 * exception handling, exception logging

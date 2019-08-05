@@ -1,6 +1,8 @@
 package com.jarqprog.artGallery.config;
 
 
+import com.jarqprog.artGallery.config.persistenceConfig.DatabaseConfig;
+import com.jarqprog.artGallery.config.persistenceConfig.MySQLConfig;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.helper.SimpleDtoEntityConverter;
 import org.modelmapper.ModelMapper;
@@ -12,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(ConfigConstants.APP_PACKAGE)
+@ComponentScan("com.jarqprog.artGallery")
 public class ArtGalleryConfig {
 
     @Bean
@@ -28,5 +30,15 @@ public class ArtGalleryConfig {
     @Bean
     public DtoEntityConverter dtoEntityConverter() {
         return new SimpleDtoEntityConverter();
+    }
+
+    @Bean
+    public AppConfiguration appConfiguration() {
+        return new GeneralConfiguration();
+    }
+
+    @Bean
+    public DatabaseConfig databaseConfig() {
+        return new MySQLConfig();
     }
 }

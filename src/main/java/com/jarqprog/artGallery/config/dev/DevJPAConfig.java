@@ -1,11 +1,10 @@
 package com.jarqprog.artGallery.config.dev;
 
 
-import com.jarqprog.artGallery.config.ConfigConstants;
-import com.jarqprog.artGallery.config.persistenceConstants.H2Constants;
-import com.jarqprog.artGallery.config.persistenceConstants.MySQLConstants;
+import com.jarqprog.artGallery.config.AppConfiguration;
+import com.jarqprog.artGallery.config.persistenceConfig.DatabaseConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -20,18 +19,21 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@Configuration
+@org.springframework.context.annotation.Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = ConfigConstants.APP_PACKAGE + ".repository" )
+@EnableJpaRepositories(basePackages = "com.jarqprog.artGallery.repository" )
 public class DevJPAConfig {
+
+    @Autowired private AppConfiguration appConfiguration;
+    @Autowired private DatabaseConfig databaseConfig;
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(MySQLConstants.DRIVER_CLASS);
-        dataSource.setUrl(MySQLConstants.URL);
-        dataSource.setUsername(MySQLConstants.USER);
-        dataSource.setPassword(MySQLConstants.PASSWORD);
+        dataSource.setDriverClassName(databaseConfig.getDriverClass());
+        dataSource.setUrl(databaseConfig.getUrl());
+        dataSource.setUsername(databaseConfig.getUser());
+        dataSource.setPassword(databaseConfig.getPassword());
         return dataSource;
     }
 
@@ -40,7 +42,7 @@ public class DevJPAConfig {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] {ConfigConstants.APP_PACKAGE + ".domain" });
+        em.setPackagesToScan(new String[] {appConfiguration.getApplicationPackage() + ".domain" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -51,7 +53,7 @@ public class DevJPAConfig {
     private Properties additionalProperties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        properties.setProperty("hibernate.dialect", MySQLConstants.HIBERNATE_DIALECT);
+        properties.setProperty("hibernate.dialect", databaseConfig.getHibernateDialect());
         properties.setProperty("spring.h2.console.enabled", "true");
         properties.setProperty("spring.jpa.generate-ddl", "true");
         return properties;
@@ -68,6 +70,4 @@ public class DevJPAConfig {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
         return new PersistenceExceptionTranslationPostProcessor();
     }
-
-
 }
