@@ -12,8 +12,10 @@ public interface CommentaryService {
 
     List<CommentaryDTO> getAllCommentaries();
     List<CommentaryDTO> getAllCommentariesByPicture(long pictureId);
+    CommentaryDTO findCommentaryById(long pictureId, long commentaryId) throws EntityNotFoundException;
     CommentaryDTO findCommentaryById(long id) throws EntityNotFoundException;
     CommentaryDTO addCommentary(long pictureId, CommentaryDTO commentaryDTO) ;
     CommentaryDTO updateCommentary(long pictureId, long commentaryId, CommentaryDTO commentaryDTO) throws EntityNotFoundException;
+    boolean removeCommentary(long pictureId, long commentaryId) throws EntityNotFoundException;
     boolean removeCommentary(long id) throws EntityNotFoundException;
 }

@@ -4,7 +4,6 @@ package com.jarqprog.artGallery.service.commentary;
 import com.jarqprog.artGallery.domain.Commentary;
 import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.dto.CommentaryDTO;
-import com.jarqprog.artGallery.dto.PictureDTO;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.repository.CommentaryRepository;
 import com.jarqprog.artGallery.repository.PictureRepository;
@@ -42,6 +41,12 @@ public class SimpleCommentaryService implements CommentaryService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public CommentaryDTO findCommentaryById(long pictureId, long commentaryId) throws EntityNotFoundException {
+        findPictureById(pictureId);// throws exception if not founded
+        return findCommentaryById(commentaryId);
+    }
+
     //todo add user context to methods
 
     @Override
@@ -52,6 +57,9 @@ public class SimpleCommentaryService implements CommentaryService {
 
     @Override
     public CommentaryDTO addCommentary(long pictureId, CommentaryDTO commentaryDTO) {
+        if (commentaryRepository.existsById(commentaryDTO.getId())) {
+            //throw exception
+        }
         Picture picture = findPictureById(pictureId);// throws exception if not founded
         Commentary commentary = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
         commentary.setPicture(picture);
@@ -63,8 +71,8 @@ public class SimpleCommentaryService implements CommentaryService {
     @Override
     public CommentaryDTO updateCommentary(long pictureId, long commentaryId, CommentaryDTO commentaryDTO)
             throws EntityNotFoundException {
+        validateCommentaryExists(commentaryId);
         Picture picture = findPictureById(pictureId);// throws exception if not founded
-        findById(commentaryId);// throws exception if not founded
         commentaryDTO.setId(commentaryId);
         Commentary updated = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
         updated.setPicture(picture);
@@ -74,17 +82,17 @@ public class SimpleCommentaryService implements CommentaryService {
     }
 
     @Override
+    public boolean removeCommentary(long pictureId, long commentaryId) throws EntityNotFoundException {
+        findPictureById(pictureId);// throws exception if not founded
+        return removeCommentary(commentaryId);
+    }
+
+    @Override
     public boolean removeCommentary(long id) throws EntityNotFoundException {
-        boolean isRemoved = false;
-        try {
-            Commentary commentary = findById(id);
-            entityMetadataService.markDiscontinued(commentary);
-            commentaryRepository.delete(commentary);
-            isRemoved = true;
-        } catch (EntityNotFoundException e) {
-            //todo
-        }
-        return isRemoved;
+        Commentary commentary = findById(id);
+        entityMetadataService.markDiscontinued(commentary);
+        commentaryRepository.deleteById(id);
+        return true;
     }
 
     private Commentary findById(long id) throws EntityNotFoundException {
@@ -97,5 +105,11 @@ public class SimpleCommentaryService implements CommentaryService {
         return pictureRepository
                 .findById(pictureId)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(pictureId)));
+    }
+
+    private void validateCommentaryExists(long commentaryId) throws EntityNotFoundException {
+        if (!commentaryRepository.existsById(commentaryId)) {
+            throw new EntityNotFoundException(String.valueOf(commentaryId));
+        }
     }
 }

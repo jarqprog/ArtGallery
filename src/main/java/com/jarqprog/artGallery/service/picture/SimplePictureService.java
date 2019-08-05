@@ -36,6 +36,9 @@ public class SimplePictureService implements PictureService {
 
     @Override
     public PictureDTO addPicture(PictureDTO pictureDTO) {
+        if (pictureRepository.existsById(pictureDTO.getId())) {
+            //todo throw exception
+        }
         Picture picture = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(picture);
         entityMetadataService.createMetadata(saved);
@@ -44,7 +47,7 @@ public class SimplePictureService implements PictureService {
 
     @Override
     public PictureDTO updatePicture(long id, PictureDTO pictureDTO) throws EntityNotFoundException {
-        findById(id);// throws exception if not founded
+        validatePictureExists(id);
         pictureDTO.setId(id);
         Picture updated = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(updated);
@@ -70,5 +73,11 @@ public class SimplePictureService implements PictureService {
         return pictureRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
+    }
+
+    private void validatePictureExists(long pictureId) throws EntityNotFoundException {
+        if (!pictureRepository.existsById(pictureId)) {
+            throw new EntityNotFoundException(String.valueOf(pictureId));
+        }
     }
 }

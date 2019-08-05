@@ -29,6 +29,13 @@ public class SimpleCommentaryController implements CommentaryController {
     }
 
     @Override
+    @GetMapping("{pictureId}/commentaries/{commentaryId}")
+    public CommentaryDTO findCommentaryById(@PathVariable("pictureId") long pictureId,
+                                            @PathVariable("commentaryId") long commentaryId) {
+        return commentaryService.findCommentaryById(pictureId, commentaryId);
+    }
+
+    @Override
     @GetMapping("commentaries/{id}")
     public CommentaryDTO findCommentaryById(@PathVariable("id") long id) {
         return commentaryService.findCommentaryById(id);
@@ -43,9 +50,9 @@ public class SimpleCommentaryController implements CommentaryController {
 
     @Override
     @PutMapping("{pictureId}/commentaries/{commentaryId}")
-    public CommentaryDTO updateContact(@PathVariable("pictureId") long pictureId,
-                                       @PathVariable("commentaryId") long commentaryId,
-                                       @RequestBody CommentaryDTO commentaryDTO) {
+    public CommentaryDTO updateCommentary(@PathVariable("pictureId") long pictureId,
+                                          @PathVariable("commentaryId") long commentaryId,
+                                          @RequestBody CommentaryDTO commentaryDTO) {
         return commentaryService.updateCommentary(pictureId, commentaryId, commentaryDTO);
     }
 
@@ -59,6 +66,6 @@ public class SimpleCommentaryController implements CommentaryController {
     @DeleteMapping("{pictureId}/commentaries/{commentaryId}")
     public void removeCommentary(@PathVariable("pictureId") long pictureId,
                                  @PathVariable("commentaryId") long commentaryId) {
-        //todo
+        commentaryService.removeCommentary(pictureId, commentaryId);
     }
 }

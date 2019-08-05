@@ -37,6 +37,9 @@ public class SimpleContactService implements ContactService {
 
     @Override
     public ContactDTO addContact(ContactDTO contactDTO) {
+        if (contactRepository.existsById(contactDTO.getId())) {
+            //throw exception here
+        }
         Contact contact = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(contact);
         entityMetadataService.createMetadata(saved);
@@ -45,7 +48,7 @@ public class SimpleContactService implements ContactService {
 
     @Override
     public ContactDTO updateContact(long id, ContactDTO contactDTO) throws EntityNotFoundException {
-        findById(id);// throws exception if not founded
+        validateContactExists(id);
         contactDTO.setId(id);
         Contact updated = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(updated);
@@ -71,5 +74,11 @@ public class SimpleContactService implements ContactService {
         return contactRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
+    }
+
+    private void validateContactExists(long contactId) throws EntityNotFoundException {
+        if (!contactRepository.existsById(contactId)) {
+            throw new EntityNotFoundException();
+        }
     }
 }
