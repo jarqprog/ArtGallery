@@ -11,5 +11,5 @@ import java.util.Optional;
 @EnableTransactionManagement
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findUserByLogin();
+    Optional<User> findUserByLogin(String login);
 }

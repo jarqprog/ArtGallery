@@ -12,20 +12,20 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.naming.AuthenticationException;
 
-@Configuration
-@EnableWebSecurity
-@EnableJpaRepositories(basePackageClasses = UserRepository.class)
+//@Configuration
+//@EnableWebSecurity
+//@EnableJpaRepositories(basePackageClasses = UserRepository.class)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
-    @Autowired private UserDetailsService userDetailsService;
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-
+//
+//    @Autowired private UserDetailsService userDetailsService;
+//
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
 
 
-    }
+
+
+//    }
 }

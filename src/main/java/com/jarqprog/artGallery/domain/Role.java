@@ -19,6 +19,7 @@ public class Role implements DomainEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Enumerated
-    private Enum role;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(length = 12)
+    private Roles role;
 }
