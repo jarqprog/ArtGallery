@@ -50,11 +50,6 @@ public class Contact implements DomainEntity {
     }
 
     @Override
-    public long getId() {
-        return id;
-    }
-
-    @Override
     public long getEntityNumber() {
         return ENTITY_NUMBER;
     }

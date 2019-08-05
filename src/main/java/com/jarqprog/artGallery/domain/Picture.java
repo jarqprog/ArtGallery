@@ -30,11 +30,6 @@ public class Picture implements DomainEntity {
     private Set<Commentary> commentaries;
 
     @Override
-    public long getId() {
-        return id;
-    }
-
-    @Override
     public long getEntityNumber() {
         return ENTITY_NUMBER;
     }
@@ -44,8 +39,7 @@ public class Picture implements DomainEntity {
         return "Picture{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", authorId=" + author.getId() +
-                ", commentaries=" + commentaries +
-                '}';
+                ", author=" + author +
+        '}';
     }
 }

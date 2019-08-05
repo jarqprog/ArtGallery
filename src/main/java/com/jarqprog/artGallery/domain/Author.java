@@ -34,11 +34,6 @@ public class Author implements DomainEntity {
     }
 
     @Override
-    public long getId() {
-        return id;
-    }
-
-    @Override
     public long getEntityNumber() {
         return ENTITY_NUMBER;
     }
@@ -49,7 +44,6 @@ public class Author implements DomainEntity {
                 "id=" + id +
                 ", artisticNickname='" + artisticNickname + '\'' +
                 ", contact=" + contact +
-                ", arts=" + arts +
                 '}';
     }
 }
