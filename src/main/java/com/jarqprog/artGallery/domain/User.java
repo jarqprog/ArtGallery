@@ -11,6 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 @Table(name="users")
 public class User implements DomainEntity {
 
@@ -33,22 +34,14 @@ public class User implements DomainEntity {
 
     private boolean tokenExpired;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name="user_role", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> role;
+
     public User(@NotNull Contact contact, @NotNull String login, @NotNull String password) {
         this.contact = contact;
         this.login = login;
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", contact=" + contact +
-                ", commentaries=" + commentaries +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", tokenExpired=" + tokenExpired +
-                '}';
     }
 }
