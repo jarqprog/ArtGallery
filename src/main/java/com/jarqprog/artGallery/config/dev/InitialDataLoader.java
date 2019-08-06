@@ -8,6 +8,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -63,12 +64,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         authorJelena.setArtisticNickname("Alenka");
         authorRepository.save(authorJelena);
 
+
         Picture spring = new Picture();
         spring.setTitle("Wiosna");
         spring.setAuthor(authorJelena);
         pictureRepository.save(spring);
 
-        Commentary commentary = new Commentary("Zapraszam do ogladania", userJelena, spring);
+        Commentary commentary = new Commentary("Zapraszam do ogladania");
+        commentary.setUser(userJelena);
+        commentary.setPicture(spring);
         commentaryRepository.save(commentary);
     }
 }

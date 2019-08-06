@@ -4,7 +4,6 @@ import com.jarqprog.artGallery.domain.Picture;
 import com.jarqprog.artGallery.dto.PictureDTO;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.repository.PictureRepository;
-import com.jarqprog.artGallery.service.metadata.EntityMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 public class SimplePictureService implements PictureService {
 
     @Autowired private PictureRepository pictureRepository;
-    @Autowired private EntityMetadataService entityMetadataService;
     @Autowired private DtoEntityConverter dtoEntityConverter;
 
 
@@ -41,7 +39,6 @@ public class SimplePictureService implements PictureService {
         }
         Picture picture = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(picture);
-        entityMetadataService.createMetadata(saved);
         return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
     }
 
@@ -51,7 +48,6 @@ public class SimplePictureService implements PictureService {
         pictureDTO.setId(id);
         Picture updated = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(updated);
-        entityMetadataService.createMetadata(saved);
         return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
     }
 
@@ -60,7 +56,6 @@ public class SimplePictureService implements PictureService {
         boolean isRemoved = false;
         try {
             Picture picture = findById(id);
-            entityMetadataService.markDiscontinued(picture);
             pictureRepository.delete(picture);
             isRemoved = true;
         } catch (EntityNotFoundException e) {

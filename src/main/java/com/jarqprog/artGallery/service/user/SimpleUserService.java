@@ -2,7 +2,6 @@ package com.jarqprog.artGallery.service.user;
 
 import com.jarqprog.artGallery.repository.PictureRepository;
 import com.jarqprog.artGallery.repository.UserRepository;
-import com.jarqprog.artGallery.service.metadata.EntityMetadataService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.slf4j.LoggerFactory;
 public class SimpleUserService implements UserService {
 
     @Autowired private PictureRepository pictureRepository;
-    @Autowired private EntityMetadataService entityMetadataService;
     @Autowired private UserRepository userRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleUserService.class);

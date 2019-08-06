@@ -7,7 +7,6 @@ import com.jarqprog.artGallery.dto.CommentaryDTO;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.repository.CommentaryRepository;
 import com.jarqprog.artGallery.repository.PictureRepository;
-import com.jarqprog.artGallery.service.metadata.EntityMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ public class SimpleCommentaryService implements CommentaryService {
 
     @Autowired private CommentaryRepository commentaryRepository;
     @Autowired private PictureRepository pictureRepository;
-    @Autowired private EntityMetadataService entityMetadataService;
     @Autowired private DtoEntityConverter dtoEntityConverter;
 
     @Override
@@ -34,8 +32,7 @@ public class SimpleCommentaryService implements CommentaryService {
 
     @Override
     public List<CommentaryDTO> getAllCommentariesByPicture(long pictureId) {
-        return commentaryRepository
-                .findAllCommentaryByPictureId(pictureId)
+        return commentaryRepository.findAllCommentaryByPictureId(pictureId)
                 .stream()
                 .map(c -> dtoEntityConverter.convertEntityToDto(c, CommentaryDTO.class))
                 .collect(Collectors.toList());
@@ -60,11 +57,10 @@ public class SimpleCommentaryService implements CommentaryService {
         if (commentaryRepository.existsById(commentaryDTO.getId())) {
             //throw exception
         }
-        Picture picture = findPictureById(pictureId);// throws exception if not founded
+        Picture picture = findPictureById(pictureId);// todo
         Commentary commentary = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
         commentary.setPicture(picture);
         Commentary created = commentaryRepository.save(commentary);
-        entityMetadataService.createMetadata(created);
         return dtoEntityConverter.convertEntityToDto(created, CommentaryDTO.class);
     }
 
@@ -72,25 +68,24 @@ public class SimpleCommentaryService implements CommentaryService {
     public CommentaryDTO updateCommentary(long pictureId, long commentaryId, CommentaryDTO commentaryDTO)
             throws EntityNotFoundException {
         validateCommentaryExists(commentaryId);
-        Picture picture = findPictureById(pictureId);// throws exception if not founded
+
+        Picture picture = findPictureById(pictureId);// todo
+
         commentaryDTO.setId(commentaryId);
         Commentary updated = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
-        updated.setPicture(picture);
         Commentary saved = commentaryRepository.save(updated);
-        entityMetadataService.createMetadata(saved);
         return dtoEntityConverter.convertEntityToDto(saved, CommentaryDTO.class);
     }
 
     @Override
     public boolean removeCommentary(long pictureId, long commentaryId) throws EntityNotFoundException {
-        findPictureById(pictureId);// throws exception if not founded
+        findPictureById(pictureId);// todo
         return removeCommentary(commentaryId);
     }
 
     @Override
     public boolean removeCommentary(long id) throws EntityNotFoundException {
         Commentary commentary = findById(id);
-        entityMetadataService.markDiscontinued(commentary);
         commentaryRepository.deleteById(id);
         return true;
     }

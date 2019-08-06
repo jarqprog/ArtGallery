@@ -4,7 +4,6 @@ import com.jarqprog.artGallery.domain.Contact;
 import com.jarqprog.artGallery.dto.ContactDTO;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.repository.ContactRepository;
-import com.jarqprog.artGallery.service.metadata.EntityMetadataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +15,8 @@ import java.util.stream.Collectors;
 public class SimpleContactService implements ContactService {
 
     @Autowired private ContactRepository contactRepository;
-
     @Autowired private DtoEntityConverter dtoEntityConverter;
 
-    @Autowired private EntityMetadataService entityMetadataService;
 
     @Override
     public List<ContactDTO> getAllContacts() {
@@ -42,7 +39,6 @@ public class SimpleContactService implements ContactService {
         }
         Contact contact = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(contact);
-        entityMetadataService.createMetadata(saved);
         return dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
     }
 
@@ -52,7 +48,6 @@ public class SimpleContactService implements ContactService {
         contactDTO.setId(id);
         Contact updated = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(updated);
-        entityMetadataService.createMetadata(saved);
         return dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
     }
 
@@ -61,7 +56,6 @@ public class SimpleContactService implements ContactService {
         boolean isRemoved = false;
         try {
             Contact contact = findById(id);
-            entityMetadataService.markDiscontinued(contact);
             contactRepository.delete(contact);
             isRemoved = true;
         } catch (EntityNotFoundException e) {
