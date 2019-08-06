@@ -1,13 +1,14 @@
 package com.jarqprog.artGallery.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
-@Getter
-@Setter
+@Data
+@EqualsAndHashCode(callSuper=true)
 public class PictureDTO extends DTO {
 
     private String title;
+    private String path;
     private AuthorDTO author;
 }

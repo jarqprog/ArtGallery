@@ -1,9 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,11 +9,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Setter
 @Getter
+@ToString
 @Table(name="roles")
 public class Role extends DomainEntity {
 
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(length = 12)
     private Roles role;
 }

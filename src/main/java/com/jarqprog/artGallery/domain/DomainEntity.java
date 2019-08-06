@@ -7,24 +7,39 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 @MappedSuperclass
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 public abstract class DomainEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) private long id;
-    @CreatedDate private LocalDateTime createdDate;
-    @LastModifiedDate private LocalDateTime modifiedDate;
-    private boolean isRemoved;
-    //@CreatedBy private User user; todo
 
-    public void markRemoved() {
-        isRemoved = true;
+    private final String uuid = UUID.randomUUID().toString();
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Setter private long id;
+    @CreatedDate @Setter @Column(updatable = false) private LocalDateTime createdDate;
+    @LastModifiedDate @Setter private LocalDateTime modifiedDate;
+    //@CreatedBy private User user; //todo
+
+    @Version private int version;
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(uuid);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) return true;
+        if (other instanceof DomainEntity)
+            return uuid.equals(((DomainEntity) other).uuid);
+        return false;
     }
 
 
