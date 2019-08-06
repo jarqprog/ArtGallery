@@ -7,5 +7,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Repository
 @EnableTransactionManagement
-public interface ContactRepository extends JpaRepository<Contact, Long>  {
+public interface ContactRepository extends JpaRepository<Contact, Long> {
 }

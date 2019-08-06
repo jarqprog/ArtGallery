@@ -3,6 +3,7 @@ package com.jarqprog.artGallery.service.contact;
 import com.jarqprog.artGallery.domain.Contact;
 import com.jarqprog.artGallery.dto.ContactDTO;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
+import com.jarqprog.artGallery.exception.persistenceException.*;
 import com.jarqprog.artGallery.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,52 +28,70 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public ContactDTO findContactById(long id) throws EntityNotFoundException {
+    public ContactDTO findContactById(long id) {
         Contact contact = findById(id);
         return dtoEntityConverter.convertEntityToDto(contact, ContactDTO.class);
     }
 
     @Override
     public ContactDTO addContact(ContactDTO contactDTO) {
-        if (contactRepository.existsById(contactDTO.getId())) {
-            //throw exception here
+        ContactDTO dto;
+        long id = contactDTO.getId();
+        try {
+            preventCreatingExistingContact(id);
+            Contact contact = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
+            Contact saved = contactRepository.save(contact);
+            dto = dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
+        } catch (EntityAlreadyExistsException e) {
+            throw new CannotCreateEntityException(Contact.class, id, e);
+        } catch (Exception ex) {
+            throw new CannotCreateEntityException(Contact.class, id, ex.getMessage());
         }
-        Contact contact = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
-        Contact saved = contactRepository.save(contact);
-        return dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
+        return dto;
     }
 
     @Override
     public ContactDTO updateContact(long id, ContactDTO contactDTO) throws EntityNotFoundException {
-        validateContactExists(id);
-        contactDTO.setId(id);
-        Contact updated = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
-        Contact saved = contactRepository.save(updated);
-        return dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
+        ContactDTO dto;
+        try {
+            validateContactExists(id);
+            contactDTO.setId(id);
+            Contact updated = dtoEntityConverter.convertDtoToEntity(contactDTO, Contact.class);
+            Contact saved = contactRepository.save(updated);
+            dto = dtoEntityConverter.convertEntityToDto(saved, ContactDTO.class);
+        } catch (CannotFindEntityException e) {
+            throw new CannotUpdateEntityException(Contact.class, id, e);
+        } catch (Exception ex) {
+            throw new CannotUpdateEntityException(Contact.class, id, ex.getMessage());
+        }
+        return dto;
     }
 
     @Override
-    public boolean removeContact(long id) throws EntityNotFoundException {
-        boolean isRemoved = false;
+    public void removeContact(long id) throws EntityNotFoundException {
         try {
-            Contact contact = findById(id);
-            contactRepository.delete(contact);
-            isRemoved = true;
-        } catch (EntityNotFoundException e) {
-            //todo
+            findById(id);
+            contactRepository.deleteById(id);
+        } catch (CannotFindEntityException e) {
+            throw new CannotRemoveEntityException(Contact.class, id, e);
+        } catch (Exception ex) {
+            throw new CannotRemoveEntityException(Contact.class, id, ex.getMessage());
         }
-        return isRemoved;
     }
 
-    private Contact findById(Long id) throws EntityNotFoundException {
-        return contactRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id)));
+    private Contact findById(Long id) {
+        return contactRepository.findById(id).orElseThrow(() -> new CannotFindEntityException(Contact.class, id));
     }
 
-    private void validateContactExists(long contactId) throws EntityNotFoundException {
+    private void validateContactExists(long contactId) {
         if (!contactRepository.existsById(contactId)) {
-            throw new EntityNotFoundException();
+            throw new CannotFindEntityException(Contact.class, contactId);
+        }
+    }
+
+    private void preventCreatingExistingContact(long contactId) {
+        if (contactRepository.existsById(contactId)) {
+            throw new EntityAlreadyExistsException(Contact.class, contactId);
         }
     }
 }
