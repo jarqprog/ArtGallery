@@ -10,11 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Table(name="pictures")
-public class Picture implements DomainEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Picture extends DomainEntity {
 
     private String title;
 

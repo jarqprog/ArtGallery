@@ -6,9 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthorDTO implements DTO {
+public class AuthorDTO extends DTO {
 
-    private long id;
     private String artisticNickname;
     private ContactDTO contact;
 }

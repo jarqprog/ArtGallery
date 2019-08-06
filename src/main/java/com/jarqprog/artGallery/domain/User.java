@@ -14,11 +14,7 @@ import java.util.Set;
 @Getter
 @ToString
 @Table(name="users")
-public class User implements DomainEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class User extends DomainEntity {
 
     @OneToOne
     @JoinColumn(name = "contact_id")

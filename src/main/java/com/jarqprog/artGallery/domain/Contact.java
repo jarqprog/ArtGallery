@@ -12,11 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 @Table(name="contacts")
-public class Contact implements DomainEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Contact extends DomainEntity {
 
     @NotNull
     private String firstName;

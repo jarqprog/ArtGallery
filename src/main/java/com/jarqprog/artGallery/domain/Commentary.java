@@ -11,11 +11,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @ToString
 @Table(name="commentaries")
-public class Commentary implements DomainEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Commentary extends DomainEntity {
 
     @NotNull
     private String content;

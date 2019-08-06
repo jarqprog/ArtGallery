@@ -11,11 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @Table(name="authors")
-public class Author implements DomainEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Author extends DomainEntity {
 
     private String artisticNickname;
 

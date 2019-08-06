@@ -6,9 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PictureDTO implements DTO {
+public class PictureDTO extends DTO {
 
-    private long id;
     private String title;
     private AuthorDTO author;
 }

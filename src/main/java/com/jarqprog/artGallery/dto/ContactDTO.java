@@ -6,9 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ContactDTO implements DTO {
+public class ContactDTO extends DTO {
 
-    private long id;
     private String firstName;
     private String lastName;
     private String nickname;

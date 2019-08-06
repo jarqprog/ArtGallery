@@ -13,11 +13,8 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Table(name="roles")
-public class Role implements DomainEntity {
+public class Role extends DomainEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(length = 12)
