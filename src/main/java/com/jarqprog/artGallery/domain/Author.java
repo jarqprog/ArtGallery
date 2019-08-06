@@ -3,13 +3,13 @@ package com.jarqprog.artGallery.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table(name="authors")
 public class Author implements DomainEntity {
 
@@ -20,22 +20,10 @@ public class Author implements DomainEntity {
     private String artisticNickname;
 
     @OneToOne
-    @JoinColumn(name="contact_id", referencedColumnName="id", nullable=false)
+    @JoinColumn(name = "contact_id")
     private Contact contact;
-
-    @OneToMany(mappedBy="author", fetch = FetchType.EAGER)
-    private Set<Picture> arts;
 
     public Author(Contact contact) {
         this.contact = contact;
-    }
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", artisticNickname='" + artisticNickname + '\'' +
-                ", contact=" + contact +
-                '}';
     }
 }

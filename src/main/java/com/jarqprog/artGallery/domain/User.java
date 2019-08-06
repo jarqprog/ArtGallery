@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.domain;
 
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,11 +21,8 @@ public class User implements DomainEntity {
     private long id;
 
     @OneToOne
-    @JoinColumn(name="contact_id", referencedColumnName="id", nullable=false)
+    @JoinColumn(name = "contact_id")
     private Contact contact;
-
-    @OneToMany(mappedBy="user", fetch = FetchType.EAGER)
-    private Set<Commentary> commentaries;
 
     private String login;
 
@@ -34,7 +32,8 @@ public class User implements DomainEntity {
 
     private boolean tokenExpired;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @JoinTable(name="user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> role;

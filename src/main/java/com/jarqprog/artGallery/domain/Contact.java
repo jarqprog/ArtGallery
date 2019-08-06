@@ -1,7 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table(name="contacts")
 public class Contact implements DomainEntity {
 
@@ -29,14 +29,6 @@ public class Contact implements DomainEntity {
 
     //todo Addressee
 
-    @Nullable
-    @OneToOne(mappedBy = "contact")
-    private User user;
-
-    @Nullable
-    @OneToOne(mappedBy = "contact")
-    private Author author;
-
     public Contact(@NotNull String firstName) {
         this.firstName = firstName;
     }
@@ -44,16 +36,5 @@ public class Contact implements DomainEntity {
     public Contact(@NotNull String firstName, String lastName) {
         this(firstName);
         this.lastName = lastName;
-    }
-
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", email='" + email + '\'' +
-                '}';
     }
 }

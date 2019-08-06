@@ -1,7 +1,6 @@
 package com.jarqprog.artGallery.domain;
 
 import lombok.*;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -10,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table(name="commentaries")
 public class Commentary implements DomainEntity {
 
@@ -21,26 +21,14 @@ public class Commentary implements DomainEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="picture_id")
+    @JoinColumn(name = "picture_id")
     private Picture picture;
 
-    public Commentary(String content, User user, Picture picture) {
+    public Commentary(String content) {
         this.content = content;
-        this.user = user;
-        this.picture = picture;
-    }
-
-    @Override
-    public String toString() {
-        return "Commentary{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-//                ", userId=" + user.getId() +//todo uncomment after user development
-                ", pictureId=" + picture.getId() +
-                '}';
     }
 }

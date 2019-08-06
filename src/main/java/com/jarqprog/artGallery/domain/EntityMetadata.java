@@ -38,6 +38,7 @@ public class EntityMetadata {
     private final String entityClass;
 
     @Setter
+    @Column(columnDefinition = "TEXT")
     private String archivedEntityAsString;
 
     public EntityMetadata(DomainEntity domainEntity) {

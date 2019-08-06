@@ -1,15 +1,14 @@
 package com.jarqprog.artGallery.domain;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Table(name="pictures")
 public class Picture implements DomainEntity {
 
@@ -20,18 +19,6 @@ public class Picture implements DomainEntity {
     private String title;
 
     @ManyToOne
-    @JoinColumn(name="author_id")
+    @JoinColumn(name = "author_id")
     private Author author;
-
-    @OneToMany(mappedBy="picture", cascade={CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
-    private Set<Commentary> commentaries;
-
-    @Override
-    public String toString() {
-        return "Picture{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author=" + author +
-        '}';
-    }
 }
