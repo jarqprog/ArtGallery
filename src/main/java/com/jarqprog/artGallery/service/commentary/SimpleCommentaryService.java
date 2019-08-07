@@ -8,6 +8,8 @@ import com.jarqprog.artGallery.exception.persistenceException.*;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.repository.CommentaryRepository;
 import com.jarqprog.artGallery.repository.PictureRepository;
+import com.jarqprog.artGallery.service.picture.SimplePictureService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class SimpleCommentaryService implements CommentaryService {
+
+    private static final org.apache.log4j.Logger logger = Logger.getLogger(SimplePictureService.class);
 
     @Autowired private CommentaryRepository commentaryRepository;
     @Autowired private PictureRepository pictureRepository;
@@ -80,8 +84,11 @@ public class SimpleCommentaryService implements CommentaryService {
             Picture picture = findPictureById(pictureId);
             commentaryDTO.setId(commentaryId);
             Commentary updated = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
+
             updated.setPicture(picture);
             Commentary saved = commentaryRepository.save(updated);
+            saved = findById(saved.getId());
+
             dto = dtoEntityConverter.convertEntityToDto(saved, CommentaryDTO.class);
         } catch (CannotFindEntityException e) {
             throw new CannotCreateEntityException(Commentary.class, commentaryId, e);

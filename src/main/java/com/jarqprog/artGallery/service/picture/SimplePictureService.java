@@ -7,11 +7,10 @@ import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.exception.persistenceException.*;
 import com.jarqprog.artGallery.repository.CommentaryRepository;
 import com.jarqprog.artGallery.repository.PictureRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
@@ -24,7 +23,7 @@ public class SimplePictureService implements PictureService {
     @Autowired private CommentaryRepository commentaryRepository;
     @Autowired private DtoEntityConverter dtoEntityConverter;
 
-    private static final Logger logger = LoggerFactory.getLogger(SimplePictureService.class);
+    private static final Logger logger = Logger.getLogger(SimplePictureService.class);
 
     @Override
     public List<PictureDTO> getAllPictures() {

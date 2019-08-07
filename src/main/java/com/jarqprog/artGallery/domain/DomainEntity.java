@@ -22,12 +22,12 @@ public abstract class DomainEntity {
 
     private final String uuid = UUID.randomUUID().toString();
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO) @Setter private long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Setter private long id;
     @CreatedDate @Setter @Column(updatable = false) private LocalDateTime createdDate;
     @LastModifiedDate @Setter private LocalDateTime modifiedDate;
     //@CreatedBy private User user; //todo
 
-    @Version private int version;
+    @Version @Setter private int version;
 
     @Override
     public int hashCode() {

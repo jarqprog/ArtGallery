@@ -3,6 +3,7 @@ package com.jarqprog.artGallery.controller;
 import com.jarqprog.artGallery.dto.CommentaryDTO;
 import com.jarqprog.artGallery.service.commentary.CommentaryService;
 import com.jarqprog.artGallery.service.picture.PictureService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,8 @@ public class SimpleCommentaryController implements CommentaryController {
 
     @Autowired private PictureService pictureService;
     @Autowired private CommentaryService commentaryService;
+
+
 
     @Override
     @GetMapping("commentaries")
