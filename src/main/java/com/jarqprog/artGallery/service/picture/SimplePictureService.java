@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,66 +40,43 @@ public class SimplePictureService implements PictureService {
 
     @Override
     public PictureDTO addPicture(PictureDTO pictureDTO) {
-        PictureDTO dto;
-        long id = pictureDTO.getId();
-        try {
-            preventCreatingExistingPicture(id);
-            Picture picture = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
-            Picture saved = pictureRepository.save(picture);
-            dto = dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
-        } catch (EntityAlreadyExistsException e) {
-            throw new CannotCreateEntityException(Picture.class, id, e);
-        } catch (Exception ex) {
-            throw new CannotCreateEntityException(Picture.class, id, ex.getMessage());
-        }
-        return dto;
+        preventCreatingExistingPicture(pictureDTO.getId());
+        Picture picture = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
+        Picture saved = pictureRepository.save(picture);
+        return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
     }
 
     @Override
     public PictureDTO updatePicture(long id, PictureDTO pictureDTO) {
-        PictureDTO dto;
-        try {
-            validatePictureExists(id);
-            pictureDTO.setId(id);
-            Picture updated = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
-            Picture saved = pictureRepository.save(updated);
-            dto = dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
-        } catch (CannotFindEntityException e) {
-            throw new CannotUpdateEntityException(Picture.class, id, e);
-        } catch (Exception ex) {
-            throw new CannotUpdateEntityException(Picture.class, id, ex.getMessage());
-        }
-        return dto;
+        validatePictureExists(id);
+        pictureDTO.setId(id);
+        Picture updated = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
+        Picture saved = pictureRepository.save(updated);
+        return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
     }
 
     @Override
-    public void removePicture(long id) throws EntityNotFoundException {
-        try {
-            validatePictureExists(id);
-            Set<Commentary> commentaries = commentaryRepository.findAllCommentaryByPictureId(id);
-            commentaries.forEach(c -> c.setPicture(null));
-            commentaryRepository.saveAll(commentaries);
-            pictureRepository.deleteById(id);
-        } catch (CannotFindEntityException e) {
-            throw new CannotRemoveEntityException(Picture.class, id, e);
-        } catch (Exception ex) {
-            throw new CannotRemoveEntityException(Picture.class, id, ex.getMessage());
-        }
+    public void removePicture(long id) {
+        validatePictureExists(id);
+        Set<Commentary> commentaries = commentaryRepository.findAllCommentaryByPictureId(id);
+        commentaries.forEach(c -> c.setPicture(null));
+        commentaryRepository.saveAll(commentaries);
+        pictureRepository.deleteById(id);
     }
 
     private Picture findById(Long id) {
-        return pictureRepository.findById(id).orElseThrow(() -> new CannotFindEntityException(Picture.class, id));
+        return pictureRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Picture.class, id));
     }
 
     private void validatePictureExists(long pictureId) {
         if (!pictureRepository.existsById(pictureId)) {
-            throw new CannotFindEntityException(Picture.class, pictureId);
+            throw new ResourceNotFoundException(Picture.class, pictureId);
         }
     }
 
     private void preventCreatingExistingPicture(long pictureId) {
         if (pictureRepository.existsById(pictureId)) {
-            throw new EntityAlreadyExistsException(Picture.class, pictureId);
+            throw new ResourceAlreadyExists(Picture.class, pictureId);
         }
     }
 }
