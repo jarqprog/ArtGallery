@@ -61,7 +61,8 @@ todo (next iterations):
 * add service and controllers for commentary domain - DONE
 * remove interfaces with constants, add 'supplier' class which stores and shares given configuration (to encapsulate parameters, remove globals) - DONE
 * add unit and integration tests
-* exception handling, exception logging - WIP
+* exception handling, exception logging - DONE
+* add optimistic locking - DONE
 * add service and controllers for author domain
 * add service and controllers for user domain
 * add users identification and authorisation (security), roles, privileges

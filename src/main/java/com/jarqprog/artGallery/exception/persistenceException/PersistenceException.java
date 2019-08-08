@@ -1,6 +1,10 @@
 package com.jarqprog.artGallery.exception.persistenceException;
 
-public interface PersistenceException {
+public abstract class PersistenceException extends RuntimeException {
 
-    String getMessage();
+    //marker class to use in ExceptionHandler
+
+    PersistenceException(String message) {
+        super(message);
+    }
 }
