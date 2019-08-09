@@ -22,9 +22,6 @@ public class SimpleCommentaryService implements CommentaryService {
     @Autowired private PictureRepository pictureRepository;
     @Autowired private DtoEntityConverter dtoEntityConverter;
 
-
-    //todo add user context to methods
-
     @Override
     public List<CommentaryDTO> getAllCommentaries() {
         return commentaryRepository

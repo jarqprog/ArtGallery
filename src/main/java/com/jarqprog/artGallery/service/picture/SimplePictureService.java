@@ -8,10 +8,12 @@ import com.jarqprog.artGallery.exception.persistenceException.*;
 import com.jarqprog.artGallery.repository.CommentaryRepository;
 import com.jarqprog.artGallery.repository.PictureRepository;
 
+import com.jarqprog.artGallery.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,7 @@ public class SimplePictureService implements PictureService {
 
     @Autowired private PictureRepository pictureRepository;
     @Autowired private CommentaryRepository commentaryRepository;
+    @Autowired private UserRepository userRepository;
     @Autowired private DtoEntityConverter dtoEntityConverter;
 
     private static final Logger logger = Logger.getLogger(SimplePictureService.class);
@@ -56,6 +59,7 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
+    @Transactional
     public void removePicture(long id) {
         validatePictureExists(id);
         Set<Commentary> commentaries = commentaryRepository.findAllCommentaryByPictureId(id);

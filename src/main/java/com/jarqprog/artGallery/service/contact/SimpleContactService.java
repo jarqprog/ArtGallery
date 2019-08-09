@@ -1,13 +1,18 @@
 package com.jarqprog.artGallery.service.contact;
 
+import com.jarqprog.artGallery.domain.Author;
 import com.jarqprog.artGallery.domain.Contact;
+import com.jarqprog.artGallery.domain.User;
 import com.jarqprog.artGallery.dto.ContactDTO;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.exception.persistenceException.*;
+import com.jarqprog.artGallery.repository.AuthorRepository;
 import com.jarqprog.artGallery.repository.ContactRepository;
+import com.jarqprog.artGallery.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +20,8 @@ import java.util.stream.Collectors;
 public class SimpleContactService implements ContactService {
 
     @Autowired private ContactRepository contactRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private AuthorRepository authorRepository;
     @Autowired private DtoEntityConverter dtoEntityConverter;
 
 
@@ -50,13 +57,30 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
+    @Transactional
     public void removeContact(long id) {
         findById(id);
+        User user = findUserByContactId(id);
+        Author author = findAuthorByContactId(id);
+        user.setContact(null);
+        author.setContact(null);
+        userRepository.save(user);
+        authorRepository.save(author);
         contactRepository.deleteById(id);
     }
 
     private Contact findById(Long id) {
         return contactRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Contact.class, id));
+    }
+
+    private User findUserByContactId(Long contactId) {
+        return userRepository.findUserByContactId(contactId)
+                .orElseThrow(() -> new ResourceNotFoundException(User.class));
+    }
+
+    private Author findAuthorByContactId(Long contactId) {
+        return authorRepository.findAuthorByContactId(contactId)
+                .orElseThrow(() -> new ResourceNotFoundException(Author.class));
     }
 
     private void validateContactExists(long contactId) {
