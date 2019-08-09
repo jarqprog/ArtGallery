@@ -57,6 +57,15 @@ COMMENTARIES:
     and related to given picture (pictureID)
 * DELETE http://host:port/artgallery/api/pictures/commentaries/{commentaryID} - to delete commentary having given commentaryID
 
+***
+USERS:
+* GET http://host:port/artgallery/api/users - to get all users
+* GET http://host:port/artgallery/api/users/{ID} - to get user with given id
+* POST http://host:port/artgallery/api/users - to add user, ex. json:
+* PUT http://host:port/artgallery/api/users/{ID} - to update user having given id
+* DELETE http://host:port/artgallery/api/users/{ID} - to delete user by id
+
+
 todo (next iterations):
 * add service and controllers for commentary domain - DONE
 * remove interfaces with constants, add 'supplier' class which stores and shares given configuration (to encapsulate parameters, remove globals) - DONE
@@ -64,13 +73,9 @@ todo (next iterations):
 * exception handling, exception logging - DONE
 * add optimistic locking - DONE
 * add service and controllers for author domain
-* add service and controllers for user domain
+* add service and controllers for user domain - DONE
 * add users identification and authorisation (security), roles, privileges
 * add profiles
-* add user to picture and commentary methods (services, controllers)
-* -- at this moment API will be finished
-* add simple frontend
-
-todo (future)
-* add better frontend
-* add auctions and online shop
+* add user to picture and commentary methods (services, controllers) - DONE
+* add hyper links
+* -- at this moment REST API will be finished
