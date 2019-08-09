@@ -11,4 +11,5 @@ public class PictureDTO extends DTO {
     private String title;
     private String path;
     private AuthorDTO author;
+    private UserDTO user;
 }

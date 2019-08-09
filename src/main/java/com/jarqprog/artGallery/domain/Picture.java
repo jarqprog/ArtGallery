@@ -19,4 +19,8 @@ public class Picture extends DomainEntity {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
