@@ -10,5 +10,5 @@ public class UserDTO extends DTO {
 
     private ContactDTO contact;
     private String login;
-    //todo add roles
+    //todo add roles? do I need to expose it?
 }

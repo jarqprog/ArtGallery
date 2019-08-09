@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Table(name="roles")
 public class Role extends DomainEntity {
 
-
     @Enumerated(EnumType.STRING)
     @Column(length = 12)
     private Roles role;
