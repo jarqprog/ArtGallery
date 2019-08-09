@@ -2,22 +2,29 @@ package com.jarqprog.artGallery.config.dev;
 
 import com.jarqprog.artGallery.domain.*;
 import com.jarqprog.artGallery.repository.*;
+import com.jarqprog.artGallery.service.user.SimpleUserDetailsService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
+    private static final Logger logger = Logger.getLogger(InitialDataLoader.class);
 
     boolean alreadySetup = false;
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private ContactRepository contactRepository;
@@ -31,6 +38,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     @Autowired
     private AuthorRepository authorRepository;
 
+    @Autowired
+    private SimpleUserDetailsService simpleUserDetailsService;
+
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -38,12 +48,23 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         if (alreadySetup) {
             return;
         }
-
+        logger.info("creating admin...");
         Contact adminContact = new Contact("admin");
         contactRepository.save(adminContact);
-        userRepository.save(new User(adminContact, "admin", "admin"));
+
+        logger.info("creating roles admin...");
+        Role role = new Role(Roles.ADMIN);
+
+        logger.info(role);
+
+        roleRepository.save(role);
+        userRepository.save(new User(adminContact, "admin", "admin", role));
 
         initJelena();
+        initSomeContacts();
+
+        logger.info("############################## USER DETAILS: " +
+                simpleUserDetailsService.loadUserByUsername("admin").toString());
 
         alreadySetup = true;
     }
@@ -57,7 +78,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         jelena.setNickname("Alenka");
         contactRepository.save(jelena);
 
-        User userJelena = new User(jelena, "login", "pass");
+        Role role = new Role(Roles.USER);
+        roleRepository.save(role);
+        User userJelena = new User(jelena, "login", "pass", role);
         userRepository.save(userJelena);
 
         Author authorJelena = new Author(jelena);
@@ -74,5 +97,15 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         commentary.setUser(userJelena);
         commentary.setPicture(spring);
         commentaryRepository.save(commentary);
+    }
+
+    private void initSomeContacts() {
+        List<Contact> contacts = new ArrayList<>();
+        contacts.add(new Contact("Mark", "Smith"));
+        contacts.add(new Contact("John", "Legend"));
+        contacts.add(new Contact("Peter", "Miller"));
+        contacts.add(new Contact("Ann", "Bigot"));
+        contacts.add(new Contact("Mary", "Levis"));
+        contactRepository.saveAll(contacts);
     }
 }
