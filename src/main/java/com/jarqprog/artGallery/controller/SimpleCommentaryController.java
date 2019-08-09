@@ -5,6 +5,7 @@ import com.jarqprog.artGallery.service.commentary.CommentaryService;
 import com.jarqprog.artGallery.service.picture.PictureService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,7 +57,8 @@ public class SimpleCommentaryController implements CommentaryController {
     }
 
     @Override
-    @PutMapping("{pictureId}/commentaries/{commentaryId}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping("{pictureId}/commentaries/secured/{commentaryId}")
     public CommentaryDTO updateCommentary(@PathVariable("pictureId") long pictureId,
                                           @PathVariable("commentaryId") long commentaryId,
                                           @RequestBody CommentaryDTO commentaryDTO) {
