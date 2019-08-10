@@ -18,6 +18,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <log4j.version>1.2.17</log4j.version>
+    <spring.version>5.1.6.RELEASE</spring.version>
   </properties>
 
   <dependencies>
@@ -49,7 +50,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>5.1.7.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
@@ -65,28 +66,27 @@
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-core</artifactId>
-      <version>5.1.5.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
-      <version>5.1.5.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
-      <version>5.1.5.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
-
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-aspects</artifactId>
-      <version>3.1.2.RELEASE</version>
+      <version>${spring.version}</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
@@ -96,19 +96,59 @@
       <version>5.4.3.Final</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+    <!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
     <dependency>
-      <groupId>org.hibernate</groupId>
+      <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
-      <version>6.0.16.Final</version>
+      <version>6.0.17.Final</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/javax.el/javax.el-api -->
+    <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
     <dependency>
-      <groupId>javax.el</groupId>
-      <artifactId>javax.el-api</artifactId>
-      <version>3.0.0</version>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf</artifactId>
+      <version>3.0.11.RELEASE</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
+    <dependency>
+      <groupId>nz.net.ultraq.thymeleaf</groupId>
+      <artifactId>thymeleaf-layout-dialect</artifactId>
+      <version>2.3.0</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
+    <dependency>
+      <groupId>org.thymeleaf</groupId>
+      <artifactId>thymeleaf-spring5</artifactId>
+      <version>3.0.11.RELEASE</version>
+    </dependency>
+
+    <!--    <dependency>-->
+<!--      <groupId>javax.servlet.jsp</groupId>-->
+<!--      <artifactId>javax.servlet.jsp-api</artifactId>-->
+<!--      <version>2.3.3</version>-->
+<!--    </dependency>-->
+<!--    <dependency>-->
+<!--      <groupId>javax.servlet</groupId>-->
+<!--      <artifactId>jstl</artifactId>-->
+<!--      <version>1.2</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/javax.el/javax.el-api &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>javax.el</groupId>-->
+<!--      <artifactId>javax.el-api</artifactId>-->
+<!--      <version>3.0.0</version>-->
+<!--    </dependency>-->
+
+<!--    &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api &ndash;&gt;-->
+<!--    <dependency>-->
+<!--      <groupId>javax.servlet.jsp</groupId>-->
+<!--      <artifactId>javax.servlet.jsp-api</artifactId>-->
+<!--      <version>2.3.3</version>-->
+<!--      <scope>provided</scope>-->
+<!--    </dependency>-->
 
     <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
     <dependency>
@@ -146,9 +186,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.glassfish.web</groupId>
-      <artifactId>el-impl</artifactId>
-      <version>2.2</version>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.el</artifactId>
+      <version>3.0.1-b08</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
@@ -159,6 +199,15 @@
     </dependency>
 
   </dependencies>
+
+  <repositories>
+
+    <repository>
+      <id>spring-milestone</id>
+      <name>Spring Milestone Repository</name>
+      <url>https://repo.spring.io/milestone</url>
+    </repository>
+  </repositories>
 
 
   <build>
@@ -196,6 +245,19 @@
         </plugin>
 
         <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.3-SNAPSHOT</version>
+          <configuration>
+            <url>http://localhost:8080/login</url>
+            <server>TomcatServer</server>
+            <path>/artGallery</path>
+            <username>admin</username>
+            <password>admin</password>
+          </configuration>
+        </plugin>
+
+        <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
         </plugin>
@@ -216,11 +278,11 @@
           <version>3.0.0</version>
         </plugin>
 
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.3-SNAPSHOT</version>
-        </plugin>
+<!--        <plugin>-->
+<!--          <groupId>org.apache.tomcat.maven</groupId>-->
+<!--          <artifactId>tomcat7-maven-plugin</artifactId>-->
+<!--          <version>2.3-SNAPSHOT</version>-->
+<!--        </plugin>-->
       </plugins>
 
     </pluginManagement>
