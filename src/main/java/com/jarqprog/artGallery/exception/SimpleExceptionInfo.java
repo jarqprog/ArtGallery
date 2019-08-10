@@ -1,12 +1,14 @@
 package com.jarqprog.artGallery.exception;
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Getter
+@ToString
 public class SimpleExceptionInfo implements ExceptionInfo {
 
     //todo: need to recognize failures on client side and inform
@@ -20,20 +22,29 @@ public class SimpleExceptionInfo implements ExceptionInfo {
     }
 
     public static ExceptionInfo getLogInfo(ExceptionInfo exceptionInfo, Exception exception) {
-        String newMessage = String.format("%s - %s", exceptionInfo.getMessage(), exception.getMessage());
-        exceptionInfo.setMessage(newMessage);
-        return exceptionInfo;
+        String newMessage = String.format("%s - %s *** CAUSE: %s *** STACK TRACE: %s", exceptionInfo.getMessage(),
+                exception.getMessage(),
+                exception.getCause(),
+                Arrays.toString(exception.getStackTrace()));
+        return new SimpleExceptionInfo(exceptionInfo, newMessage);
     }
 
     private final String uuid;
     private final LocalDateTime dateTime;
     private final long httpStatus;
-    @Setter private String message;
+    private final String message;
 
     private SimpleExceptionInfo(String uuid, LocalDateTime dateTime, long httpStatus, String message) {
         this.uuid = uuid;
         this.dateTime = dateTime;
         this.httpStatus = httpStatus;
+        this.message = message;
+    }
+
+    private SimpleExceptionInfo(ExceptionInfo exceptionInfo, String message) {
+        this.uuid = exceptionInfo.getUuid();
+        this.dateTime = exceptionInfo.getDateTime();
+        this.httpStatus = exceptionInfo.getHttpStatus();
         this.message = message;
     }
 }

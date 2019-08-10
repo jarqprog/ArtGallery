@@ -8,5 +8,4 @@ public interface ExceptionInfo {
     long getHttpStatus();
     LocalDateTime getDateTime();
     String getMessage();
-    void setMessage(String message);
 }

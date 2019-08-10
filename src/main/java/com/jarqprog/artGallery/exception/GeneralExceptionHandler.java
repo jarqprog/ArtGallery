@@ -1,7 +1,5 @@
-package com.jarqprog.artGallery.config;
+package com.jarqprog.artGallery.exception;
 
-import com.jarqprog.artGallery.exception.ExceptionInfo;
-import com.jarqprog.artGallery.exception.SimpleExceptionInfo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
