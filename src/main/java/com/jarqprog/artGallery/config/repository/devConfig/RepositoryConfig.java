@@ -1,8 +1,8 @@
-package com.jarqprog.artGallery.config.dev;
+package com.jarqprog.artGallery.config.data.devConfig;
 
 
 import com.jarqprog.artGallery.config.AppConfiguration;
-import com.jarqprog.artGallery.config.persistenceConfig.DatabaseConfig;
+import com.jarqprog.artGallery.config.data.database.DatabaseConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;

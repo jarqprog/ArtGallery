@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.controller;
+package com.jarqprog.artGallery.controller.rest;
 
 import com.jarqprog.artGallery.dto.CommentaryDTO;
 import com.jarqprog.artGallery.service.commentary.CommentaryService;

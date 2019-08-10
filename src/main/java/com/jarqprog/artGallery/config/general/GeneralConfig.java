@@ -1,8 +1,10 @@
-package com.jarqprog.artGallery.config;
+package com.jarqprog.artGallery.config.general;
 
 
-import com.jarqprog.artGallery.config.persistenceConfig.DatabaseConfig;
-import com.jarqprog.artGallery.config.persistenceConfig.MySQLConfig;
+import com.jarqprog.artGallery.config.AppConfiguration;
+import com.jarqprog.artGallery.config.GeneralConfiguration;
+import com.jarqprog.artGallery.config.data.database.DatabaseConfig;
+import com.jarqprog.artGallery.config.data.database.MySQLConfig;
 import com.jarqprog.artGallery.helper.DtoEntityConverter;
 import com.jarqprog.artGallery.helper.SimpleDtoEntityConverter;
 import org.modelmapper.ModelMapper;
@@ -15,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.jarqprog.artGallery")
-public class ArtGalleryConfig {
+public class RootConfig {
 
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {

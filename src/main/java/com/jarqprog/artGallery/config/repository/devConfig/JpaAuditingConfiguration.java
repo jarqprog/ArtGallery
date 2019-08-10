@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.config.dev;
+package com.jarqprog.artGallery.config.data.devConfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

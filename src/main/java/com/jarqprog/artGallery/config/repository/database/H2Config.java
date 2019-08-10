@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.config.persistenceConfig;
+package com.jarqprog.artGallery.config.data.database;
 
 public class H2Config implements DatabaseConfig {
 

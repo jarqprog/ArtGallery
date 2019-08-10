@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.controller;
+package com.jarqprog.artGallery.controller.rest;
 
 import com.jarqprog.artGallery.dto.CommentaryDTO;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,9 +1,8 @@
-package com.jarqprog.artGallery.controller;
+package com.jarqprog.artGallery.controller.rest;
 
 import com.jarqprog.artGallery.dto.UserDTO;
 import com.jarqprog.artGallery.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
