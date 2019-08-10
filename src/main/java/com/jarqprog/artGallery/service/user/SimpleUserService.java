@@ -14,6 +14,7 @@ import com.jarqprog.artGallery.repository.PictureRepository;
 import com.jarqprog.artGallery.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,6 +32,9 @@ public class SimpleUserService implements UserService {
 
     @Autowired private CommentaryRepository commentaryRepository;
     @Autowired private DtoEntityConverter dtoEntityConverter;
+
+    @Autowired private PasswordEncoder passwordEncoder;
+
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -50,6 +54,8 @@ public class SimpleUserService implements UserService {
     public UserDTO addUser(UserDTO userDTO) {
         preventCreatingExistingUser(userDTO.getId());
         User user = dtoEntityConverter.convertDtoToEntity(userDTO, User.class);
+        String password = user.getPassword();
+        user.setPassword(passwordEncoder.encode(password));
         User saved = userRepository.save(user);
         return dtoEntityConverter.convertEntityToDto(saved, UserDTO.class);
     }

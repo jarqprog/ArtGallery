@@ -10,6 +10,7 @@ import com.jarqprog.artGallery.repository.AuthorRepository;
 import com.jarqprog.artGallery.repository.ContactRepository;
 import com.jarqprog.artGallery.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,6 +27,7 @@ public class SimpleContactService implements ContactService {
 
 
     @Override
+//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<ContactDTO> getAllContacts() {
         return contactRepository.findAll()
                 .stream()
