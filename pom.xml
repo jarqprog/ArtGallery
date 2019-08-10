@@ -9,10 +9,6 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-<!--  <name>ArtGallery</name>-->
-<!--  &lt;!&ndash; FIXME change it to the project's website &ndash;&gt;-->
-<!--  <url>http://www.example.com</url>-->
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
@@ -124,32 +120,6 @@
       <version>3.0.11.RELEASE</version>
     </dependency>
 
-    <!--    <dependency>-->
-<!--      <groupId>javax.servlet.jsp</groupId>-->
-<!--      <artifactId>javax.servlet.jsp-api</artifactId>-->
-<!--      <version>2.3.3</version>-->
-<!--    </dependency>-->
-<!--    <dependency>-->
-<!--      <groupId>javax.servlet</groupId>-->
-<!--      <artifactId>jstl</artifactId>-->
-<!--      <version>1.2</version>-->
-<!--    </dependency>-->
-
-<!--    &lt;!&ndash; https://mvnrepository.com/artifact/javax.el/javax.el-api &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>javax.el</groupId>-->
-<!--      <artifactId>javax.el-api</artifactId>-->
-<!--      <version>3.0.0</version>-->
-<!--    </dependency>-->
-
-<!--    &lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api &ndash;&gt;-->
-<!--    <dependency>-->
-<!--      <groupId>javax.servlet.jsp</groupId>-->
-<!--      <artifactId>javax.servlet.jsp-api</artifactId>-->
-<!--      <version>2.3.3</version>-->
-<!--      <scope>provided</scope>-->
-<!--    </dependency>-->
-
     <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
     <dependency>
       <groupId>javax.servlet</groupId>
@@ -245,19 +215,6 @@
         </plugin>
 
         <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.3-SNAPSHOT</version>
-          <configuration>
-            <url>http://localhost:8080/login</url>
-            <server>TomcatServer</server>
-            <path>/artGallery</path>
-            <username>admin</username>
-            <password>admin</password>
-          </configuration>
-        </plugin>
-
-        <plugin>
           <artifactId>maven-install-plugin</artifactId>
           <version>2.5.2</version>
         </plugin>
@@ -278,11 +235,11 @@
           <version>3.0.0</version>
         </plugin>
 
-<!--        <plugin>-->
-<!--          <groupId>org.apache.tomcat.maven</groupId>-->
-<!--          <artifactId>tomcat7-maven-plugin</artifactId>-->
-<!--          <version>2.3-SNAPSHOT</version>-->
-<!--        </plugin>-->
+        <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat7-maven-plugin</artifactId>
+          <version>2.3-SNAPSHOT</version>
+        </plugin>
       </plugins>
 
     </pluginManagement>
