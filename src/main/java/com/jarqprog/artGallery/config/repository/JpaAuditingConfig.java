@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.config.data.devConfig;
+package com.jarqprog.artGallery.config.repository;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
-public class JpaAuditingConfiguration {
+public class JpaAuditingConfig {
 
     @Bean
     public AuditorAware<String> auditorProvider() {

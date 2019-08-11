@@ -1,8 +1,7 @@
-package com.jarqprog.artGallery.config.data.devConfig;
+package com.jarqprog.artGallery.config.repository;
 
-
-import com.jarqprog.artGallery.config.AppConfiguration;
-import com.jarqprog.artGallery.config.data.database.DatabaseConfig;
+import com.jarqprog.artGallery.config.repository.database.DatabaseConfig;
+import com.jarqprog.artGallery.config.repository.database.MySQLConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
@@ -22,9 +21,8 @@ import java.util.Properties;
 @org.springframework.context.annotation.Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.jarqprog.artGallery.repository" )
-public class DevJPAConfig {
+public class RepositoryConfig {
 
-    @Autowired private AppConfiguration appConfiguration;
     @Autowired private DatabaseConfig databaseConfig;
 
     @Bean
@@ -42,7 +40,7 @@ public class DevJPAConfig {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] {appConfiguration.getApplicationPackage() + ".domain" });
+        em.setPackagesToScan(new String[] { "com.jarqprog.artGallery.domain" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -69,5 +67,10 @@ public class DevJPAConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
         return new PersistenceExceptionTranslationPostProcessor();
+    }
+
+    @Bean
+    public DatabaseConfig databaseConfig() {
+        return new MySQLConfig();
     }
 }

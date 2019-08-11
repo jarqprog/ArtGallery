@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.service.user;
 
-import com.jarqprog.artGallery.exception.GeneralExceptionHandler;
+import com.jarqprog.artGallery.springWebMVC.controller.ErrorController;
 import com.jarqprog.artGallery.domain.User;
 import com.jarqprog.artGallery.domain.userDetails.SimpleUserDetails;
 import com.jarqprog.artGallery.repository.UserRepository;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SimpleUserDetailsService implements UserDetailsService {
 
-    private static final Logger logger = Logger.getLogger(GeneralExceptionHandler.class);
+    private static final Logger logger = Logger.getLogger(ErrorController.class);
 
     @Autowired private UserRepository userRepository;
 

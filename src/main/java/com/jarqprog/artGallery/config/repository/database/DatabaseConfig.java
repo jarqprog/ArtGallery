@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.config.data.database;
+package com.jarqprog.artGallery.config.repository.database;
 
 public interface DatabaseConfig {
 

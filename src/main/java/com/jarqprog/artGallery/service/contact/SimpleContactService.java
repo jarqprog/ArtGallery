@@ -27,7 +27,7 @@ public class SimpleContactService implements ContactService {
 
 
     @Override
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<ContactDTO> getAllContacts() {
         return contactRepository.findAll()
                 .stream()

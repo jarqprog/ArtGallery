@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.config.data.devConfig;
+package com.jarqprog.artGallery.config.repository;
 
 import com.jarqprog.artGallery.domain.*;
 import com.jarqprog.artGallery.repository.*;

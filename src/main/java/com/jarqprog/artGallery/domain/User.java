@@ -25,11 +25,11 @@ public class User extends DomainEntity {
 
     private String password;
 
-    private Boolean enabled;
+    private Boolean enabled = Boolean.TRUE;
 
-    private Boolean tokenExpired;
+    private Boolean tokenExpired = Boolean.FALSE;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
