@@ -1,26 +1,29 @@
 package com.jarqprog.artGallery.springWebMVC.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Controller
 public class MainController {
 
-//    @RequestMapping("/login.html")
-//    public String login() {
-//        return "login.html";
-//    }
-//
-//    @RequestMapping("/login-error.html")
-//    public String loginError(Model model) {
-//        model.addAttribute("loginError", true);
-//        return "login.html";
-//    }
+    @GetMapping("/")
+    public String root() {
+        return "index";
+    }
 
-    @RequestMapping("/index.html")
-    public String home() {
-        return "index.html";
+    @GetMapping("/api")
+    public String userIndex() {
+        return "api";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied() {
+        return "/error/access-denied";
     }
 }

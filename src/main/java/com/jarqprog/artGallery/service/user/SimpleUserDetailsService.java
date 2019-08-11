@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SimpleUserDetailsService implements UserDetailsService {
 
-    private static final Logger logger = Logger.getLogger(ErrorController.class);
+    private static final Logger logger = Logger.getLogger(SimpleUserDetailsService.class);
 
     @Autowired private UserRepository userRepository;
 

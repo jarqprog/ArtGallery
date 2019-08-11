@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.config.security;
+package com.jarqprog.artGallery.springWebMVC.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
@@ -18,7 +18,9 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
     private static final Logger logger = Logger.getLogger(SimpleAuthenticationFailureHandler.class);
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest httpServletRequest,
+                                        HttpServletResponse httpServletResponse,
+                                        AuthenticationException e) throws IOException, ServletException {
 
         Authentication auth
                 = SecurityContextHolder.getContext().getAuthentication();
@@ -28,7 +30,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
                     + "' tried to login using incorrect credentials to URL: "
                     + httpServletRequest.getRequestURI());
         }
-        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/error");
+        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/login_failure");
     }
 
 

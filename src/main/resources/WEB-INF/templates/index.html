@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<!--      layout:decorate="~{fragments/layout}">-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+<head>
+    <title>Index</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <h1>Art Gallery</h1>
+    <p>This is an unsecured page, but you can access the secured pages after authenticating.</p>
+    <ul>
+        <li>Go to the <a href="/api/" th:href="@{/api/}">secured pages</a></li>
+    </ul>
+</div>
+    <a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
+
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+</body>
+</html>

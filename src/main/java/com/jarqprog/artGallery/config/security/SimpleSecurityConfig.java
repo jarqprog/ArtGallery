@@ -2,6 +2,8 @@ package com.jarqprog.artGallery.config.security;
 
 
 import com.jarqprog.artGallery.service.user.SimpleUserDetailsService;
+import com.jarqprog.artGallery.springWebMVC.controller.SimpleAccessDeniedHandler;
+import com.jarqprog.artGallery.springWebMVC.controller.SimpleAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -65,24 +67,30 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/index").permitAll()
-                .antMatchers("/api/contacts/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-                .antMatchers("/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER")
-                .anyRequest().authenticated()
+                    .antMatchers(
+                            "/",
+                            "/js/**",
+                            "/css/**",
+                            "/img/**",
+                            "/webjars/**").permitAll()
+                    .antMatchers("/index.html").permitAll()
+                    .antMatchers("/api/contacts/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                    .antMatchers("/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER")
+                    .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
                 .and()
-                .formLogin()
-                .successForwardUrl("/index.html")
-                .permitAll()
-//                .loginPage("/login.html")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-                .failureHandler(authenticationFailureHandler)
-                .successForwardUrl("/index.html")
+                    .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
                 .and()
-                .logout()
-                .logoutSuccessUrl("/index.html");
+                    .exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler);
     }
 
     @Bean

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<!--      layout:decorate="~{fragments/layout}">-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+<head>
+    <title>Secured</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <h1>This is a secured page!</h1>
+    <h2>This is REST API, for now hyperlinks are not supported, so please modify url to get resources :)</h2>
+    <p><a href="/api/contacts" th:href="@{/api/contacts}">sample 'Contacts' resource (to get there u need 'Admin' privileges)</a></p>
+    <p><a href="/" th:href="@{/}">Back to home page</a></p>
+</div>
+
+    <a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
+
+    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+        <input hidden type="submit" value="Sign Out"/>
+    </form>
+</body>
+</html>
