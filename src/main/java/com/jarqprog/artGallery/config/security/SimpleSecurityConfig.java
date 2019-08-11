@@ -14,21 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.DefaultSecurityFilterChain;
-import org.springframework.security.web.FilterChainProxy;
-import org.springframework.security.web.access.ExceptionTranslationFilter;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
-import org.springframework.security.web.debug.DebugFilter;
-import org.springframework.security.web.firewall.HttpFirewall;
-import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import javax.servlet.Filter;
-import java.util.Arrays;
 
 
 @Configuration
@@ -39,7 +27,11 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired private SimpleUserDetailsService userDetailsService;
 
-    @Autowired private AuthenticationFailureHandler accessDeniedHandler;
+    @Autowired private AccessDeniedHandler accessDeniedHandler;
+
+    @Autowired private AuthenticationFailureHandler authenticationFailureHandler;
+
+
 
     public SimpleSecurityConfig() {
         super();
@@ -74,8 +66,11 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/index").permitAll()
-                .antMatchers("/**").hasAnyRole("ADMIN")
+                .antMatchers("/api/contacts/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
+                .antMatchers("/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER")
                 .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
                 .and()
                 .formLogin()
                 .successForwardUrl("/index.html")
@@ -83,30 +78,20 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .loginPage("/login.html")
 //                .usernameParameter("username")
 //                .passwordParameter("password")
-                .failureUrl("/login-error.html")
+                .failureHandler(authenticationFailureHandler)
                 .successForwardUrl("/index.html")
                 .and()
                 .logout()
                 .logoutSuccessUrl("/index.html");
     }
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/index").permitAll()
-//                .antMatchers("/**").hasAnyRole("ADMIN", "USER")
-//                .anyRequest().authenticated()
-//                .and()
-//                .formLogin()
-//                    .loginProcessingUrl("/login.html")
-//                    .usernameParameter("username")
-//                    .passwordParameter("password")
-//                    .successForwardUrl("/index.html")
-//                    .permitAll()
-//                    .failureUrl("/login-error.html")
-//                    .failureHandler(accessDeniedHandler)
-//                .and()
-//                    .logout()
-//                    .permitAll();
-//    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new SimpleAccessDeniedHandler();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new SimpleAuthenticationFailureHandler();
+    }
 }

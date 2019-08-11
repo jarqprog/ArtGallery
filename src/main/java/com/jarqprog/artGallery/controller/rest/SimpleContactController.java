@@ -3,7 +3,6 @@ package com.jarqprog.artGallery.controller.rest;
 import com.jarqprog.artGallery.dto.ContactDTO;
 import com.jarqprog.artGallery.service.contact.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +15,6 @@ public class SimpleContactController implements ContactController {
 
     @Override
     @GetMapping
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<ContactDTO> getAllContacts() {
         return contactService.getAllContacts();
     }

@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.config.repository;
 
 import com.jarqprog.artGallery.domain.*;
+import com.jarqprog.artGallery.exception.persistenceException.ResourceNotFoundException;
 import com.jarqprog.artGallery.repository.*;
 import com.jarqprog.artGallery.service.user.SimpleUserDetailsService;
 import org.apache.log4j.Logger;
@@ -14,6 +15,8 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//only use in development context
 @Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -44,23 +47,16 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         if (alreadySetup) {
             return;
         }
-        logger.info("creating admin...");
-        Contact adminContact = new Contact("admin");
-        contactRepository.save(adminContact);
 
-        logger.info("creating roles admin...");
-        Role role = new Role(Roles.ADMIN);
+        logger.info("#####Developer mode: Initialing basic data...");
 
-        logger.info(role);
-
-        roleRepository.save(role);
-        userRepository.save(new User(adminContact, "admin", passwordEncoder.encode("admin"), role));
-
+        initRoles();
+        initSuperAdmin();
+        initAdmin();
         initJelena();
         initSomeContacts();
 
-        logger.info("############################## USER DETAILS: " +
-                simpleUserDetailsService.loadUserByUsername("admin").toString());
+        logger.info("#####Developer mode: Basic data initialized.");
 
         alreadySetup = true;
     }
@@ -69,20 +65,17 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     /**
      * Jelena is my wife and artist. I'm developing this app for her :)
      */
+    @Transactional
     private void initJelena() {
         Contact jelena = new Contact("Jelena", "Kucharczyk");
         jelena.setNickname("Alenka");
         contactRepository.save(jelena);
 
-        Role role = new Role(Roles.USER);
-        roleRepository.save(role);
-        User userJelena = new User(jelena, "login", passwordEncoder.encode("pass"), role);
-        userRepository.save(userJelena);
+        User userJelena = createUser(jelena, Roles.USER, "login", "password");
 
         Author authorJelena = new Author(jelena);
         authorJelena.setArtisticNickname("Alenka");
         authorRepository.save(authorJelena);
-
 
         Picture spring = new Picture();
         spring.setTitle("Wiosna");
@@ -103,5 +96,35 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         contacts.add(new Contact("Ann", "Bigot"));
         contacts.add(new Contact("Mary", "Levis"));
         contactRepository.saveAll(contacts);
+    }
+
+    private void initRoles() {
+        List<Role> roles = new ArrayList<>();
+        roles.add(new Role(Roles.SUPER_ADMIN));
+        roles.add(new Role(Roles.ADMIN));
+        roles.add(new Role(Roles.USER));
+        roleRepository.saveAll(roles);
+    }
+
+    @Transactional
+    private void initSuperAdmin() {
+        Contact superAdminContact = new Contact("super admin");
+        contactRepository.save(superAdminContact);
+        createUser(superAdminContact, Roles.SUPER_ADMIN, "super_admin", "super_admin");
+    }
+
+    @Transactional
+    private void initAdmin() {
+        Contact adminContact = new Contact("admin");
+        contactRepository.save(adminContact);
+        createUser(adminContact, Roles.ADMIN, "admin", "admin");
+    }
+
+    private User createUser(Contact contact, Roles role, String login, String password) {
+        Role userRole = roleRepository
+                .findByRole(role).orElseThrow(() -> new ResourceNotFoundException(Role.class));
+        return userRepository.save(new User(contact,
+                login, passwordEncoder.encode(password),
+                userRole));
     }
 }

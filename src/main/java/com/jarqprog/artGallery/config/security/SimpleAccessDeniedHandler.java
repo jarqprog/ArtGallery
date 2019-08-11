@@ -1,12 +1,11 @@
-package com.jarqprog.artGallery.springWebMVC.controller;
+package com.jarqprog.artGallery.config.security;
 
 import org.apache.log4j.Logger;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -15,13 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class SimpleAccessDeniedHandler implements AuthenticationFailureHandler {
+public class SimpleAccessDeniedHandler implements AccessDeniedHandler {
 
-    private static final Logger logger = Logger.getLogger(ErrorController.class);
+    private static final Logger logger = Logger.getLogger(SimpleAccessDeniedHandler.class);
+
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-
+    public void handle(HttpServletRequest httpServletRequest,
+                       HttpServletResponse httpServletResponse,
+                       AccessDeniedException e)
+            throws IOException, ServletException {
         Authentication auth
                 = SecurityContextHolder.getContext().getAuthentication();
 
@@ -30,6 +32,6 @@ public class SimpleAccessDeniedHandler implements AuthenticationFailureHandler {
                     + "' attempted to access the protected URL: "
                     + httpServletRequest.getRequestURI());
         }
-        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/403");
+        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/error");
     }
 }
