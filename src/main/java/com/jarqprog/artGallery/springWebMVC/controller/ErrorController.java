@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.springWebMVC.controller;
 
-import com.jarqprog.artGallery.exception.ExceptionInfo;
-import com.jarqprog.artGallery.exception.SimpleExceptionInfo;
+import com.jarqprog.artGallery.domain.exception.ExceptionInfo;
+import com.jarqprog.artGallery.springWebMVC.helper.mvcExceptionInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,11 +21,11 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected String handleConflict(final Exception exception, final Model model){
 
-        ExceptionInfo clientExceptionInfo = SimpleExceptionInfo
+        ExceptionInfo clientExceptionInfo = mvcExceptionInfo
                 .getClientInfo(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception);
         model.addAttribute("errorMessage", clientExceptionInfo.getMessage());
 
-        ExceptionInfo logExceptionInfo = SimpleExceptionInfo.getLogInfo(clientExceptionInfo, exception);
+        ExceptionInfo logExceptionInfo = mvcExceptionInfo.getLogInfo(clientExceptionInfo, exception);
         logger.warn(logExceptionInfo.toString());
         return "error";
     }
