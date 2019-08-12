@@ -74,8 +74,10 @@ todo (next iterations):
 * add optimistic locking - DONE
 * add service and controllers for author domain
 * add service and controllers for user domain - DONE
+* separate domain (entities, DTOs) from framework implementation details - DONE
 * add users identification and authorisation (security), roles, privileges
 * add profiles
 * add user to picture and commentary methods (services, controllers) - DONE
 * add hyper links
+* add simple views (use Thymeleaf) - DONE
 * -- at this moment REST API will be finished
