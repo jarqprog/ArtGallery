@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
-<!--      layout:decorate="~{fragments/layout}">-->
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
-
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/fragments/layout}">
 <head>
     <title>Index</title>
 </head>
@@ -15,10 +13,5 @@
         <li>Go to the <a href="/api/" th:href="@{/api/}">secured pages</a></li>
     </ul>
 </div>
-    <a href="javascript: document.logoutForm.submit()" role="menuitem"> Logout</a>
-
-    <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
-        <input hidden type="submit" value="Sign Out"/>
-    </form>
 </body>
 </html>
