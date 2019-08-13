@@ -2,19 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <body>
-<th:block th:fragment="footer">
-    <footer>
-        <div class="container">
-            <p>
-                &copy; jarqprog
+<footer>
+    <div class="w3-container w3-teal">
+        <th:block th:fragment="footer">
+            <p>&copy; jarqprog
                 <span sec:authorize="isAuthenticated()" style="display: inline-block;">
                     | Logged user: <span sec:authentication="name"></span> |
-                    Roles: <span sec:authentication="principal.authorities"></span> |
-                    <a th:href="@{/logout}">Sign Out</a>
-                </span>
+                    Roles: <span sec:authentication="principal.authorities"></span>
             </p>
-        </div>
-    </footer>
-</th:block>
+    </th:block>
+    </div>
+</footer>
 </body>
 </html>
