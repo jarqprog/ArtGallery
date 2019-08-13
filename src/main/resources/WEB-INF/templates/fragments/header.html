@@ -1,28 +1,29 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <header>
     <div class="w3-container w3-teal">
-        <th:block th:block th:fragment="header">
+        <th:block th:fragment="header">
             <a class="fa fa-home" th:href="@{/}"></a>
-            <a class="fa fa-sign-out" th:href="@{/logout}"></a>
+            <th:block sec:authorize="isAuthenticated()">
+                <a class="fa fa-sign-out" th:href="@{/logout}"></a>
+            </th:block>
+            <th:block sec:authorize="isAnonymous()">
+                <a class="fa fa-sign-in" th:href="@{/login}"></a>
+            </th:block>
+
+
         </th:block>
     </div>
 </header>
 
-
-<!--<th:block th:fragment="header">-->
-<!--    <nav class="navbar navbar-inverse navbar-static-top">-->
-<!--        <div class="container">-->
-<!--            <div id="navbar" class="collapse navbar-collapse">-->
-<!--                <ul class="nav navbar-nav">-->
-<!--                    <li class="active">-->
-<!--                        <a th:href="@{/}">Home</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
-<!--</th:block>-->
 </body>
 </html>
+
+<!--<span sec:authorize="isAuthenticated()" style="display: inline-block;">-->
+<!--                    | Logged user: <span sec:authentication="name"></span> |-->
+<!--                    Roles: <span sec:authentication="principal.authorities"></span>-->
+
+

@@ -1,16 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
 <footer>
     <div class="w3-container w3-teal">
         <th:block th:fragment="footer">
-            <p>&copy; jarqprog
-                <span sec:authorize="isAuthenticated()" style="display: inline-block;">
-                    | Logged user: <span sec:authentication="name"></span> |
-                    Roles: <span sec:authentication="principal.authorities"></span>
+            <p>&copy; jarqprog <a href="mailto:jarqprog@gmail.com" title="Contact me"><i class="fa fa-envelope"></i></a>
             </p>
-    </th:block>
+        </th:block>
     </div>
 </footer>
 </body>
