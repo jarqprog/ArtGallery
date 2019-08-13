@@ -15,6 +15,7 @@ import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.dialect.IDialect;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.dialect.SpringStandardDialect;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -96,6 +97,7 @@ public class WebMvcConfig implements ApplicationContextAware, WebMvcConfigurer {
         Set<IDialect> dialects = new HashSet<>();
         dialects.add(new SpringStandardDialect());
         dialects.add(new LayoutDialect());
+        dialects.add(new SpringSecurityDialect());
         return dialects;
     }
 
