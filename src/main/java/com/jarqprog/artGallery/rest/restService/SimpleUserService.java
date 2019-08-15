@@ -50,6 +50,12 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
+    public UserDTO findUserByLogin(String login) {
+        User User = findByLogin(login);
+        return dtoEntityConverter.convertEntityToDto(User, UserDTO.class);
+    }
+
+    @Override
     public UserDTO addUser(UserDTO userDTO) {
         preventCreatingExistingUser(userDTO.getId());
         User user = dtoEntityConverter.convertDtoToEntity(userDTO, User.class);
@@ -86,6 +92,10 @@ public class SimpleUserService implements UserService {
 
     private User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(User.class, id));
+    }
+
+    private User findByLogin(String login) {
+        return userRepository.findUserByLogin(login).orElseThrow(() -> new ResourceNotFoundException(User.class));
     }
 
     private void validateUserExists(long userId) {
