@@ -21,7 +21,7 @@ import java.util.Properties;
 @org.springframework.context.annotation.Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.jarqprog.artGallery.springData.repository" )
-public class RepositoryConfig {
+public class DataConfig {
 
     @Autowired private DatabaseConfig databaseConfig;
 
@@ -50,7 +50,7 @@ public class RepositoryConfig {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        properties.setProperty("hibernate.hbm2ddl.auto", "none");//"create-drop"
         properties.setProperty("hibernate.dialect", databaseConfig.getHibernateDialect());
         properties.setProperty("spring.h2.console.enabled", "true");
         properties.setProperty("spring.jpa.generate-ddl", "true");
