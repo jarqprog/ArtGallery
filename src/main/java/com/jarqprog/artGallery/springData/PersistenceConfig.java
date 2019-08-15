@@ -21,7 +21,7 @@ import java.util.Properties;
 @org.springframework.context.annotation.Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.jarqprog.artGallery.springData.repository" )
-public class DataConfig {
+public class PersistenceConfig {
 
     @Autowired private DatabaseConfig databaseConfig;
 

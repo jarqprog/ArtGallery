@@ -50,11 +50,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         logger.info("#####Developer mode: Initialing basic data...");
 
-        initRoles();
-        initSuperAdmin();
-        initAdmin();
-        initJelena();
-        initSomeContacts();
+//        initRoles();
+//        initSuperAdmin();
+//        initAdmin();
+//        initJelena();
+//        initSomeContacts();
 
         logger.info("#####Developer mode: Basic data initialized.");
 
