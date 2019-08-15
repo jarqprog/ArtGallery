@@ -32,9 +32,5 @@ public class MainController {
         return "about-api";
     }
 
-    @GetMapping("/user-info")
-    public String userInfo() {
-        return "/user-info";
-    }
 }
 

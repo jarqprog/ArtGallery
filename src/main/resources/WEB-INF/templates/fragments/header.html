@@ -10,7 +10,7 @@
             <a th:href="@{/about-api}" >REST</a>
             <th:block sec:authorize="isAuthenticated()">
                 <a class="fa fa-sign-out" th:href="@{/logout}"></a>
-                <a class="fa fa-user" th:href="@{/user-info}"></a>
+                <a class="fa fa-user" th:href="@{user/user-info}"></a>
                 <span>Logged:</span><span sec:authentication="name"></span>
             </th:block>
             <th:block sec:authorize="isAnonymous()">
