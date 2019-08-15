@@ -74,6 +74,8 @@ todo (next iterations):
 * add optimistic locking - DONE
 * add service and controllers for author domain
 * add service and controllers for user domain - DONE
+* add heart domain (likes) with services and controllers
+* add friends (so user could invite someone to friends list)
 * separate domain (entities, DTOs) from framework implementation details - DONE
 * add users identification and authorisation (security), roles, privileges - DONE
 * add profiles
