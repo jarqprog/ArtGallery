@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.springCommon;
 
-import com.jarqprog.artGallery.springData.RepositoryConfig;
+import com.jarqprog.artGallery.springData.PersistenceConfig;
 import com.jarqprog.artGallery.springSecurity.config.SimpleSecurityConfig;
 import com.jarqprog.artGallery.springWebMVC.config.WebMvcConfig;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -12,7 +12,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     protected Class<?>[] getRootConfigClasses() {
         return new Class[] {
-                RepositoryConfig.class, SimpleSecurityConfig.class, WebMvcConfig.class
+                PersistenceConfig.class, SimpleSecurityConfig.class, WebMvcConfig.class
         };
     }
 

@@ -14,10 +14,12 @@
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Art Gallery</title>
 </head>
 <body>
-<th:block th:replace="fragments/header :: header"/>
-<div class="w3-container">
-    <th:block layout:fragment="content"/>
-</div>
-<th:block th:replace="fragments/footer :: footer"/>
+    <th:block th:replace="fragments/header :: header"/>
+
+    <div class="w3-container" style="padding-bottom: 3%;">
+        <th:block layout:fragment="content"/>
+    </div>
+
+    <th:block th:replace="fragments/footer :: footer"/>
 </body>
 </html>
