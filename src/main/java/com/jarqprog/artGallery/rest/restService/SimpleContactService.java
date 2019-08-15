@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.springWebMVC.restService;
+package com.jarqprog.artGallery.rest.restService;
 
 import com.jarqprog.artGallery.domain.entity.Author;
 import com.jarqprog.artGallery.domain.entity.Contact;
