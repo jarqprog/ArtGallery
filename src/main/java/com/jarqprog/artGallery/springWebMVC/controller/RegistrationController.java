@@ -35,10 +35,9 @@ public class RegistrationController {
 
     @PostMapping
     public String registerUser(@ModelAttribute("registration") @Valid RegistrationDTO registrationDTO,
-                               BindingResult result, WebRequest request, Errors errors) {
+                               BindingResult result, WebRequest request, Errors errors, Model model) {
         UserDTO userDTO = registrationService.registerUser(registrationDTO);
-        return "/login";
+        model.addAttribute("login", userDTO.getLogin());
+        return "user/registration-success";
     }
-
-
 }
