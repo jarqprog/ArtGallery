@@ -73,7 +73,7 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/css/**",
                             "/img/**",
                             "/webjars/**").permitAll()
-                    .antMatchers("/index", "/about-api").permitAll()
+                    .antMatchers("/user/registration", "/index", "/about-api").permitAll()
                     .antMatchers("/api/contacts/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
                     .antMatchers("/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER")
                     .anyRequest().authenticated()
