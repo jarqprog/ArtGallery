@@ -1,4 +1,6 @@
 # ArtGallery - REST API
+# ArtGallery - simple web application
+
 Spring Data / MVC / Security project. Java 8.
 
 To run this application you will need MySQL server. Postman would be handy for POST, PUT and DELETE requests.
