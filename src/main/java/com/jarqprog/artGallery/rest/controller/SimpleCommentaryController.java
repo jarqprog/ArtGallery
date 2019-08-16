@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.rest.restController;
+package com.jarqprog.artGallery.rest.controller;
 
 import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
 import com.jarqprog.artGallery.domain.useCases.CommentaryService;

@@ -30,7 +30,7 @@ public class RegistrationController {
     public String showRegistrationForm(WebRequest request, Model model) {
         RegistrationDTO registrationDTO = new RegistrationDTO();
         model.addAttribute("registration", registrationDTO);
-        return "/user/registration";
+        return "user/registration";
     }
 
     @PostMapping

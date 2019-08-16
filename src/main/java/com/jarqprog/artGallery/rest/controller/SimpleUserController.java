@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.rest.restController;
+package com.jarqprog.artGallery.rest.controller;
 
 import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.domain.useCases.UserService;
