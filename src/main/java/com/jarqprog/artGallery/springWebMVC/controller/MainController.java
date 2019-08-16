@@ -27,6 +27,11 @@ public class MainController {
         return "/error/access-denied";
     }
 
+    @GetMapping("/error")
+    public String error() {
+        return "/error/error";
+    }
+
     @GetMapping("/about-api")
     public String about() {
         return "about-api";
