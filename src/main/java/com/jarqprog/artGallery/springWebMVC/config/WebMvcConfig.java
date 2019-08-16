@@ -1,9 +1,6 @@
 package com.jarqprog.artGallery.springWebMVC.config;
 
-import com.jarqprog.artGallery.domain.helper.DtoEntityConverter;
-import com.jarqprog.artGallery.springWebMVC.helper.mvcDtoEntityConverter;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -99,15 +96,5 @@ public class WebMvcConfig implements ApplicationContextAware, WebMvcConfigurer {
         dialects.add(new LayoutDialect());
         dialects.add(new SpringSecurityDialect());
         return dialects;
-    }
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
-
-    @Bean
-    public DtoEntityConverter dtoEntityConverter() {
-        return new mvcDtoEntityConverter();
     }
 }
