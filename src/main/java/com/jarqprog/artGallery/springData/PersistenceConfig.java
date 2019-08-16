@@ -69,7 +69,7 @@ public class PersistenceConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    @Bean
+    @Bean//todo add profiles
     public DatabaseConfig databaseConfig() {
         return new MySQLConfig();
     }
