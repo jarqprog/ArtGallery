@@ -7,6 +7,7 @@
     <div class="w3-container w3-teal" style="font-size: small;">
         <th:block th:fragment="header">
             <a class="fa fa-home" th:href="@{/}"></a>
+            <a class="fa fa-arrow-left" style="cursor: pointer;" onclick="goBack()"></a>
             <a th:href="@{/about-api}" >REST</a>
             <th:block sec:authorize="isAuthenticated()">
                 <a class="fa fa-sign-out" th:href="@{/logout}"></a>
