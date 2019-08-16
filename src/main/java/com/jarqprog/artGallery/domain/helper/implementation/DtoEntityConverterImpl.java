@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.springWebMVC.helper;
+package com.jarqprog.artGallery.domain.helper.implementation;
 
 import com.jarqprog.artGallery.domain.entity.DomainEntity;
 import com.jarqprog.artGallery.domain.dto.DTO;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class mvcDtoEntityConverter implements DtoEntityConverter {
+public class DtoEntityConverterImpl implements DtoEntityConverter {
 
     @Autowired
     private ModelMapper modelMapper;

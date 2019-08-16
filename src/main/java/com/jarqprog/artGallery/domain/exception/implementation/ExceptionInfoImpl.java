@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @ToString
-public class mvcExceptionInfo implements ExceptionInfo {
+public class MvcExceptionInfo implements ExceptionInfo {
 
     //todo: need to recognize failures on client side and inform
 
@@ -19,7 +19,7 @@ public class mvcExceptionInfo implements ExceptionInfo {
         LocalDateTime date = LocalDateTime.now();
         String message = String.format("Problem occurred: UID=%s, Date=%s, Status=%s, Exception=%s",
                 uuid, date, httpStatus, exception.getClass().getSimpleName());
-        return new mvcExceptionInfo(uuid, date, httpStatus, message);
+        return new MvcExceptionInfo(uuid, date, httpStatus, message);
     }
 
     public static ExceptionInfo getLogInfo(ExceptionInfo exceptionInfo, Exception exception) {
@@ -27,7 +27,7 @@ public class mvcExceptionInfo implements ExceptionInfo {
                 exception.getMessage(),
                 exception.getCause(),
                 Arrays.toString(exception.getStackTrace()));
-        return new mvcExceptionInfo(exceptionInfo, newMessage);
+        return new MvcExceptionInfo(exceptionInfo, newMessage);
     }
 
     private final String uuid;
@@ -35,14 +35,14 @@ public class mvcExceptionInfo implements ExceptionInfo {
     private final long httpStatus;
     private final String message;
 
-    private mvcExceptionInfo(String uuid, LocalDateTime dateTime, long httpStatus, String message) {
+    private MvcExceptionInfo(String uuid, LocalDateTime dateTime, long httpStatus, String message) {
         this.uuid = uuid;
         this.dateTime = dateTime;
         this.httpStatus = httpStatus;
         this.message = message;
     }
 
-    private mvcExceptionInfo(ExceptionInfo exceptionInfo, String message) {
+    private MvcExceptionInfo(ExceptionInfo exceptionInfo, String message) {
         this.uuid = exceptionInfo.getUuid();
         this.dateTime = exceptionInfo.getDateTime();
         this.httpStatus = exceptionInfo.getHttpStatus();
