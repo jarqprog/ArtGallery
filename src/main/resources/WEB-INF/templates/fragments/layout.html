@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Art Gallery</title>
+
+    <script>
+        function goBack() {
+          window.history.back();
+        }
+    </script>
 </head>
 <body>
     <th:block th:replace="fragments/header :: header"/>
