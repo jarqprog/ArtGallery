@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.rest.restService;
+package com.jarqprog.artGallery.domain.useCases.implementation;
 
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;

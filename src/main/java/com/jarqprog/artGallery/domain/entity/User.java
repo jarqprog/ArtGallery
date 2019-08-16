@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.domain.entity;
 
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,8 +21,11 @@ public class User extends DomainEntity {
     @JoinColumn(name = "contact_id")
     private Contact contact;
 
+    @NotNull
+    @Column(unique = true)
     private String login;
 
+    @NotNull
     private String password;
 
     private Boolean enabled = Boolean.TRUE;

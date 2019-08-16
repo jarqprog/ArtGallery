@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.domain.entity;
 
 import lombok.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,8 @@ public class Contact extends DomainEntity {
 
     private String nickname;
 
+    @NotNull
+    @Column(unique = true)
     private String email;
 
     //todo Addressee
