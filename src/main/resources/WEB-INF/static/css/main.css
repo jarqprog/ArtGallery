@@ -20,6 +20,11 @@ header a, header span {
 }
 
 .text-multiline {
-  padding: 3px;
-  white-space: pre-wrap;
+    padding: 3px;
+    white-space: pre-wrap;
+}
+
+.required {
+    background-color: #398ead;
+    font-weight: bolder;
 }
