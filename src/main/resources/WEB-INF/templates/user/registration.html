@@ -52,6 +52,9 @@
             <button id="register-submit" name="register-submit" class="w3-btn w3-blue-grey" type="submit">register</button>
         </form>
 
+        <div th:if="${param.error}" class="w3-panel w3-pale-yellow w3-border">
+            <p>Invalid data, please check it...</p></div>
+
     </th:block>
 </div>
 </body>
