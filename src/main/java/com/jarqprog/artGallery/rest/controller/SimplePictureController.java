@@ -12,8 +12,12 @@ import java.util.List;
 @RequestMapping("/api/pictures")
 public class SimplePictureController {
 
+    private final PictureService pictureService;
+
     @Autowired
-    private PictureService pictureService;
+    public SimplePictureController(PictureService pictureService) {
+        this.pictureService = pictureService;
+    }
 
     @GetMapping()
     public List<PictureDTO> getAllPictures() {

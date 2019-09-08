@@ -11,7 +11,12 @@ import java.util.List;
 @RequestMapping("/api/contacts")
 public class SimpleContactController {
 
-    @Autowired ContactService contactService;
+    private final ContactService contactService;
+
+    @Autowired
+    public SimpleContactController(ContactService contactService) {
+        this.contactService = contactService;
+    }
 
     @GetMapping
     public List<ContactDTO> getAllContacts() {
