@@ -19,9 +19,18 @@ import java.util.stream.Collectors;
 @Service
 public class SimpleCommentaryService implements CommentaryService {
 
-    @Autowired private CommentaryRepository commentaryRepository;
-    @Autowired private PictureRepository pictureRepository;
-    @Autowired private DtoEntityConverter dtoEntityConverter;
+    private final CommentaryRepository commentaryRepository;
+    private final PictureRepository pictureRepository;
+    private final DtoEntityConverter dtoEntityConverter;
+
+    @Autowired
+    public SimpleCommentaryService(CommentaryRepository commentaryRepository,
+                                   PictureRepository pictureRepository,
+                                   DtoEntityConverter dtoEntityConverter) {
+        this.commentaryRepository = commentaryRepository;
+        this.pictureRepository = pictureRepository;
+        this.dtoEntityConverter = dtoEntityConverter;
+    }
 
     @Override
     public List<CommentaryDTO> getAllCommentaries() {

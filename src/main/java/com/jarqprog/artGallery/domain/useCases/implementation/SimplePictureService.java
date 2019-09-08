@@ -22,10 +22,21 @@ import java.util.stream.Collectors;
 @Service
 public class SimplePictureService implements PictureService {
 
-    @Autowired private PictureRepository pictureRepository;
-    @Autowired private CommentaryRepository commentaryRepository;
-    @Autowired private UserRepository userRepository;
-    @Autowired private DtoEntityConverter dtoEntityConverter;
+    private final PictureRepository pictureRepository;
+    private final CommentaryRepository commentaryRepository;
+    private final UserRepository userRepository;
+    private final DtoEntityConverter dtoEntityConverter;
+
+    @Autowired
+    public SimplePictureService(PictureRepository pictureRepository,
+                                CommentaryRepository commentaryRepository,
+                                UserRepository userRepository,
+                                DtoEntityConverter dtoEntityConverter) {
+        this.pictureRepository = pictureRepository;
+        this.commentaryRepository = commentaryRepository;
+        this.userRepository = userRepository;
+        this.dtoEntityConverter = dtoEntityConverter;
+    }
 
     private static final Logger logger = Logger.getLogger(SimplePictureService.class);
 
