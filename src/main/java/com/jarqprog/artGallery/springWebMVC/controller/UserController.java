@@ -21,7 +21,12 @@ public class UserController {
 
     private static final Logger logger = Logger.getLogger(UserController.class);
 
-    @Autowired private UserService userService;
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/user-info")
     public String showUserInfo(Model model) {

@@ -23,8 +23,12 @@ public class RegistrationController {
 
     private static final Logger logger = Logger.getLogger(RegistrationController.class);
 
+    private final RegistrationService registrationService;
+
     @Autowired
-    private RegistrationService registrationService;
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
     @GetMapping
     public String showRegistrationForm(WebRequest request, Model model) {

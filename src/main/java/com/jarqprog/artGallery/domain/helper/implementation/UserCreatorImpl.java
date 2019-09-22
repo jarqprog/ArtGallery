@@ -11,13 +11,26 @@ import com.jarqprog.artGallery.domain.helper.UserCreator;
 import com.jarqprog.artGallery.domain.useCases.RoleService;
 import com.jarqprog.artGallery.domain.useCases.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserCreatorImpl implements UserCreator {
 
-    @Autowired private DtoEntityConverter dtoEntityConverter;
-    @Autowired private RegistrationValidator registrationValidator;
-    @Autowired private UserService userService;
-    @Autowired private RoleService roleService;
+    private final DtoEntityConverter dtoEntityConverter;//todo to check
+    private final RegistrationValidator registrationValidator;
+    private final UserService userService;
+    private final RoleService roleService;
+
+    @Autowired
+    public UserCreatorImpl(DtoEntityConverter dtoEntityConverter,
+                           RegistrationValidator registrationValidator,
+                           UserService userService,
+                           RoleService roleService) {
+        this.dtoEntityConverter = dtoEntityConverter;
+        this.registrationValidator = registrationValidator;
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @Override
     public UserDTO createUserFromRegistrationDTO(RegistrationDTO registrationDTO, ContactDTO contactDTO) {

@@ -1,7 +1,9 @@
 package com.jarqprog.artGallery.domain.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.UniqueElements;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,11 +11,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@ToString
+@EqualsAndHashCode(callSuper = true)
 @Table(name="users")
 public class User extends DomainEntity {
 
@@ -22,6 +22,7 @@ public class User extends DomainEntity {
     private Contact contact;
 
     @NotNull
+    @NaturalId(mutable = true)
     @Column(unique = true)
     private String login;
 
@@ -32,10 +33,11 @@ public class User extends DomainEntity {
 
     private Boolean tokenExpired = Boolean.FALSE;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Fetch(FetchMode.JOIN)
     private Set<Role> roles;
 
     public User(@NotNull Contact contact, @NotNull String login, @NotNull String password) {

@@ -40,11 +40,6 @@ public class GeneralConfig {
     }
 
     @Bean
-    public UserCreator userCreator() {
-        return new UserCreatorImpl();
-    }
-
-    @Bean
     public RegistrationValidator registrationValidator() {
         return new RegistrationValidatorImpl();
     }

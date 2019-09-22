@@ -3,11 +3,11 @@ package com.jarqprog.artGallery.springData;
 import com.jarqprog.artGallery.domain.entity.*;
 import com.jarqprog.artGallery.domain.exception.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.repository.*;
-import com.jarqprog.artGallery.springSecurity.userDetails.SimpleUserDetailsService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -22,23 +22,32 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     private static final Logger logger = Logger.getLogger(InitialDataLoader.class);
 
-    boolean alreadySetup = false;
+    private boolean alreadySetup = false;
 
-    @Autowired private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final ContactRepository contactRepository;
+    private final PictureRepository pictureRepository;
+    private final CommentaryRepository commentaryRepository;
+    private final AuthorRepository authorRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired private RoleRepository roleRepository;
-
-    @Autowired private ContactRepository contactRepository;
-
-    @Autowired private PictureRepository pictureRepository;
-
-    @Autowired private CommentaryRepository commentaryRepository;
-
-    @Autowired private AuthorRepository authorRepository;
-
-    @Autowired private SimpleUserDetailsService simpleUserDetailsService;
-
-    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired
+    public InitialDataLoader(UserRepository userRepository,
+                             RoleRepository roleRepository,
+                             ContactRepository contactRepository,
+                             PictureRepository pictureRepository,
+                             CommentaryRepository commentaryRepository,
+                             AuthorRepository authorRepository,
+                             PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.contactRepository = contactRepository;
+        this.pictureRepository = pictureRepository;
+        this.commentaryRepository = commentaryRepository;
+        this.authorRepository = authorRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     @Transactional
@@ -50,11 +59,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
         logger.info("#####Developer mode: Initialing basic data...");
 
-//        initRoles();
-//        initSuperAdmin();
-//        initAdmin();
-//        initJelena();
-//        initSomeContacts();
+        initRoles();
+        initSuperAdmin();
+        initAdmin();
+        initJelena();
+        initSomeContacts();
 
         logger.info("#####Developer mode: Basic data initialized.");
 
@@ -67,7 +76,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
      */
     @Transactional
     private void initJelena() {
-        Contact jelena = new Contact("Jelena", "Kucharczyk");
+        Contact jelena = new Contact("Jelena", "Kucharczyk", "jelenka@gmail.com");
         jelena.setNickname("Alenka");
         contactRepository.save(jelena);
 
@@ -90,11 +99,11 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     private void initSomeContacts() {
         List<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact("Mark", "Smith"));
-        contacts.add(new Contact("John", "Legend"));
-        contacts.add(new Contact("Peter", "Miller"));
-        contacts.add(new Contact("Ann", "Bigot"));
-        contacts.add(new Contact("Mary", "Levis"));
+        contacts.add(new Contact("Mark", "Smith", "mark@gmail.com"));
+        contacts.add(new Contact("John", "Legend", "john@gmail.com"));
+        contacts.add(new Contact("Peter", "Miller", "peter@gmail.com"));
+        contacts.add(new Contact("Ann", "Bigot", "ann@gmail.com"));
+        contacts.add(new Contact("Mary", "Levis", "marry@gmail.com"));
         contactRepository.saveAll(contacts);
     }
 
@@ -108,14 +117,14 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     @Transactional
     private void initSuperAdmin() {
-        Contact superAdminContact = new Contact("super admin");
+        Contact superAdminContact = new Contact("super admin", "superAdminContact@mail.com");
         contactRepository.save(superAdminContact);
         createUser(superAdminContact, Roles.SUPER_ADMIN, "super_admin", "super_admin");
     }
 
     @Transactional
     private void initAdmin() {
-        Contact adminContact = new Contact("admin");
+        Contact adminContact = new Contact("admin", "adminContact@mail.com");
         contactRepository.save(adminContact);
         createUser(adminContact, Roles.ADMIN, "admin", "admin");
     }

@@ -28,19 +28,23 @@ import java.util.Set;
 @ComponentScan("com.jarqprog.artGallery")
 public class WebMvcConfig implements ApplicationContextAware, WebMvcConfigurer {
 
-    @Autowired
     private ApplicationContext applicationContext;
+    private final FormattingConversionService mvcConversionService;
 
     @Autowired
-    private FormattingConversionService mvcConversionService;
+    public WebMvcConfig(ApplicationContext applicationContext, FormattingConversionService mvcConversionService) {
+        this.applicationContext = applicationContext;
+        this.mvcConversionService = mvcConversionService;
+    }
 
+    @Autowired
     @Override
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
     @Bean
-    public ThymeleafViewResolver viewResolver(){
+    protected ThymeleafViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
@@ -48,7 +52,7 @@ public class WebMvcConfig implements ApplicationContextAware, WebMvcConfigurer {
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine() {
+    protected SpringTemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
         engine.setTemplateResolver(templateResolver());
@@ -85,12 +89,12 @@ public class WebMvcConfig implements ApplicationContextAware, WebMvcConfigurer {
     }
 
     @Bean
-    public DomainClassConverter<?> domainClassConverter() {
+    protected DomainClassConverter<?> domainClassConverter() {
         return new DomainClassConverter<>(mvcConversionService);
     }
 
     @Bean
-    public Set<IDialect> thymeleafDialects() {
+    protected Set<IDialect> thymeleafDialects() {
         Set<IDialect> dialects = new HashSet<>();
         dialects.add(new SpringStandardDialect());
         dialects.add(new LayoutDialect());

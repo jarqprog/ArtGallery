@@ -5,11 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@ToString
+@EqualsAndHashCode(callSuper = true)
 @Table(name="authors")
 public class Author extends DomainEntity {
 
