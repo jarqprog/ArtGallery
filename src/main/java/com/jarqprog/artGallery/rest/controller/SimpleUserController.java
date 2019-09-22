@@ -11,8 +11,12 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class SimpleUserController {
 
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public SimpleUserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
 //    @PreAuthorize("hasRole('ADMIN')")

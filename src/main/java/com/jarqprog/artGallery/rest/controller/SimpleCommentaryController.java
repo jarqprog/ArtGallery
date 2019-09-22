@@ -15,10 +15,14 @@ import java.util.List;
 @RequestMapping("/api/pictures/")
 public class SimpleCommentaryController {
 
-    @Autowired private PictureService pictureService;
-    @Autowired private CommentaryService commentaryService;
+    private final PictureService pictureService;
+    private final CommentaryService commentaryService;
 
-
+    @Autowired
+    public SimpleCommentaryController(PictureService pictureService, CommentaryService commentaryService) {
+        this.pictureService = pictureService;
+        this.commentaryService = commentaryService;
+    }
 
     @GetMapping("commentaries")
     public List<CommentaryDTO> getAllCommentaries() {

@@ -14,10 +14,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class SimpleRoleService implements RoleService {
 
-    @Autowired private RoleRepository roleRepository;
-    @Autowired private DtoEntityConverter dtoEntityConverter;
+    private final RoleRepository roleRepository;
+    private final DtoEntityConverter dtoEntityConverter;
 
     private static final Logger logger = Logger.getLogger(SimpleRoleService.class);
+
+    @Autowired
+    public SimpleRoleService(RoleRepository roleRepository, DtoEntityConverter dtoEntityConverter) {
+        this.roleRepository = roleRepository;
+        this.dtoEntityConverter = dtoEntityConverter;
+    }
 
     @Override
     public RoleDTO findByRole(Roles role) {

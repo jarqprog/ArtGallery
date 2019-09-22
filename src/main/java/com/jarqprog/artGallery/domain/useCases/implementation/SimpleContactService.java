@@ -21,11 +21,21 @@ import java.util.stream.Collectors;
 @Service
 public class SimpleContactService implements ContactService {
 
-    @Autowired private ContactRepository contactRepository;
-    @Autowired private UserRepository userRepository;
-    @Autowired private AuthorRepository authorRepository;
-    @Autowired private DtoEntityConverter dtoEntityConverter;
+    private final ContactRepository contactRepository;
+    private final UserRepository userRepository;
+    private final AuthorRepository authorRepository;
+    private final DtoEntityConverter dtoEntityConverter;
 
+    @Autowired
+    public SimpleContactService(ContactRepository contactRepository,
+                                UserRepository userRepository,
+                                AuthorRepository authorRepository,
+                                DtoEntityConverter dtoEntityConverter) {
+        this.contactRepository = contactRepository;
+        this.userRepository = userRepository;
+        this.authorRepository = authorRepository;
+        this.dtoEntityConverter = dtoEntityConverter;
+    }
 
     @Override
     public List<ContactDTO> getAllContacts() {

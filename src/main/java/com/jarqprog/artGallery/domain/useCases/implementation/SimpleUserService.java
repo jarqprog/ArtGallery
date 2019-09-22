@@ -26,14 +26,24 @@ import java.util.stream.Collectors;
 @Service
 public class SimpleUserService implements UserService {
 
-    @Autowired private UserRepository userRepository;
-    @Autowired private PictureRepository pictureRepository;
+    private final UserRepository userRepository;
+    private final PictureRepository pictureRepository;
+    private final CommentaryRepository commentaryRepository;
+    private final DtoEntityConverter dtoEntityConverter;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired private CommentaryRepository commentaryRepository;
-    @Autowired private DtoEntityConverter dtoEntityConverter;
-
-    @Autowired private PasswordEncoder passwordEncoder;
-
+    @Autowired
+    public SimpleUserService(UserRepository userRepository,
+                             PictureRepository pictureRepository,
+                             CommentaryRepository commentaryRepository,
+                             DtoEntityConverter dtoEntityConverter,
+                             PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.pictureRepository = pictureRepository;
+        this.commentaryRepository = commentaryRepository;
+        this.dtoEntityConverter = dtoEntityConverter;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<UserDTO> getAllUsers() {
