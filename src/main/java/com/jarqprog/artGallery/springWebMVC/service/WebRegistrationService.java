@@ -15,8 +15,14 @@ import javax.transaction.Transactional;
 @Service
 public class WebRegistrationService implements RegistrationService {
 
-    @Autowired private UserCreator userCreator;
-    @Autowired private ContactCreator contactCreator;
+    private final UserCreator userCreator;
+    private final ContactCreator contactCreator;
+
+    @Autowired
+    public WebRegistrationService(UserCreator userCreator, ContactCreator contactCreator) {
+        this.userCreator = userCreator;
+        this.contactCreator = contactCreator;
+    }
 
     @Transactional
     @Override

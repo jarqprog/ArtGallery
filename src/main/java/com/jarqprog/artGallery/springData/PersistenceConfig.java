@@ -4,6 +4,7 @@ import com.jarqprog.artGallery.springData.databaseConfig.DatabaseConfig;
 import com.jarqprog.artGallery.springData.databaseConfig.MySQLConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -18,15 +19,20 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@org.springframework.context.annotation.Configuration
+@Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.jarqprog.artGallery.springData.repository" )
 public class PersistenceConfig {
 
-    @Autowired private DatabaseConfig databaseConfig;
+    private DatabaseConfig databaseConfig;
+
+    @Autowired
+    public void setDatabaseConfig(DatabaseConfig databaseConfig) {
+        this.databaseConfig = databaseConfig;
+    }
 
     @Bean
-    public DataSource dataSource() {
+    protected DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(databaseConfig.getDriverClass());
         dataSource.setUrl(databaseConfig.getUrl());
@@ -40,7 +46,7 @@ public class PersistenceConfig {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "com.jarqprog.artGallery.domain" });
+        em.setPackagesToScan(new String[] { "com.jarqprog.artGallery.domain.entity" });
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
@@ -50,7 +56,7 @@ public class PersistenceConfig {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "none");//"create-drop"
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");//"create-drop" "none"
         properties.setProperty("hibernate.dialect", databaseConfig.getHibernateDialect());
         properties.setProperty("spring.h2.console.enabled", "true");
         properties.setProperty("spring.jpa.generate-ddl", "true");

@@ -13,7 +13,7 @@ public class JpaAuditingConfig {
 
     @Bean
     public AuditorAware<String> auditorProvider() {
-
+        //todo to check
         /*
           if you are using spring springSecurity, you can get the currently logged username with following code segment.
           SecurityContextHolder.getContext().getAuthentication().getName()
