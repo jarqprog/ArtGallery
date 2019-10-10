@@ -1,5 +1,13 @@
 package com.jarqprog.artGallery.springData.databaseConfig;
 
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+import java.util.Properties;
+
+//@Component
+//@Profile("test")
 public class H2Config implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "org.h2.Driver";
@@ -29,7 +37,12 @@ public class H2Config implements DatabaseConfig {
     }
 
     @Override
-    public String getHibernateDialect() {
-        return HIBERNATE_DIALECT;
+    public Properties getJPAProperties() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");//"create-drop" "none"
+        properties.setProperty("hibernate.dialect", HIBERNATE_DIALECT);
+        properties.setProperty("spring.h2.console.enabled", "false");
+        properties.setProperty("spring.jpa.generate-ddl", "true");
+        return properties;
     }
 }
