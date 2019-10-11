@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-//@Component
-//@Profile("test")
+@Component
+@Profile("test")
 public class H2Config implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "org.h2.Driver";
     private final static String URL = "jdbc:h2:mem:test";
     private final static String USER = "sa";
-    private final static String PASSWORD = "sa";
+    private final static String PASSWORD = "password";
     private final static String HIBERNATE_DIALECT = "org.hibernate.dialect.H2Dialect";
 
     @Override
@@ -39,9 +39,9 @@ public class H2Config implements DatabaseConfig {
     @Override
     public Properties getJPAProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");//"create-drop" "none"
+        properties.setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
         properties.setProperty("hibernate.dialect", HIBERNATE_DIALECT);
-        properties.setProperty("spring.h2.console.enabled", "false");
+        properties.setProperty("spring.h2.console.enabled", "true");
         properties.setProperty("spring.jpa.generate-ddl", "true");
         return properties;
     }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-//@Profile({"dev", "prod"})
+@Profile({"dev", "prod"})
 public class MySQLConfig implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
