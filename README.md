@@ -6,7 +6,7 @@ Spring Data / MVC / Security project. Java 8.
 To run this application you will need MySQL server. Postman would be handy for POST, PUT and DELETE requests.
 
 * create database 'art_gallery' on MySQL server (application handles tables creation)
-* type in the command line: 'mvn clean install tomcat7:run'
+* type in the command line: 'mvn clean install tomcat7:run -Dspring.profiles.active=dev'
 
 Api functionalities at the moment (wip):
 
