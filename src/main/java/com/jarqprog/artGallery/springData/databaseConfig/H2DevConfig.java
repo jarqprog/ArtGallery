@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-@Profile("test")
-public class H2Config implements DatabaseConfig {
+@Profile("dev")
+public class H2DevConfig implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "org.h2.Driver";
-    private final static String URL = "jdbc:h2:mem:test";
+    private final static String URL = "jdbc:h2:mem:dev;DB_CLOSE_DELAY=-1";
     private final static String USER = "sa";
-    private final static String PASSWORD = "password";
+    private final static String PASSWORD = "";
     private final static String HIBERNATE_DIALECT = "org.hibernate.dialect.H2Dialect";
 
     @Override
