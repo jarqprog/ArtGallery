@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.springWebMVC.controller;
 
-import com.jarqprog.artGallery.domain.exception.ExceptionInfo;
-import com.jarqprog.artGallery.domain.exception.implementation.ExceptionInfoImpl;
+import com.jarqprog.artGallery.springData.exceptions.ExceptionInfo;
+import com.jarqprog.artGallery.springData.exceptions.implementation.ExceptionInfoImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

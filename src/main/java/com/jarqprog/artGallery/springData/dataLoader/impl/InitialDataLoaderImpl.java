@@ -2,7 +2,7 @@ package com.jarqprog.artGallery.springData.dataLoader.impl;
 
 
 import com.jarqprog.artGallery.domain.entity.*;
-import com.jarqprog.artGallery.domain.exception.ResourceNotFoundException;
+import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.dataLoader.InitialDataLoader;
 import com.jarqprog.artGallery.springData.repository.*;
 import org.apache.log4j.Logger;
@@ -51,15 +51,13 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
     @Transactional
     public void populateDb() {
 
-        logger.info("$#@$@$#@#$#@Starting.......");
-
+        logger.info("populating DB - START...");
         initRoles();
         initSuperAdmin();
         initAdmin();
         initJelena();
         initSomeContacts();
-
-        logger.info("$#@$@$#@#$#@Finishing.......");
+        logger.info("populating DB - DONE!");
     }
 
     /**
