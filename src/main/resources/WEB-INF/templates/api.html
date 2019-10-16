@@ -3,13 +3,12 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{/fragments/layout}">
 <head>
-    <title>Secured</title>
+    <title>api</title>
 </head>
 <body>
 <div layout:fragment="content" th:remove="tag">
-    <h1>This is a secured page!</h1>
     <h2>This is REST API, for now hyperlinks are not supported, so please modify url to get resources :)</h2>
-    <p><a href="/api/contacts" th:href="@{/api/contacts}">sample 'Contacts' resource (to get there u need 'Admin' privileges)</a></p>
+    <p><a href="/api/pictures" th:href="@{/api/pictures}">sample 'Picture-type' resources</a></p>
 </div>
 </body>
 </html>
