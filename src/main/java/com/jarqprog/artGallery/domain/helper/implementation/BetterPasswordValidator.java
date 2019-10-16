@@ -1,10 +1,14 @@
 package com.jarqprog.artGallery.domain.helper.implementation;
 
 import com.jarqprog.artGallery.domain.helper.PasswordValidator;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
+@Profile("prod")
 public class BetterPasswordValidator implements PasswordValidator {
 
     private Pattern pattern;

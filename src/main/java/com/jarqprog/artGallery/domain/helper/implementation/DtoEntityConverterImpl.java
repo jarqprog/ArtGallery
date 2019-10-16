@@ -10,8 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class DtoEntityConverterImpl implements DtoEntityConverter {
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    private ModelMapper modelMapper;
+    public DtoEntityConverterImpl(ModelMapper modelMapper) {
+        assert modelMapper != null;
+        this.modelMapper = modelMapper;
+    }
 
     @Override
     public <D extends DomainEntity> D convertDtoToEntity(DTO dto, Class<D> destinationType) {
