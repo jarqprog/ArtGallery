@@ -1,13 +1,13 @@
-package com.jarqprog.artGallery.springData;
+package com.jarqprog.artGallery.springData.dataLoader.impl;
+
 
 import com.jarqprog.artGallery.domain.entity.*;
 import com.jarqprog.artGallery.domain.exception.ResourceNotFoundException;
+import com.jarqprog.artGallery.springData.dataLoader.InitialDataLoader;
 import com.jarqprog.artGallery.springData.repository.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +15,12 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//only use in development context
 @Component
-public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent> {
+@Profile({"dev", "test"})
+//@Profile({"dev", "test", "prod"})
+public class InitialDataLoaderImpl implements InitialDataLoader {
 
-    private static final Logger logger = Logger.getLogger(InitialDataLoader.class);
-
-    private boolean alreadySetup = false;
+    private static final Logger logger = Logger.getLogger(InitialDataLoaderImpl.class);
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -33,13 +31,13 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public InitialDataLoader(UserRepository userRepository,
-                             RoleRepository roleRepository,
-                             ContactRepository contactRepository,
-                             PictureRepository pictureRepository,
-                             CommentaryRepository commentaryRepository,
-                             AuthorRepository authorRepository,
-                             PasswordEncoder passwordEncoder) {
+    public InitialDataLoaderImpl(UserRepository userRepository,
+                                 RoleRepository roleRepository,
+                                 ContactRepository contactRepository,
+                                 PictureRepository pictureRepository,
+                                 CommentaryRepository commentaryRepository,
+                                 AuthorRepository authorRepository,
+                                 PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.contactRepository = contactRepository;
@@ -51,13 +49,9 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 
     @Override
     @Transactional
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    public void populateDb() {
 
-        if (alreadySetup) {
-            return;
-        }
-
-        logger.info("#####Developer mode: Initialing basic data...");
+        logger.info("$#@$@$#@#$#@Starting.......");
 
         initRoles();
         initSuperAdmin();
@@ -65,16 +59,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         initJelena();
         initSomeContacts();
 
-        logger.info("#####Developer mode: Basic data initialized.");
-
-        alreadySetup = true;
+        logger.info("$#@$@$#@#$#@Finishing.......");
     }
-
 
     /**
      * Jelena is my wife and artist. I'm developing this app for her :)
      */
-    @Transactional
     private void initJelena() {
         Contact jelena = new Contact("Jelena", "Kucharczyk", "jelenka@gmail.com");
         jelena.setNickname("Alenka");
@@ -115,14 +105,12 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         roleRepository.saveAll(roles);
     }
 
-    @Transactional
     private void initSuperAdmin() {
         Contact superAdminContact = new Contact("super admin", "superAdminContact@mail.com");
         contactRepository.save(superAdminContact);
         createUser(superAdminContact, Roles.SUPER_ADMIN, "super_admin", "super_admin");
     }
 
-    @Transactional
     private void initAdmin() {
         Contact adminContact = new Contact("admin", "adminContact@mail.com");
         contactRepository.save(adminContact);
