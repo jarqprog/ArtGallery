@@ -1,9 +1,9 @@
 package com.jarqprog.artGallery.springData;
 
 import com.jarqprog.artGallery.springData.databaseConfig.DatabaseConfig;
-import com.jarqprog.artGallery.springData.databaseConfig.MySQLConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -17,22 +17,17 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.jarqprog.artGallery.springData.repository" )
+@ComponentScan({"com.jarqprog.artGallery.springData.databaseConfig",
+        "com.jarqprog.artGallery.domain.helper.implementation"})
 public class PersistenceConfig {
 
-    private DatabaseConfig databaseConfig;
-
-    @Autowired
-    public void setDatabaseConfig(DatabaseConfig databaseConfig) {
-        this.databaseConfig = databaseConfig;
-    }
-
     @Bean
-    protected DataSource dataSource() {
+    protected DataSource dataSource(@Autowired DatabaseConfig databaseConfig) {
+        assert databaseConfig != null;
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(databaseConfig.getDriverClass());
         dataSource.setUrl(databaseConfig.getUrl());
@@ -42,25 +37,19 @@ public class PersistenceConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Autowired DataSource dataSource,
+                                                                       @Autowired DatabaseConfig databaseConfig) {
+        assert dataSource != null;
+        assert databaseConfig != null;
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "com.jarqprog.artGallery.domain.entity" });
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("com.jarqprog.artGallery.domain.entity");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
-        em.setJpaProperties(additionalProperties());
+        em.setJpaProperties(databaseConfig.getJPAProperties());
         return em;
-    }
-
-    private Properties additionalProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");//"create-drop" "none"
-        properties.setProperty("hibernate.dialect", databaseConfig.getHibernateDialect());
-        properties.setProperty("spring.h2.console.enabled", "true");
-        properties.setProperty("spring.jpa.generate-ddl", "true");
-        return properties;
     }
 
     @Bean
@@ -73,10 +62,5 @@ public class PersistenceConfig {
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
         return new PersistenceExceptionTranslationPostProcessor();
-    }
-
-    @Bean//todo add profiles
-    public DatabaseConfig databaseConfig() {
-        return new MySQLConfig();
     }
 }

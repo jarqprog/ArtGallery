@@ -6,7 +6,7 @@ Spring Data / MVC / Security project. Java 8.
 To run this application you will need MySQL server. Postman would be handy for POST, PUT and DELETE requests.
 
 * create database 'art_gallery' on MySQL server (application handles tables creation)
-* type in the command line: 'mvn clean install tomcat7:run'
+* type in the command line: 'mvn clean install tomcat7:run -Dspring.profiles.active=dev'
 
 Api functionalities at the moment (wip):
 
@@ -71,7 +71,6 @@ USERS:
 todo (next iterations):
 * add service and controllers for commentary domain - DONE
 * remove interfaces with constants, add 'supplier' class which stores and shares given configuration (to encapsulate parameters, remove globals) - DONE
-* add unit and integration tests
 * exception handling, exception logging - DONE
 * add optimistic locking - DONE
 * add service and controllers for author domain
@@ -79,9 +78,27 @@ todo (next iterations):
 * add heart domain (likes) with services and controllers
 * add friends (so user could invite someone to friends list)
 * separate domain (entities, DTOs) from framework implementation details - DONE
-* add users identification and authorisation (security), roles, privileges - DONE
-* add profiles
+* add users identification and authorisation (security), roles, privileges - DONE for web application
+* add profiles (dev / test / production)
+* add unit tests for domain (assuming unit is service + dao layer), use in memory database (avoid testing mocks)
+* add unit tests for controller (mock service layer, unit is controller behavior only)
 * add user to picture and commentary methods (services, controllers) - DONE
-* add hyper links
 * add simple views (use Thymeleaf) - DONE
-* -- at this moment REST API will be finished
+* add hyper links (hateoas)
+* move web application packages/resources to separated directory
+* add api-keys security for REST application
+
+-----
+At this moment web application and REST application will be treated separately
+
+
+REST app:
+...
+
+WEB app:
+...
+
+
+
+
+

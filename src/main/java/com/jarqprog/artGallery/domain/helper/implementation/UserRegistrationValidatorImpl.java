@@ -5,17 +5,32 @@ import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
 import com.jarqprog.artGallery.domain.exception.CreationException;
 import com.jarqprog.artGallery.domain.helper.PasswordValidator;
-import com.jarqprog.artGallery.domain.helper.RegistrationValidator;
+import com.jarqprog.artGallery.domain.helper.UserRegistrationValidator;
 import com.jarqprog.artGallery.springData.repository.ContactRepository;
 import com.jarqprog.artGallery.springData.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class RegistrationValidatorImpl implements RegistrationValidator {
+@Component
+public class UserRegistrationValidatorImpl implements UserRegistrationValidator {
 
     //todo some email validator should be used
-    @Autowired private ContactRepository contactRepository;
-    @Autowired private UserRepository userRepository;
-    @Autowired private PasswordValidator passwordValidator;
+    private final ContactRepository contactRepository;
+    private final UserRepository userRepository;
+    private final PasswordValidator passwordValidator;
+
+    @Autowired
+    public UserRegistrationValidatorImpl(ContactRepository contactRepository,
+                                         UserRepository userRepository,
+                                         PasswordValidator passwordValidator) {
+        assert contactRepository != null;
+        assert userRepository != null;
+        assert passwordValidator != null;
+
+        this.contactRepository = contactRepository;
+        this.userRepository = userRepository;
+        this.passwordValidator = passwordValidator;
+    }
 
     @Override
     public void validateContactData(RegistrationDTO registrationDTO) throws CreationException {
