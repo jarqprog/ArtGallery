@@ -3,6 +3,7 @@ package com.jarqprog.artGallery.springData;
 import com.jarqprog.artGallery.springData.databaseConfig.DatabaseConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -20,6 +21,8 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.jarqprog.artGallery.springData.repository" )
+@ComponentScan({"com.jarqprog.artGallery.springData.databaseConfig",
+        "com.jarqprog.artGallery.domain.helper.implementation"})
 public class PersistenceConfig {
 
     @Bean

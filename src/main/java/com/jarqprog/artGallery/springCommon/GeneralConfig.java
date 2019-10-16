@@ -1,7 +1,5 @@
 package com.jarqprog.artGallery.springCommon;
 
-import com.jarqprog.artGallery.domain.helper.*;
-import com.jarqprog.artGallery.domain.helper.implementation.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,29 +17,8 @@ public class GeneralConfig {
         return new MethodValidationPostProcessor();
     }
 
-    @Bean //todo only for DEV
-    public PasswordValidator passwordValidator() {
-        return new DummyPasswordValidator();
-    }
-
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
-
-    @Bean
-    public DtoEntityConverter dtoEntityConverter() {
-        return new DtoEntityConverterImpl();
-    }
-
-    @Bean
-    public ContactCreator contactCreator() {
-        return new ContactCreatorImpl();
-    }
-
-    @Bean
-    public RegistrationValidator registrationValidator() {
-        return new RegistrationValidatorImpl();
-    }
-
 }
