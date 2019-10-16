@@ -11,6 +11,20 @@ footer {
 }
 
 footer p {
-    padding: 15px;
+    padding: 3px;
+    margin-bottom: 1%;
 }
 
+header a, header span {
+    padding: 3px;
+}
+
+.text-multiline {
+    padding: 3px;
+    white-space: pre-wrap;
+}
+
+.required {
+    background-color: #398ead;
+    font-weight: bolder;
+}

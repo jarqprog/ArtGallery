@@ -7,11 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@EqualsAndHashCode(callSuper = true)
 @Table(name="commentaries")
 public class Commentary extends DomainEntity {
 

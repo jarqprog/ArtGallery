@@ -4,11 +4,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@EqualsAndHashCode(callSuper = true)
 @Table(name="pictures")
 public class Picture extends DomainEntity {
 

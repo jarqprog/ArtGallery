@@ -5,11 +5,10 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@Setter
-@Getter
-@ToString
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 @Table(name="roles")
 public class Role extends DomainEntity {
 

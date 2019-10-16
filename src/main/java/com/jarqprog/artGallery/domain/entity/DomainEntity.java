@@ -19,7 +19,6 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class DomainEntity {
 
-
     private final String uuid = UUID.randomUUID().toString();
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Setter private long id;
@@ -31,7 +30,7 @@ public abstract class DomainEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(uuid);
+        return uuid.hashCode();
     }
 
     @Override
@@ -41,6 +40,4 @@ public abstract class DomainEntity {
             return uuid.equals(((DomainEntity) other).uuid);
         return false;
     }
-
-
 }

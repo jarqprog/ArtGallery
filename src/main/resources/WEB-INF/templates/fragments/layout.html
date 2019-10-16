@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -11,12 +12,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Art Gallery</title>
+
+    <script>
+        function goBack() {
+          window.history.back();
+        }
+    </script>
 </head>
 <body>
-<th:block th:replace="fragments/header :: header"/>
-<div class="w3-container">
-    <th:block layout:fragment="content"/>
-</div>
-<th:block th:replace="fragments/footer :: footer"/>
+    <th:block th:replace="fragments/header :: header"/>
+
+    <div class="w3-container" style="padding-bottom: 3%;">
+        <th:block layout:fragment="content"/>
+    </div>
+
+    <th:block th:replace="fragments/footer :: footer"/>
 </body>
 </html>

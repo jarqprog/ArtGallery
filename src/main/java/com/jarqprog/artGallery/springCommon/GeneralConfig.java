@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.springCommon;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,4 +17,8 @@ public class GeneralConfig {
         return new MethodValidationPostProcessor();
     }
 
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 }

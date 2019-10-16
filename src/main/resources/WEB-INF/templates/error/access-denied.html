@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org">
-<!--      layout:decorate="~{fragments/layout}">-->
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
 <head>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
     <title>Access Denied</title>
 </head>
 <body>
-<div layout:fragment="content" th:remove="tag">
-    <h1>Access denied</h1>
-    <p><a href="/" th:href="@{/}">Back to home page</a></p>
-</div>
+    <div layout:fragment="content" th:remove="tag">
+        <div class="w3-panel w3-pale-yellow w3-border">
+            <p>access denied</p>
+        </div>
+    </div>
+
+    <button class="w3-btn w3-blue-grey" onclick="goBack()">Go Back</button>
+
+
 </body>
 </html>

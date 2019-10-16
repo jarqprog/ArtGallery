@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{/fragments/layout}">
+<head>
+    <title>Registration</title>
+</head>
+
+<body>
+<div layout:fragment="content" th:remove="tag">
+
+    <h1>Registration panel</h1>
+
+    <th:block sec:authorize="isAuthenticated()">
+        <p>You are already registered!</p>
+    </th:block>
+
+
+    <th:block sec:authorize="isAnonymous()">
+
+        <form class="w3-container" th:action="@{/user/registration}" th:object="${registration}" method="post">
+
+            <p>
+            <input minlength="4" th:field="*{login}" id="login" name="login" class="w3-input w3-border w3-light-grey required" type="text"
+                   placeholder="login" required>
+            </p>
+
+            <p>
+                <input minlength="4" th:field="*{password}" id="password" name="password" class="w3-input w3-border w3-light-grey required" type="password"
+                       placeholder="password" required>
+            </p>
+
+            <p>
+                <input th:field="*{email}" id="email" name="email" class="w3-input w3-border w3-light-grey required" type="email"
+                       placeholder="email" required>
+            </p>
+
+            <p>
+            <input th:field="*{firstName}" id="firstName" name="firstName" class="w3-input w3-border w3-light-grey required" type="text"
+                   placeholder="first name" required>
+            </p>
+
+            <p>
+                <input th:field="*{lastName}" id="lastName" name="lastName" class="w3-input w3-border w3-light-grey" type="text"
+                       placeholder="last name">
+            </p>
+
+            <p>
+                <input th:field="*{nickname}" id="nickname" name="nickname" class="w3-input w3-border w3-light-grey" type="text"
+                       placeholder="nickname">
+            </p>
+            <button id="register-submit" name="register-submit" class="w3-btn w3-blue-grey" type="submit">register</button>
+        </form>
+
+        <div th:if="${param.error}" class="w3-panel w3-pale-yellow w3-border">
+            <p>Invalid data, please check it...</p></div>
+
+    </th:block>
+</div>
+</body>
+</html>

@@ -1,7 +1,6 @@
 package com.jarqprog.artGallery.springSecurity.config;
 
 
-import com.jarqprog.artGallery.springSecurity.userDetails.SimpleUserDetailsService;
 import com.jarqprog.artGallery.springWebMVC.handler.SimpleAccessDeniedHandler;
 import com.jarqprog.artGallery.springWebMVC.handler.SimpleAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,39 +26,20 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    @Autowired private SimpleUserDetailsService userDetailsService;
 
-    @Autowired private AccessDeniedHandler accessDeniedHandler;
-
-    @Autowired private AuthenticationFailureHandler authenticationFailureHandler;
-
-
+    private UserDetailsService userDetailsService;
 
     public SimpleSecurityConfig() {
         super();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new SimpleUserDetailsService();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+    @Autowired
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
-    @Autowired
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider());
     }
 
@@ -73,12 +53,13 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/css/**",
                             "/img/**",
                             "/webjars/**").permitAll()
-                    .antMatchers("/index.html").permitAll()
+                    .antMatchers("/user/registration", "/index", "/about-api").permitAll()
                     .antMatchers("/api/contacts/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
                     .antMatchers("/api/**").hasAnyRole("SUPER_ADMIN", "ADMIN", "USER")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
+//                    .failureHandler(authenticationFailureHandler())
                     .loginPage("/login")
                     .permitAll()
                 .and()
@@ -90,16 +71,29 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .and()
                     .exceptionHandling()
-                    .accessDeniedHandler(accessDeniedHandler);
+                    .accessDeniedHandler(accessDeniedHandler());
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
+    protected DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    protected AccessDeniedHandler accessDeniedHandler() {
         return new SimpleAccessDeniedHandler();
     }
 
     @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
+    protected AuthenticationFailureHandler authenticationFailureHandler() {
         return new SimpleAuthenticationFailureHandler();
+    }
+
+    @Bean
+    protected PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

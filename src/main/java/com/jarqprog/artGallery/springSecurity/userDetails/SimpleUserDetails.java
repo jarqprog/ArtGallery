@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class SimpleUserDetails extends User implements UserDetails {
 
 
-    public SimpleUserDetails(final User user) {
+    SimpleUserDetails(final User user) {
         super(user);
     }
 
