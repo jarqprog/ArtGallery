@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.springCommon;
 
-import com.jarqprog.artGallery.springData.PersistenceConfig;
+import com.jarqprog.artGallery.springData.config.PersistenceConfig;
 import com.jarqprog.artGallery.springSecurity.config.SimpleSecurityConfig;
 import com.jarqprog.artGallery.springWebMVC.config.WebMvcConfig;
 import org.springframework.web.filter.DelegatingFilterProxy;
