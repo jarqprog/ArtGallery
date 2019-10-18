@@ -7,7 +7,9 @@ import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.components.DtoEntityConverter;
 import com.jarqprog.artGallery.domain.useCases.RoleService;
 import com.jarqprog.artGallery.springData.repository.RoleRepository;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class SimpleRoleService implements RoleService {
     private final RoleRepository roleRepository;
     private final DtoEntityConverter dtoEntityConverter;
 
-    private static final Logger logger = Logger.getLogger(SimpleRoleService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleRoleService.class);
 
     @Autowired
     public SimpleRoleService(RoleRepository roleRepository, DtoEntityConverter dtoEntityConverter) {

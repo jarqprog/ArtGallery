@@ -4,7 +4,9 @@ package com.jarqprog.artGallery.springWebMVC.controller;
 import com.jarqprog.artGallery.domain.dto.ContactDTO;
 import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.domain.useCases.UserService;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final Logger logger = Logger.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
 

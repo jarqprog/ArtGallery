@@ -5,7 +5,9 @@ import com.jarqprog.artGallery.domain.entity.*;
 import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.dataLoader.InitialDataLoader;
 import com.jarqprog.artGallery.springData.repository.*;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +22,7 @@ import java.util.List;
 //@Profile({"dev", "test", "prod"})
 public class InitialDataLoaderImpl implements InitialDataLoader {
 
-    private static final Logger logger = Logger.getLogger(InitialDataLoaderImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderImpl.class);
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -55,34 +57,50 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         initRoles();
         initSuperAdmin();
         initAdmin();
-        initJelena();
+        initContactUserPicturesCommentaries();
         initSomeContacts();
         logger.info("populating DB - DONE!");
     }
 
-    /**
-     * Jelena is my wife and artist. I'm developing this app for her :)
-     */
-    private void initJelena() {
-        Contact jelena = new Contact("Jelena", "Kucharczyk", "jelenka@gmail.com");
-        jelena.setNickname("Alenka");
-        contactRepository.save(jelena);
+    @Transactional
+    private void initContactUserPicturesCommentaries() {
+        Contact contact = new Contact("Betty", "Sue", "bettys@gmail.com");
+        contact.setNickname("betty80");
+        contactRepository.save(contact);
 
-        User userJelena = createUser(jelena, Roles.USER, "login", "password");
+        User user = createUser(contact, Roles.USER, "betty80", "betty80");
 
-        Author authorJelena = new Author(jelena);
-        authorJelena.setArtisticNickname("Alenka");
-        authorRepository.save(authorJelena);
+        Author author = new Author(contact);
+        author.setArtisticNickname("betty-artist");
+        authorRepository.save(author);
 
         Picture spring = new Picture();
-        spring.setTitle("Wiosna");
-        spring.setAuthor(authorJelena);
+        spring.setTitle("Spring");
+        spring.setAuthor(author);
         pictureRepository.save(spring);
 
-        Commentary commentary = new Commentary("Zapraszam do ogladania");
-        commentary.setUser(userJelena);
-        commentary.setPicture(spring);
-        commentaryRepository.save(commentary);
+        Picture summer = new Picture();
+        summer.setTitle("Summer");
+        summer.setAuthor(author);
+        pictureRepository.save(summer);
+
+        Commentary firstCommentary = new Commentary("This is my first painting");
+        firstCommentary.setUser(user);
+        firstCommentary.setPicture(spring);
+
+        Commentary secondCommentary = new Commentary("Do you like it?");
+        secondCommentary.setUser(user);
+        secondCommentary.setPicture(spring);
+
+        Commentary thirdCommentary = new Commentary("Enjoy!");
+        thirdCommentary.setUser(user);
+        thirdCommentary.setPicture(spring);
+
+        Commentary commentary4Summer = new Commentary("I love summer!");
+        thirdCommentary.setUser(user);
+        thirdCommentary.setPicture(summer);
+
+        commentaryRepository.saveAll(List.of(firstCommentary, secondCommentary, thirdCommentary, commentary4Summer));
     }
 
     private void initSomeContacts() {

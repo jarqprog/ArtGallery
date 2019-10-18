@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.springWebMVC.handler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +16,7 @@ import java.io.IOException;
 @Component
 public class SimpleAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-    private static final Logger logger = Logger.getLogger(SimpleAuthenticationFailureHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleAuthenticationFailureHandler.class);
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest,

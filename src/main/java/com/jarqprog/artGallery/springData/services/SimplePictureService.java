@@ -11,7 +11,8 @@ import com.jarqprog.artGallery.springData.repository.PictureRepository;
 
 import com.jarqprog.artGallery.springData.repository.UserRepository;
 import com.jarqprog.artGallery.domain.useCases.PictureService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class SimplePictureService implements PictureService {
         this.dtoEntityConverter = dtoEntityConverter;
     }
 
-    private static final Logger logger = Logger.getLogger(SimplePictureService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimplePictureService.class);
 
     @Override
     public List<PictureDTO> getAllPictures() {
