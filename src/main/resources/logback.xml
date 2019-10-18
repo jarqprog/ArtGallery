@@ -1,0 +1,35 @@
+<configuration>
+    <property name="HOME_LOG" value="logs/art_gallery.log"/>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener"/>
+
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${HOME_LOG}</file>
+        <append>true</append>
+        <immediateFlush>true</immediateFlush>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.jarqprog" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE" />
+    </logger>
+
+    <logger name="org.hibernate" level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <root level="ERROR">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
