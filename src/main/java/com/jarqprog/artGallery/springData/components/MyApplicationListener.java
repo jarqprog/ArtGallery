@@ -1,7 +1,10 @@
 package com.jarqprog.artGallery.springData.components;
 
 import com.jarqprog.artGallery.springData.dataLoader.InitialDataLoader;
-import org.apache.log4j.Logger;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
@@ -13,7 +16,7 @@ import org.springframework.stereotype.Component;
 //@Profile({"dev", "prod"})
 public class MyApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
 
-    private static final Logger logger = Logger.getLogger(MyApplicationListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(MyApplicationListener.class);
 
     private final InitialDataLoader initialDataLoader;
 

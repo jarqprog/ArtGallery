@@ -2,7 +2,9 @@ package com.jarqprog.artGallery.springSecurity.userDetails;
 
 import com.jarqprog.artGallery.domain.entity.User;
 import com.jarqprog.artGallery.springData.repository.UserRepository;
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SimpleUserDetailsService implements UserDetailsService {
 
-    private static final Logger logger = Logger.getLogger(SimpleUserDetailsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleUserDetailsService.class);
 
     private final UserRepository userRepository;
 
