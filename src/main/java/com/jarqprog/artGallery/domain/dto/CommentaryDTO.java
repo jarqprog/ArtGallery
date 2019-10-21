@@ -8,7 +8,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=true)
 public class CommentaryDTO extends DTO {
 
-    private String content;
+    private String comment;
     private UserDTO user;
     private PictureDTO picture;
+
 }

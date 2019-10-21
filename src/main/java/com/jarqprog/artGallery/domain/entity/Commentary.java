@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class Commentary extends DomainEntity {
 
     @NotNull
-    private String content;
+    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -23,7 +23,7 @@ public class Commentary extends DomainEntity {
     @JoinColumn(name = "picture_id")
     private Picture picture;
 
-    public Commentary(String content) {
-        this.content = content;
+    public Commentary(String comment) {
+        this.comment = comment;
     }
 }

@@ -52,7 +52,7 @@ class RetrievingAllCommentariesTest {
     @DisplayName("every comment should have some content (text)")
     void checkEveryCommentContainsValidText() {
 
-        assertTrue(commentaries.stream().map(CommentaryDTO::getContent).allMatch(StringUtils::isNotBlank));
+        assertTrue(commentaries.stream().map(CommentaryDTO::getComment).allMatch(StringUtils::isNotBlank));
 
     }
 

@@ -40,9 +40,9 @@ public class RetrievingAllCommentariesAfterAddingTest {
 
         CommentaryDTO existingOne = commentaryService.findCommentaryById(1L); //to get Picture and User from it
 
-        String content = "I'm added";
+        String comment = "I'm added";
         CommentaryDTO commentaryToAdd = new CommentaryDTO();
-        commentaryToAdd.setContent(content);
+        commentaryToAdd.setComment(comment);
         commentaryToAdd.setPicture(existingOne.getPicture());
         commentaryToAdd.setUser(existingOne.getUser());
 
@@ -55,6 +55,6 @@ public class RetrievingAllCommentariesAfterAddingTest {
         List<CommentaryDTO> commentaries = commentaryService.getAllCommentaries();
 
         assertEquals(expectedSize, commentaries.size());
-        assertTrue(commentaries.stream().anyMatch(c -> c.getContent().equals(content)));
+        assertTrue(commentaries.stream().anyMatch(c -> c.getComment().equals(comment)));
     }
 }
