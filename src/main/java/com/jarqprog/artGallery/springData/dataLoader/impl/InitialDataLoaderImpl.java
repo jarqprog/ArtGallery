@@ -77,11 +77,13 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         Picture spring = new Picture();
         spring.setTitle("Spring");
         spring.setAuthor(author);
+        spring.setUser(user);
         pictureRepository.save(spring);
 
         Picture summer = new Picture();
         summer.setTitle("Summer");
         summer.setAuthor(author);
+        summer.setUser(user);
         pictureRepository.save(summer);
 
         Commentary firstCommentary = new Commentary("This is my first painting");
