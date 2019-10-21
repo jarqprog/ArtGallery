@@ -25,8 +25,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-
     private UserDetailsService userDetailsService;
 
     public SimpleSecurityConfig() {
@@ -56,20 +54,20 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/webjars/**").permitAll()
                     .antMatchers("/user/registration", "/index", "/about-api").permitAll()
                     .anyRequest().authenticated()
-                .and()
-                    .formLogin()
+                    .and()
+                .formLogin()
 //                    .failureHandler(authenticationFailureHandler())
                     .loginPage("/login")
                     .permitAll()
-                .and()
-                    .logout()
+                    .and()
+                .logout()
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login?logout")
                     .permitAll()
-                .and()
-                    .exceptionHandling()
+                    .and()
+                .exceptionHandling()
                     .accessDeniedHandler(accessDeniedHandler());
     }
 
