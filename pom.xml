@@ -13,14 +13,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.9</maven.compiler.source>
     <maven.compiler.target>1.9</maven.compiler.target>
-    <spring.version>5.1.6.RELEASE</spring.version>
+    <spring.version>5.1.5.RELEASE</spring.version>
     <logback.version>1.2.3</logback.version>
-    <thymeleaf.version>3.0.10.RELEASE</thymeleaf.version>
-    <jackson.version>2.9.10</jackson.version>
-    <thymeleaf-layout-dialect.version>2.3.0</thymeleaf-layout-dialect.version>
-    <thymeleaf-spring-data-dialect.version>3.3.1</thymeleaf-spring-data-dialect.version>
-    <thymeleaf-extras-springsecurity5.version>3.0.3.RELEASE</thymeleaf-extras-springsecurity5.version>
-    <thymeleaf-extras-java8time.version>3.0.1.RELEASE</thymeleaf-extras-java8time.version>
+    <jackson.version>2.10.0</jackson.version>
+    <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+    <thymeleaf-layout-dialect.version>2.4.1</thymeleaf-layout-dialect.version>
+    <thymeleaf-spring-data-dialect.version>3.4.1</thymeleaf-spring-data-dialect.version>
+    <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
+    <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
   </properties>
 
 
@@ -162,10 +162,12 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.8</version>
+      <version>1.18.10</version>
+      <scope>provided</scope>
     </dependency>
 
     <!-- DB -->
@@ -197,10 +199,11 @@
       <version>${jackson.version}</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.glassfish/javax.el -->
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.el</artifactId>
-      <version>3.0.1-b08</version>
+      <version>3.0.1-b11</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
