@@ -97,8 +97,8 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         thirdCommentary.setPicture(spring);
 
         Commentary commentary4Summer = new Commentary("I love summer!");
-        thirdCommentary.setUser(user);
-        thirdCommentary.setPicture(summer);
+        commentary4Summer.setUser(user);
+        commentary4Summer.setPicture(summer);
 
         commentaryRepository.saveAll(List.of(firstCommentary, secondCommentary, thirdCommentary, commentary4Summer));
     }
