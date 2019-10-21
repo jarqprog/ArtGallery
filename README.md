@@ -46,14 +46,14 @@ COMMENTARIES:
 * GET http://host:port/artgallery/api/pictures/commentaries/{commentaryID} - to get commentary having given id
 * POST http://host:port/artgallery/api/pictures/{pictureID}/commentaries/- to add commentary to picture having given pictureID, ex. json:
     {
-      "content":"I like it!"
+      "comment":"I like it!"
     }
 * PUT http://host:port/artgallery/api/pictures/{pictureID}/commentaries/{commentaryID} - to update commentary having given commentaryID
     and related to given picture (pictureID), example:
 
     http://localhost:8080/artgallery/api/pictures/6/commentaries/7
     {
-      "content":"I hate it!"
+      "comment":"I hate it!"
     }
 * DELETE http://host:port/artgallery/api/pictures/{pictureID}/commentaries/{commentaryID} - to delete commentary having given commentaryID
     and related to given picture (pictureID)
