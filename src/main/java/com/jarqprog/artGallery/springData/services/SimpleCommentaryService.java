@@ -1,10 +1,12 @@
 package com.jarqprog.artGallery.springData.services;
 
 
+import com.jarqprog.artGallery.domain.dto.PictureDTO;
 import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;
 import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
+import com.jarqprog.artGallery.domain.entity.User;
 import com.jarqprog.artGallery.springData.exceptions.InvalidObjectException;
 import com.jarqprog.artGallery.springData.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
@@ -12,6 +14,8 @@ import com.jarqprog.artGallery.springData.components.DtoEntityConverter;
 import com.jarqprog.artGallery.springData.repository.CommentaryRepository;
 import com.jarqprog.artGallery.springData.repository.PictureRepository;
 import com.jarqprog.artGallery.domain.useCases.CommentaryService;
+import com.jarqprog.artGallery.springData.repository.UserRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,16 +27,19 @@ import java.util.stream.Collectors;
 @Transactional
 public class SimpleCommentaryService implements CommentaryService {
 
-    private final CommentaryRepository commentaryRepository;
-    private final PictureRepository pictureRepository;
-    private final DtoEntityConverter dtoEntityConverter;
+    @NonNull private final CommentaryRepository commentaryRepository;
+    @NonNull private final PictureRepository pictureRepository;
+    @NonNull private final UserRepository userRepository;
+    @NonNull private final DtoEntityConverter dtoEntityConverter;
 
     @Autowired
-    public SimpleCommentaryService(CommentaryRepository commentaryRepository,
-                                   PictureRepository pictureRepository,
-                                   DtoEntityConverter dtoEntityConverter) {
+    public SimpleCommentaryService(@NonNull CommentaryRepository commentaryRepository,
+                                   @NonNull PictureRepository pictureRepository,
+                                   @NonNull UserRepository userRepository,
+                                   @NonNull DtoEntityConverter dtoEntityConverter) {
         this.commentaryRepository = commentaryRepository;
         this.pictureRepository = pictureRepository;
+        this.userRepository = userRepository;
         this.dtoEntityConverter = dtoEntityConverter;
     }
 
@@ -69,14 +76,17 @@ public class SimpleCommentaryService implements CommentaryService {
     public CommentaryDTO addCommentary(long pictureId, CommentaryDTO commentaryDTO) {
         long commentaryId = commentaryDTO.getId();
 
-        preventCreatingExistingCommentary(commentaryId);
+        preventCreatingAlreadyExistingCommentary(commentaryId);
+
+        preventPersistingCommentaryWithoutValidPicture(pictureId, commentaryDTO);
+        preventPersistingCommentaryWithoutValidUser(commentaryDTO);
 
         Picture picture = findPictureById(pictureId);
-
-        preventPersistingCommentaryWithoutValidUser(commentaryDTO);
+        User user = findUserById(commentaryDTO.getUser().getId());
 
         Commentary commentary = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
         commentary.setPicture(picture);
+        commentary.setUser(user);
         Commentary created = commentaryRepository.save(commentary);
         return dtoEntityConverter.convertEntityToDto(created, CommentaryDTO.class);
     }
@@ -84,14 +94,20 @@ public class SimpleCommentaryService implements CommentaryService {
     @Override
     public CommentaryDTO updateCommentary(long pictureId, long commentaryId, CommentaryDTO commentaryDTO) {
         validateCommentaryExists(commentaryId);
-        Picture picture = findPictureById(pictureId);
+
+        preventPersistingCommentaryWithoutValidPicture(pictureId, commentaryDTO);
         preventPersistingCommentaryWithoutValidUser(commentaryDTO);
 
+        Picture picture = findPictureById(pictureId);
+        User user = findUserById(commentaryDTO.getUser().getId());
+
         commentaryDTO.setId(commentaryId);
+
         Commentary updated = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
         updated.setPicture(picture);
+        updated.setUser(user);
+
         Commentary saved = commentaryRepository.save(updated);
-        saved = findById(saved.getId());
         return dtoEntityConverter.convertEntityToDto(saved, CommentaryDTO.class);
     }
 
@@ -118,15 +134,28 @@ public class SimpleCommentaryService implements CommentaryService {
                 .orElseThrow(() -> new ResourceNotFoundException(Picture.class, pictureId));
     }
 
+    private User findUserById(long userId) {
+        return userRepository
+                .findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(User.class, userId));
+    }
+
     private void validateCommentaryExists(long commentaryId) {
         if (!commentaryRepository.existsById(commentaryId)) {
             throw new ResourceNotFoundException(Commentary.class, commentaryId);
         }
     }
 
-    private void preventCreatingExistingCommentary(long commentaryId) {
+    private void preventCreatingAlreadyExistingCommentary(long commentaryId) {
         if (commentaryRepository.existsById(commentaryId)) {
             throw new ResourceAlreadyExists(Commentary.class, commentaryId);
+        }
+    }
+
+    private void preventPersistingCommentaryWithoutValidPicture(long pictureId, CommentaryDTO commentaryDTO) {
+        PictureDTO pictureDTO = commentaryDTO.getPicture();
+        if (pictureDTO == null || pictureDTO.getId() <= 0 || pictureId != pictureDTO.getId()) {
+            throw new InvalidObjectException(CommentaryDTO.class, "No valid Picture");
         }
     }
 
