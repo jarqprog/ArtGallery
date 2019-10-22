@@ -57,7 +57,7 @@ class UpdatingCommentaryTest {
     }
 
     @Test
-    @DisplayName("ResourceNotFoundException should be thrown")
+    @DisplayName("InvalidObjectException should be thrown")
     void tryToUpdateExistingCommentaryUsingInvalidPictureId() {
 
         long notExistingPictureId = 76576;
@@ -67,7 +67,7 @@ class UpdatingCommentaryTest {
 
         long commentaryId = existingCommentary.getId();
 
-        assertThrows(ResourceNotFoundException.class,
+        assertThrows(InvalidObjectException.class,
                 () -> commentaryService.updateCommentary(notExistingPictureId, commentaryId, existingCommentary));
     }
 

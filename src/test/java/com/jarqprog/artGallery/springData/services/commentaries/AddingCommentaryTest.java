@@ -54,7 +54,7 @@ class AddingCommentaryTest {
     }
 
     @Test
-    @DisplayName("ResourceNotFoundException should be thrown")
+    @DisplayName("InvalidObjectException should be thrown")
     void tryToAddCommentaryUsingInvalidPictureId() {
 
         long notExistingPictureId = 87676;
@@ -62,12 +62,12 @@ class AddingCommentaryTest {
         CommentaryDTO invalidCommentary = new CommentaryDTO();
         invalidCommentary.setComment("I am invalid - invalid picture id, no picture, no user");
 
-        assertThrows(ResourceNotFoundException.class,
+        assertThrows(InvalidObjectException.class,
                 () -> commentaryService.addCommentary(notExistingPictureId, invalidCommentary));
     }
 
     @Test
-    @DisplayName("ResourceNotFoundException should be thrown")
+    @DisplayName("InvalidObjectException should be thrown")
     void tryToAddCommentaryWithoutPictureAndUser() {
 
         long notExistingPictureId = 87676;
@@ -75,7 +75,7 @@ class AddingCommentaryTest {
         CommentaryDTO invalidCommentary = new CommentaryDTO();
         invalidCommentary.setComment("I am invalid - invalid picture id, no picture, no user");
 
-        assertThrows(ResourceNotFoundException.class,
+        assertThrows(InvalidObjectException.class,
                 () -> commentaryService.addCommentary(notExistingPictureId, invalidCommentary));;
     }
 
@@ -120,6 +120,45 @@ class AddingCommentaryTest {
             () -> assertEquals(comment, addedCommentary.getComment()),
             () -> assertEquals(pictureDTO.getId(), addedCommentary.getPicture().getId()),
             () -> assertEquals(userDTO.getId(), addedCommentary.getUser().getId())
+        );
+
+        CommentaryDTO retrievedCommentary = commentaryService.findCommentaryById(addedCommentaryId);
+
+        assertAll(
+                () -> assertEquals(addedCommentaryId, retrievedCommentary.getId()),
+                () -> assertEquals(comment, retrievedCommentary.getComment()),
+                () -> assertEquals(pictureDTO.getId(), retrievedCommentary.getPicture().getId()),
+                () -> assertEquals(userDTO.getId(), retrievedCommentary.getUser().getId())
+        );
+
+    }
+
+    @Test
+    @DisplayName("Commentary should be added, User should not be updated")
+    void tryToUpdateUserByAddingCommentary() {
+
+        CommentaryDTO existingCommentary = commentaryService.findCommentaryById(1);
+        PictureDTO pictureDTO = existingCommentary.getPicture();
+        UserDTO userDTO = existingCommentary.getUser();
+        long pictureId = pictureDTO.getId();
+        String comment = "I am OK";
+
+
+        // todo
+
+        CommentaryDTO commentaryToAdd = new CommentaryDTO();
+        commentaryToAdd.setComment(comment);
+        commentaryToAdd.setPicture(pictureDTO);
+        commentaryToAdd.setUser(userDTO);
+
+        CommentaryDTO addedCommentary = commentaryService.addCommentary(pictureId, commentaryToAdd);
+        long addedCommentaryId = addedCommentary.getId();
+
+        assertAll(
+                () -> assertTrue(addedCommentaryId > 0),
+                () -> assertEquals(comment, addedCommentary.getComment()),
+                () -> assertEquals(pictureDTO.getId(), addedCommentary.getPicture().getId()),
+                () -> assertEquals(userDTO.getId(), addedCommentary.getUser().getId())
         );
 
         CommentaryDTO retrievedCommentary = commentaryService.findCommentaryById(addedCommentaryId);
