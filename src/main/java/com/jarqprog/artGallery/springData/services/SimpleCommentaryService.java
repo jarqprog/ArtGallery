@@ -1,9 +1,11 @@
 package com.jarqprog.artGallery.springData.services;
 
 
+import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;
 import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
+import com.jarqprog.artGallery.springData.exceptions.InvalidObjectException;
 import com.jarqprog.artGallery.springData.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.components.DtoEntityConverter;
@@ -66,8 +68,13 @@ public class SimpleCommentaryService implements CommentaryService {
     @Override
     public CommentaryDTO addCommentary(long pictureId, CommentaryDTO commentaryDTO) {
         long commentaryId = commentaryDTO.getId();
+
         preventCreatingExistingCommentary(commentaryId);
+
         Picture picture = findPictureById(pictureId);
+
+        preventPersistingCommentaryWithoutValidUser(commentaryDTO);
+
         Commentary commentary = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
         commentary.setPicture(picture);
         Commentary created = commentaryRepository.save(commentary);
@@ -78,6 +85,8 @@ public class SimpleCommentaryService implements CommentaryService {
     public CommentaryDTO updateCommentary(long pictureId, long commentaryId, CommentaryDTO commentaryDTO) {
         validateCommentaryExists(commentaryId);
         Picture picture = findPictureById(pictureId);
+        preventPersistingCommentaryWithoutValidUser(commentaryDTO);
+
         commentaryDTO.setId(commentaryId);
         Commentary updated = dtoEntityConverter.convertDtoToEntity(commentaryDTO, Commentary.class);
         updated.setPicture(picture);
@@ -118,6 +127,13 @@ public class SimpleCommentaryService implements CommentaryService {
     private void preventCreatingExistingCommentary(long commentaryId) {
         if (commentaryRepository.existsById(commentaryId)) {
             throw new ResourceAlreadyExists(Commentary.class, commentaryId);
+        }
+    }
+
+    private void preventPersistingCommentaryWithoutValidUser(CommentaryDTO commentaryDTO) {
+        UserDTO userDTO = commentaryDTO.getUser();
+        if (userDTO == null || userDTO.getId() <= 0) {
+            throw new InvalidObjectException(CommentaryDTO.class, "No valid User");
         }
     }
 }
