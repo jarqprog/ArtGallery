@@ -2,7 +2,6 @@ package com.jarqprog.artGallery.springData.services.commentaries;
 
 
 import com.jarqprog.artGallery.SpringServiceTestConfig;
-
 import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
 import com.jarqprog.artGallery.domain.useCases.CommentaryService;
 import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
@@ -16,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Values used in test methods are related to values set in InitialDataLoader
@@ -24,12 +24,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
-public class RetrievingCommentaryByIdTest {
+public class RetrievingCommentaryByIdAndPictureIdTest {
 
     private final CommentaryService commentaryService;
 
     @Autowired
-    public RetrievingCommentaryByIdTest(CommentaryService commentaryService) {
+    public RetrievingCommentaryByIdAndPictureIdTest(CommentaryService commentaryService) {
         assert commentaryService != null;
         this.commentaryService = commentaryService;
     }
@@ -39,33 +39,21 @@ public class RetrievingCommentaryByIdTest {
     void tryToRetrieveNotExistingComment() {
 
         long notExistingCommentaryId = 10099;
-        long pictureId = 1;
 
         assertThrows(ResourceNotFoundException.class,
-                () -> commentaryService.findCommentaryById(pictureId, notExistingCommentaryId));
+                () -> commentaryService.findCommentaryById(notExistingCommentaryId));
     }
 
     @Test
-    @DisplayName("ResourceNotFoundException should be thrown")
-    void tryToRetrieveCommentIfPictureIdIsInvalid() {
-
-        long commentaryId = 1;
-        long notExistingPictureId = 1876876;
-
-        assertThrows(ResourceNotFoundException.class,
-                () -> commentaryService.findCommentaryById(notExistingPictureId, commentaryId));
-    }
-
-    @Test
-    @DisplayName("should return valid comment")
-    void retrieveComment() {
+    @DisplayName("comment should be returned with valid values")
+    void tryToRetrieveExistingComment() {
 
         long existingCommentaryId = 1;
-        long pictureId = 1;
         String comment = "This is my first painting";
+        long pictureId = 1;
         long userId = 3;
 
-        CommentaryDTO commentaryDTO = commentaryService.findCommentaryById(pictureId, existingCommentaryId);
+        CommentaryDTO commentaryDTO = commentaryService.findCommentaryById(existingCommentaryId);
 
         assertAll(
 
@@ -75,4 +63,5 @@ public class RetrievingCommentaryByIdTest {
                 () -> assertEquals(userId, commentaryDTO.getUser().getId())
         );
     }
+
 }
