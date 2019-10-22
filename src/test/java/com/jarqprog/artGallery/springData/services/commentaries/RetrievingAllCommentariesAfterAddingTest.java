@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
-public class RetrievingAllCommentariesAfterAddingTest {
+class RetrievingAllCommentariesAfterAddingTest {
 
     private final CommentaryService commentaryService;
 

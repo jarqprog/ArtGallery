@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
-public class RetrievingCommentaryByIdAndPictureIdTest {
+class RetrievingCommentaryByIdAndPictureIdTest {
 
     private final CommentaryService commentaryService;
 

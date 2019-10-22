@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
-public class RetrievingCommentariesByPictureTest {
+class RetrievingCommentariesByPictureTest {
 
     private static final Logger logger = LoggerFactory.getLogger(RetrievingCommentariesByPictureTest.class);
 

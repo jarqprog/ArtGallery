@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
-public class RetrievingAllCommentariesAfterDeletingTest {
+class RetrievingAllCommentariesAfterDeletingTest {
 
     private final CommentaryService commentaryService;
     private final CommentaryRepository commentaryRepository;
