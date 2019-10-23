@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.springWebMVC.controller;
 
 import com.jarqprog.artGallery.springData.exceptions.HttpExceptionInfo;
+import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.exceptions.implementation.HttpExceptionInfoImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -25,21 +26,36 @@ public class ErrorController extends ResponseEntityExceptionHandler {
         return "/error/error";
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    protected String handleNotFoundResource(final ResourceNotFoundException exception, final Model model) {
+        handleExceptionInfo("Resource not found", exception, model, HttpStatus.NOT_FOUND);
+        return "/error/error";
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected String handleIncorrectArguments(final IllegalArgumentException exception, final Model model) {
+        handleExceptionInfo("Incorrect argument was given", exception, model, HttpStatus.BAD_REQUEST);
+        return "/error/error";
+    }
+
+
+
     private void handleExceptionInfo(String message, final Exception exception,
                                      final Model model, HttpStatus httpStatus) {
 
         HttpExceptionInfo httpExceptionInfo = new HttpExceptionInfoImpl(httpStatus, message, exception);
         model.addAttribute("clientInfo", httpExceptionInfo);
-        logger.error(String.format("UUID: %s - Exception in controller layer", httpExceptionInfo.getUuid()), exception);
+        logger.error(String.format("UUID: %s - Exception handled in controller layer",
+                httpExceptionInfo.getUuid()), exception);
     }
 
     //use this one for REST
 //    @ExceptionHandler(ResourceNotFoundException.class)
 //    public ResponseEntity<HttpExceptionInfo> customHandleNotFound(Exception ex, WebRequest request) {
 //        HttpExceptionInfo httpExceptionInfo = new HttpExceptionInfoImpl(httpStatus, message, exception);
-//        model.addAttribute("exceptionInfo", httpExceptionInfo);
 //        logger.error(String.format("UUID: %s - Exception in controller layer", httpExceptionInfo.getUuid()), exception);
-//
 //        return new ResponseEntity<>(exceptionInfo, HttpStatus.NOT_FOUND);
 //    }
 }
