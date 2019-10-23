@@ -1,8 +1,8 @@
 package com.jarqprog.artGallery.springWebMVC.controller;
 
 
-import com.jarqprog.artGallery.domain.dto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
 import com.jarqprog.artGallery.domain.useCases.UserService;
 
 import org.slf4j.Logger;

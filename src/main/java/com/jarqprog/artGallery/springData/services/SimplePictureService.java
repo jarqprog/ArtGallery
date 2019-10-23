@@ -2,8 +2,8 @@ package com.jarqprog.artGallery.springData.services;
 
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;
-import com.jarqprog.artGallery.domain.dto.PictureDTO;
-import com.jarqprog.artGallery.springData.components.DtoEntityConverter;
+import com.jarqprog.artGallery.domain.dto.heavyDto.PictureDTO;
+import com.jarqprog.artGallery.domain.dto.DtoConverter;
 import com.jarqprog.artGallery.springData.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.repository.CommentaryRepository;
@@ -26,17 +26,17 @@ public class SimplePictureService implements PictureService {
     private final PictureRepository pictureRepository;
     private final CommentaryRepository commentaryRepository;
     private final UserRepository userRepository;
-    private final DtoEntityConverter dtoEntityConverter;
+    private final DtoConverter dtoConverter;
 
     @Autowired
     public SimplePictureService(PictureRepository pictureRepository,
                                 CommentaryRepository commentaryRepository,
                                 UserRepository userRepository,
-                                DtoEntityConverter dtoEntityConverter) {
+                                DtoConverter dtoConverter) {
         this.pictureRepository = pictureRepository;
         this.commentaryRepository = commentaryRepository;
         this.userRepository = userRepository;
-        this.dtoEntityConverter = dtoEntityConverter;
+        this.dtoConverter = dtoConverter;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(SimplePictureService.class);
@@ -45,31 +45,31 @@ public class SimplePictureService implements PictureService {
     public List<PictureDTO> getAllPictures() {
         return pictureRepository.findAll()
                 .stream()
-                .map(p -> dtoEntityConverter.convertEntityToDto(p, PictureDTO.class))
+                .map(p -> dtoConverter.convertEntityToDto(p, PictureDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public PictureDTO findPictureById(long id) {
         Picture picture = findById(id);
-        return dtoEntityConverter.convertEntityToDto(picture, PictureDTO.class);
+        return dtoConverter.convertEntityToDto(picture, PictureDTO.class);
     }
 
     @Override
     public PictureDTO addPicture(PictureDTO pictureDTO) {
         preventCreatingExistingPicture(pictureDTO.getId());
-        Picture picture = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
+        Picture picture = dtoConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(picture);
-        return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
+        return dtoConverter.convertEntityToDto(saved, PictureDTO.class);
     }
 
     @Override
     public PictureDTO updatePicture(long id, PictureDTO pictureDTO) {
         validatePictureExists(id);
         pictureDTO.setId(id);
-        Picture updated = dtoEntityConverter.convertDtoToEntity(pictureDTO, Picture.class);
+        Picture updated = dtoConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(updated);
-        return dtoEntityConverter.convertEntityToDto(saved, PictureDTO.class);
+        return dtoConverter.convertEntityToDto(saved, PictureDTO.class);
     }
 
     @Override

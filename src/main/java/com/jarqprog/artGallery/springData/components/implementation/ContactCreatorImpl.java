@@ -1,10 +1,10 @@
 package com.jarqprog.artGallery.springData.components.implementation;
 
 
-import com.jarqprog.artGallery.domain.dto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
 import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
 import com.jarqprog.artGallery.springData.components.ContactCreator;
-import com.jarqprog.artGallery.springData.components.DtoEntityConverter;
+import com.jarqprog.artGallery.domain.dto.DtoConverter;
 import com.jarqprog.artGallery.springData.components.UserRegistrationValidator;
 import com.jarqprog.artGallery.domain.useCases.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +13,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class ContactCreatorImpl implements ContactCreator {
 
-    private final DtoEntityConverter dtoEntityConverter;
+    private final DtoConverter dtoConverter;
     private final UserRegistrationValidator userRegistrationValidator;
     private final ContactService contactService;
 
     @Autowired
-    public ContactCreatorImpl(DtoEntityConverter dtoEntityConverter,
+    public ContactCreatorImpl(DtoConverter dtoConverter,
                               UserRegistrationValidator userRegistrationValidator,
                               ContactService contactService) {
-        assert dtoEntityConverter != null;
+        assert dtoConverter != null;
         assert userRegistrationValidator != null;
         assert contactService != null;
-        this.dtoEntityConverter = dtoEntityConverter;
+        this.dtoConverter = dtoConverter;
         this.userRegistrationValidator = userRegistrationValidator;
         this.contactService = contactService;
     }

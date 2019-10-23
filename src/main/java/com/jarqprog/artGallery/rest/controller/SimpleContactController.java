@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.rest.controller;
 
-import com.jarqprog.artGallery.domain.dto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
 import com.jarqprog.artGallery.domain.useCases.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -2,8 +2,8 @@ package com.jarqprog.artGallery.domain.entity;
 
 import lombok.*;
 
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Table(name="commentaries")
 public class Commentary extends DomainEntity {
 
-    @NotNull
+    @NonNull
     private String comment;
 
     @ManyToOne

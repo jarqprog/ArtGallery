@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.domain.useCases;
 
-import com.jarqprog.artGallery.domain.dto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

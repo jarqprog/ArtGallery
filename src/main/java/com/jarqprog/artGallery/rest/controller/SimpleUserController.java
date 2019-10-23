@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.rest.controller;
 
-import com.jarqprog.artGallery.domain.dto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
 import com.jarqprog.artGallery.domain.useCases.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

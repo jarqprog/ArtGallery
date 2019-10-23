@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.rest.controller;
 
-import com.jarqprog.artGallery.domain.dto.PictureDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.PictureDTO;
 import com.jarqprog.artGallery.domain.useCases.PictureService;
 
 import org.springframework.beans.factory.annotation.Autowired;

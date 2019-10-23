@@ -3,10 +3,10 @@ package com.jarqprog.artGallery.springData.services;
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;
 import com.jarqprog.artGallery.domain.entity.User;
-import com.jarqprog.artGallery.domain.dto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
 import com.jarqprog.artGallery.springData.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
-import com.jarqprog.artGallery.springData.components.DtoEntityConverter;
+import com.jarqprog.artGallery.domain.dto.DtoConverter;
 import com.jarqprog.artGallery.springData.repository.CommentaryRepository;
 import com.jarqprog.artGallery.springData.repository.PictureRepository;
 import com.jarqprog.artGallery.springData.repository.UserRepository;
@@ -29,19 +29,19 @@ public class SimpleUserService implements UserService {
     private final UserRepository userRepository;
     private final PictureRepository pictureRepository;
     private final CommentaryRepository commentaryRepository;
-    private final DtoEntityConverter dtoEntityConverter;
+    private final DtoConverter dtoConverter;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public SimpleUserService(UserRepository userRepository,
                              PictureRepository pictureRepository,
                              CommentaryRepository commentaryRepository,
-                             DtoEntityConverter dtoEntityConverter,
+                             DtoConverter dtoConverter,
                              PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.pictureRepository = pictureRepository;
         this.commentaryRepository = commentaryRepository;
-        this.dtoEntityConverter = dtoEntityConverter;
+        this.dtoConverter = dtoConverter;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -49,39 +49,39 @@ public class SimpleUserService implements UserService {
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(p -> dtoEntityConverter.convertEntityToDto(p, UserDTO.class))
+                .map(p -> dtoConverter.convertEntityToDto(p, UserDTO.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDTO findUserById(long id) {
         User User = findById(id);
-        return dtoEntityConverter.convertEntityToDto(User, UserDTO.class);
+        return dtoConverter.convertEntityToDto(User, UserDTO.class);
     }
 
     @Override
     public UserDTO findUserByLogin(String login) {
         User User = findByLogin(login);
-        return dtoEntityConverter.convertEntityToDto(User, UserDTO.class);
+        return dtoConverter.convertEntityToDto(User, UserDTO.class);
     }
 
     @Override
     public UserDTO addUser(UserDTO userDTO) {
         preventCreatingExistingUser(userDTO.getId());
-        User user = dtoEntityConverter.convertDtoToEntity(userDTO, User.class);
+        User user = dtoConverter.convertDtoToEntity(userDTO, User.class);
         String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));
         User saved = userRepository.save(user);
-        return dtoEntityConverter.convertEntityToDto(saved, UserDTO.class);
+        return dtoConverter.convertEntityToDto(saved, UserDTO.class);
     }
 
     @Override
     public UserDTO updateUser(long id, UserDTO userDTO) {
         validateUserExists(id);
         userDTO.setId(id);
-        User updated = dtoEntityConverter.convertDtoToEntity(userDTO, User.class);
+        User updated = dtoConverter.convertDtoToEntity(userDTO, User.class);
         User saved = userRepository.save(updated);
-        return dtoEntityConverter.convertEntityToDto(saved, UserDTO.class);
+        return dtoConverter.convertEntityToDto(saved, UserDTO.class);
     }
 
     @Override
