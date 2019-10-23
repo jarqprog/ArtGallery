@@ -44,6 +44,8 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().ignoringAntMatchers("/api","/api/**")// todo temp
+                    .and()
                 .authorizeRequests()
                     .antMatchers(
                             "/",
