@@ -3,70 +3,112 @@
 
 Spring Data / MVC / Security project. Java 9 with embedded Tomcat7
 
-To run this application you will need MySQL server. Postman would be handy for POST, PUT and DELETE requests.
+Postman would be handy for POST, PUT and DELETE requests.
 
-* create database 'art_gallery' on MySQL server (application handles tables creation)
-* type in the command line: 'mvn clean install tomcat7:run -Dspring.profiles.active=dev'
+To run application (using Maven) type in the command line: 'mvn clean install tomcat7:run -Dspring.profiles.active=dev'
+Application will start with 'dev' Profile.
+
+To run with 'prod' (production) Profile you will need MySQL server and create database 'art_gallery' on it
+(application's ORM handles DB tables creation and populates some initial data).
 
 Api functionalities at the moment (wip):
 
-***
-PICTURES:
-* GET http://host:port/artgallery/api/pictures - to get all pictures, example:
-    http://localhost:8080/artgallery/api/pictures
-* GET http://host:port/artgallery/api/pictures/{ID} - to get picture having given id
-    http://localhost:8080/artgallery/api/pictures/6
-* POST http://host:port/artgallery/api/pictures - to add picture, ex. json:
-    {
-        "title": "some title"
-    }
-* PUT http://host:port/artgallery/api/pictures/{ID} - to update picture having given id, ex. json:
-    {
-        "title": "changed title"
-    }
-* DELETE http://host:port/artgallery/api/pictures/{ID} - to delete picture by id
+    /artgallery/api/light/.... <- to get simplified resources (without nested resources), ex.
+
+        'http://localhost:8080/artgallery/api/light/pictures/commentaries' with GET method will return:
+        [
+            {
+                id: 1,
+                version: 0,
+                comment: "This is my first painting",
+                userId: 3,
+                pictureId: 1
+            },
+            {
+                id: 2,
+                version: 0,
+                comment: "Do you like it?",
+                userId: 3,
+                pictureId: 1
+            }
+        ]
+
+    /artgallery/api/heavy/.... <- to get full resources (with nested resources, to avoid multiple request), ex.
+ 
+        http://localhost:8080/artgallery/api/heavy/pictures/1/commentaries/1 with GET method will return:
+
+        {
+            id: 1,
+            version: 0,
+            comment: "This is my first painting",
+            user: {
+                id: 3,
+                version: 0,
+                    contact: {
+                    id: 3,
+                    version: 0,
+                    firstName: "Betty",
+                    lastName: "Sue",
+                    nickname: "betty80",
+                    email: "bettys@gmail.com"
+                    },
+                login: "betty80"
+            },
+            picture: {
+                id: 1,
+                version: 0,
+                title: "Spring",
+                path: null,
+                author: {
+                    id: 1,
+                    version: 0,
+                    artisticNickname: "betty-artist",
+                        contact: {
+                            id: 3,
+                            version: 0,
+                            firstName: "Betty",
+                            lastName: "Sue",
+                            nickname: "betty80",
+                            email: "bettys@gmail.com"
+                        }
+                },
+                user: {
+                    id: 3,
+                    version: 0,
+                    contact: {
+                        id: 3,
+                        version: 0,
+                        firstName: "Betty",
+                        lastName: "Sue",
+                        nickname: "betty80",
+                        email: "bettys@gmail.com"
+                    },
+                    login: "betty80"
+                }
+            }
+        }
 
 ***
-CONTACTS:
-* GET http://host:port/artgallery/api/contacts - to get all contacts
-* GET http://host:port/artgallery/api/contacts/{ID} - to get contact with given id
-* POST http://host:port/artgallery/api/contacts - to add contact, ex. json:
-    {
-      "firstName":"Nick","lastName":"Smith","nickname":"nicky"
-    }
-* PUT http://host:port/artgallery/api/contacts/{ID} - to update contact having given id
-* DELETE http://host:port/artgallery/api/contacts/{ID} - to delete contact by id
+ENDPOINTS available at the moment:
 
-***
-COMMENTARIES:
-* GET http://host:port/artgallery/api/pictures/commentaries - to get all commentaries
-* GET http://host:port/artgallery/api/pictures/{{pictureID}}/commentaries - to get all commentaries by picture ID
-* GET http://host:port/artgallery/api/pictures/{pictureID}/commentaries/{commentaryID} - to get commentary having given id
-    and related to given picture (pictureID)
-* GET http://host:port/artgallery/api/pictures/commentaries/{commentaryID} - to get commentary having given id
-* POST http://host:port/artgallery/api/pictures/{pictureID}/commentaries/- to add commentary to picture having given pictureID, ex. json:
-    {
-      "comment":"I like it!"
-    }
-* PUT http://host:port/artgallery/api/pictures/{pictureID}/commentaries/{commentaryID} - to update commentary having given commentaryID
-    and related to given picture (pictureID), example:
+    /artgallery/api/{light or heavy}/pictures
+    /artgallery/api/{light or heavy}/pictures/commentaries
+    /artgallery/api/{light or heavy}/users
+    /artgallery/api/{light or heavy}/contacts
 
-    http://localhost:8080/artgallery/api/pictures/6/commentaries/7
-    {
-      "comment":"I hate it!"
-    }
-* DELETE http://host:port/artgallery/api/pictures/{pictureID}/commentaries/{commentaryID} - to delete commentary having given commentaryID
-    and related to given picture (pictureID)
-* DELETE http://host:port/artgallery/api/pictures/commentaries/{commentaryID} - to delete commentary having given commentaryID
+Put ID number after resource to get single data, ex.
+    
+    /artgallery/api/{light or heavy}/pictures/1 <-- (with http GET method) to get Picture having ID=1
+    
+    /artgallery/api/{light or heavy}/pictures/1/commentaries/2 <-- (with http GET method) to get Commentary with ID=2
+    related to Picture with ID=1 
 
-***
-USERS:
-* GET http://host:port/artgallery/api/users - to get all users
-* GET http://host:port/artgallery/api/users/{ID} - to get user with given id
-* POST http://host:port/artgallery/api/users - to add user, ex. json:
-* PUT http://host:port/artgallery/api/users/{ID} - to update user having given id
-* DELETE http://host:port/artgallery/api/users/{ID} - to delete user by id
+URL without ID will return collection of objects
 
+Main concepts (in short):
+    //todo
+    API - simple layered architecture (dao / services / controllers).
+    Entities  
 
 todo (next iterations):
 * add service and controllers for commentary domain - DONE
@@ -79,7 +121,7 @@ todo (next iterations):
 * add friends (so user could invite someone to friends list)
 * separate domain (entities, DTOs) from framework implementation details - DONE
 * add users identification and authorisation (security), roles, privileges - DONE for web application
-* add profiles (dev / test / production)
+* add profiles (dev / test / production) - DONE
 * add unit tests for domain (assuming unit is service + dao layer), use in memory database (avoid testing mocks)
 * add unit tests for controller (mock service layer, unit is controller behavior only)
 * add user to picture and commentary methods (services, controllers) - DONE
