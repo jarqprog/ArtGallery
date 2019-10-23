@@ -96,6 +96,8 @@ ENDPOINTS available at the moment:
     /artgallery/api/{light or heavy}/users
     /artgallery/api/{light or heavy}/contacts
 
+Handled Http methods at the moment: GET, POST, PUT, DELETE
+
 Put ID number after resource to get single data, ex.
     
     /artgallery/api/{light or heavy}/pictures/1 <-- (with http GET method) to get Picture having ID=1
