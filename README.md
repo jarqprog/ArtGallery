@@ -108,7 +108,12 @@ Put ID number after resource to get single data, ex.
 URL without ID will return collection of objects
 
 Main concepts (in short):
-    //todo
+* persistence - SQL Databases (MySQL - production, H2 - development, tests)
+* using Spring Data, ORM - Hibernate
+* model/domain objects (entities, DTOs) - anemic/POJO-like (logic is handled by services)
+
+    - 
+    - DTOs ()
     API - simple layered architecture (dao / services / controllers).
     Entities  
 
