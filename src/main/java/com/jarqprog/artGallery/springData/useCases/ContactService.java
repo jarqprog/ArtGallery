@@ -1,6 +1,8 @@
-package com.jarqprog.artGallery.domain.useCases;
+package com.jarqprog.artGallery.springData.useCases;
 
 import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.lightDto.ContactDTOLight;
+import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,8 +12,8 @@ public interface ContactService {
 
     List<ContactDTO> getAllContacts();
     ContactDTO findContactById(long id);
-    ContactDTO addContact(ContactDTO contactDTO);
-    ContactDTO updateContact(long id, ContactDTO contactDTO);
+    ContactDTO addContact(@NonNull ContactDTOLight contactDTO);
+    ContactDTO updateContact(long id, @NonNull ContactDTOLight contactDTO);
     void removeContact(long id);
 
 }

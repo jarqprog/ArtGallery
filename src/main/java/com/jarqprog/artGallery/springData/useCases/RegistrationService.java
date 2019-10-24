@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.domain.useCases;
+package com.jarqprog.artGallery.springData.useCases;
 
 import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
 import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;

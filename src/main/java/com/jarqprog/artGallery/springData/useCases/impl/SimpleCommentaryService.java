@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.springData.services;
+package com.jarqprog.artGallery.springData.useCases.impl;
 
 
 import com.jarqprog.artGallery.domain.dto.lightDto.CommentaryDTOLight;
@@ -12,7 +12,7 @@ import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.domain.dto.DtoConverter;
 import com.jarqprog.artGallery.springData.repository.CommentaryRepository;
 import com.jarqprog.artGallery.springData.repository.PictureRepository;
-import com.jarqprog.artGallery.domain.useCases.CommentaryService;
+import com.jarqprog.artGallery.springData.useCases.CommentaryService;
 import com.jarqprog.artGallery.springData.repository.UserRepository;
 import com.jarqprog.artGallery.springWebMVC.controller.ErrorController;
 import lombok.NonNull;
@@ -37,6 +37,7 @@ public class SimpleCommentaryService implements CommentaryService {
     @NonNull private final UserRepository userRepository;
     @NonNull private final DtoConverter dtoConverter;
 
+    @Autowired
     public SimpleCommentaryService(@NonNull CommentaryValidator commentaryValidator,
                                    @NonNull CommentaryRepository commentaryRepository,
                                    @NonNull PictureRepository pictureRepository,
@@ -49,7 +50,6 @@ public class SimpleCommentaryService implements CommentaryService {
         this.dtoConverter = dtoConverter;
     }
 
-    @Autowired
 
 
     @Override
@@ -117,7 +117,12 @@ public class SimpleCommentaryService implements CommentaryService {
     @Override
     public void removeCommentary(long pictureId, long commentaryId) {
         findPictureById(pictureId);
-        removeCommentary(commentaryId);
+        Commentary commentary = findById(commentaryId);
+
+        if (pictureId != commentary.getPicture().getId()) {
+            throw new IllegalArgumentException("Incorrect Picture ID");
+        }
+        commentaryRepository.deleteById(commentaryId);
     }
 
     @Override
@@ -125,7 +130,6 @@ public class SimpleCommentaryService implements CommentaryService {
         findById(id);
         commentaryRepository.deleteById(id);
     }
-
 
 
     private Commentary findById(long id) {

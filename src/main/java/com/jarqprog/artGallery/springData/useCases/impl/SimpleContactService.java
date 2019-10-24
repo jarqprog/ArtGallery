@@ -1,5 +1,6 @@
-package com.jarqprog.artGallery.springData.services;
+package com.jarqprog.artGallery.springData.useCases.impl;
 
+import com.jarqprog.artGallery.domain.dto.lightDto.ContactDTOLight;
 import com.jarqprog.artGallery.domain.entity.Author;
 import com.jarqprog.artGallery.domain.entity.Contact;
 import com.jarqprog.artGallery.domain.entity.User;
@@ -10,7 +11,8 @@ import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.repository.AuthorRepository;
 import com.jarqprog.artGallery.springData.repository.ContactRepository;
 import com.jarqprog.artGallery.springData.repository.UserRepository;
-import com.jarqprog.artGallery.domain.useCases.ContactService;
+import com.jarqprog.artGallery.springData.useCases.ContactService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +54,7 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public ContactDTO addContact(ContactDTO contactDTO) {
+    public ContactDTO addContact(@NonNull ContactDTOLight contactDTO) {
         preventCreatingExistingContact(contactDTO.getId());
         Contact contact = dtoConverter.convertDtoToEntity(contactDTO, Contact.class);
         Contact saved = contactRepository.save(contact);
@@ -60,7 +62,7 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public ContactDTO updateContact(long id, ContactDTO contactDTO) {
+    public ContactDTO updateContact(long id, @NonNull ContactDTOLight contactDTO) {
         validateContactExists(id);
         contactDTO.setId(id);
         Contact updated = dtoConverter.convertDtoToEntity(contactDTO, Contact.class);

@@ -1,5 +1,6 @@
-package com.jarqprog.artGallery.springData.services;
+package com.jarqprog.artGallery.springData.useCases.impl;
 
+import com.jarqprog.artGallery.domain.dto.lightDto.PictureDTOLight;
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;
 import com.jarqprog.artGallery.domain.dto.heavyDto.PictureDTO;
@@ -9,8 +10,8 @@ import com.jarqprog.artGallery.springData.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.springData.repository.CommentaryRepository;
 import com.jarqprog.artGallery.springData.repository.PictureRepository;
 
-import com.jarqprog.artGallery.springData.repository.UserRepository;
-import com.jarqprog.artGallery.domain.useCases.PictureService;
+import com.jarqprog.artGallery.springData.useCases.PictureService;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +24,16 @@ import java.util.stream.Collectors;
 @Service
 public class SimplePictureService implements PictureService {
 
-    private final PictureRepository pictureRepository;
-    private final CommentaryRepository commentaryRepository;
-    private final UserRepository userRepository;
-    private final DtoConverter dtoConverter;
+    @NonNull private final PictureRepository pictureRepository;
+    @NonNull private final CommentaryRepository commentaryRepository;
+    @NonNull private final DtoConverter dtoConverter;
 
     @Autowired
-    public SimplePictureService(PictureRepository pictureRepository,
-                                CommentaryRepository commentaryRepository,
-                                UserRepository userRepository,
-                                DtoConverter dtoConverter) {
+    public SimplePictureService(@NonNull PictureRepository pictureRepository,
+                                @NonNull CommentaryRepository commentaryRepository,
+                                @NonNull DtoConverter dtoConverter) {
         this.pictureRepository = pictureRepository;
         this.commentaryRepository = commentaryRepository;
-        this.userRepository = userRepository;
         this.dtoConverter = dtoConverter;
     }
 
@@ -56,7 +54,7 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
-    public PictureDTO addPicture(PictureDTO pictureDTO) {
+    public PictureDTO addPicture(@NonNull PictureDTOLight pictureDTO) {
         preventCreatingExistingPicture(pictureDTO.getId());
         Picture picture = dtoConverter.convertDtoToEntity(pictureDTO, Picture.class);
         Picture saved = pictureRepository.save(picture);
@@ -64,7 +62,7 @@ public class SimplePictureService implements PictureService {
     }
 
     @Override
-    public PictureDTO updatePicture(long id, PictureDTO pictureDTO) {
+    public PictureDTO updatePicture(long id, @NonNull PictureDTOLight pictureDTO) {
         validatePictureExists(id);
         pictureDTO.setId(id);
         Picture updated = dtoConverter.convertDtoToEntity(pictureDTO, Picture.class);

@@ -1,5 +1,6 @@
-package com.jarqprog.artGallery.springData.services;
+package com.jarqprog.artGallery.springData.useCases.impl;
 
+import com.jarqprog.artGallery.domain.dto.lightDto.UserDTOLight;
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;
 import com.jarqprog.artGallery.domain.entity.User;
@@ -10,34 +11,34 @@ import com.jarqprog.artGallery.domain.dto.DtoConverter;
 import com.jarqprog.artGallery.springData.repository.CommentaryRepository;
 import com.jarqprog.artGallery.springData.repository.PictureRepository;
 import com.jarqprog.artGallery.springData.repository.UserRepository;
-import com.jarqprog.artGallery.domain.useCases.UserService;
-import lombok.extern.slf4j.Slf4j;
+import com.jarqprog.artGallery.springData.useCases.UserService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@Slf4j
 @Service
+@Transactional
 public class SimpleUserService implements UserService {
 
-    private final UserRepository userRepository;
-    private final PictureRepository pictureRepository;
-    private final CommentaryRepository commentaryRepository;
-    private final DtoConverter dtoConverter;
-    private final PasswordEncoder passwordEncoder;
+    @NonNull private final UserRepository userRepository;
+    @NonNull private final PictureRepository pictureRepository;
+    @NonNull private final CommentaryRepository commentaryRepository;
+    @NonNull private final DtoConverter dtoConverter;
+    @NonNull private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public SimpleUserService(UserRepository userRepository,
-                             PictureRepository pictureRepository,
-                             CommentaryRepository commentaryRepository,
-                             DtoConverter dtoConverter,
-                             PasswordEncoder passwordEncoder) {
+    public SimpleUserService(@NonNull UserRepository userRepository,
+                             @NonNull PictureRepository pictureRepository,
+                             @NonNull CommentaryRepository commentaryRepository,
+                             @NonNull DtoConverter dtoConverter,
+                             @NonNull PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.pictureRepository = pictureRepository;
         this.commentaryRepository = commentaryRepository;
@@ -66,7 +67,7 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public UserDTO addUser(UserDTO userDTO) {
+    public UserDTO addUser(@NonNull UserDTOLight userDTO) {
         preventCreatingExistingUser(userDTO.getId());
         User user = dtoConverter.convertDtoToEntity(userDTO, User.class);
         String password = user.getPassword();
@@ -76,7 +77,7 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public UserDTO updateUser(long id, UserDTO userDTO) {
+    public UserDTO updateUser(long id, @NonNull UserDTOLight userDTO) {
         validateUserExists(id);
         userDTO.setId(id);
         User updated = dtoConverter.convertDtoToEntity(userDTO, User.class);
@@ -85,7 +86,6 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    @Transactional
     public void removeUser(long id) {
         validateUserExists(id);
 
