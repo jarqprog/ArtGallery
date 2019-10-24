@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.domain.entity;
 
-public enum Roles {
+public enum AuthorizationRole {
 
     USER,
     ADMIN,
