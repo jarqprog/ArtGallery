@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 @Profile("prod")
 public class BetterPasswordValidator implements PasswordValidator {
 
-    private Pattern pattern;
+    private final Pattern pattern;
 
     private static final String PASSWORD_PATTERN = "((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})";
 
