@@ -2,8 +2,8 @@ package com.jarqprog.artGallery.rest.controller.lightDTOsREST;
 
 import com.jarqprog.artGallery.domain.dto.DtoConverter;
 import com.jarqprog.artGallery.domain.dto.lightDto.CommentaryDTOLight;
-import com.jarqprog.artGallery.domain.useCases.CommentaryService;
-import com.jarqprog.artGallery.domain.useCases.PictureService;
+import com.jarqprog.artGallery.springData.useCases.CommentaryService;
+import com.jarqprog.artGallery.springData.useCases.PictureService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

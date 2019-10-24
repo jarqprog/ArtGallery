@@ -1,25 +1,26 @@
-package com.jarqprog.artGallery.rest.controller;
+package com.jarqprog.artGallery.rest.controller.heavyDTOsREST;
 
 import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
-import com.jarqprog.artGallery.domain.useCases.UserService;
+import com.jarqprog.artGallery.domain.dto.lightDto.UserDTOLight;
+import com.jarqprog.artGallery.springData.useCases.UserService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
-public class SimpleUserController {
+@RequestMapping("/api/heavy/users")
+public class UserController {
 
-    private final UserService userService;
+    @NonNull private final UserService userService;
 
     @Autowired
-    public SimpleUserController(UserService userService) {
+    public UserController(@NonNull UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-//    @PreAuthorize("hasRole('ADMIN')")
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
     }
@@ -30,12 +31,12 @@ public class SimpleUserController {
     }
 
     @PostMapping
-    public UserDTO addUser(@RequestBody UserDTO userDTO) {
+    public UserDTO addUser(@RequestBody UserDTOLight userDTO) {
         return userService.addUser(userDTO);
     }
 
     @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTO userDTO) {
+    public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTOLight userDTO) {
         return userService.updateUser(id, userDTO);
     }
 

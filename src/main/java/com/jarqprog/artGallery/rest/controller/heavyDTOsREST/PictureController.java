@@ -1,7 +1,8 @@
-package com.jarqprog.artGallery.rest.controller;
+package com.jarqprog.artGallery.rest.controller.heavyDTOsREST;
 
 import com.jarqprog.artGallery.domain.dto.heavyDto.PictureDTO;
-import com.jarqprog.artGallery.domain.useCases.PictureService;
+import com.jarqprog.artGallery.domain.dto.lightDto.PictureDTOLight;
+import com.jarqprog.artGallery.springData.useCases.PictureService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/pictures")
-public class SimplePictureController {
+@RequestMapping("/api/heavy/pictures")
+public class PictureController {
 
     private final PictureService pictureService;
 
     @Autowired
-    public SimplePictureController(PictureService pictureService) {
+    public PictureController(PictureService pictureService) {
         this.pictureService = pictureService;
     }
 
@@ -30,12 +31,12 @@ public class SimplePictureController {
     }
 
     @PostMapping
-    public PictureDTO addPicture(@RequestBody PictureDTO pictureDTO) {
+    public PictureDTO addPicture(@RequestBody PictureDTOLight pictureDTO) {
         return pictureService.addPicture(pictureDTO);
     }
 
     @PutMapping("/{id}")
-    public PictureDTO updatePicture(@PathVariable("id")long id, @RequestBody PictureDTO pictureDTO) {
+    public PictureDTO updatePicture(@PathVariable("id")long id, @RequestBody PictureDTOLight pictureDTO) {
         return pictureService.updatePicture(id, pictureDTO);
     }
 

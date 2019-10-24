@@ -1,8 +1,8 @@
-package com.jarqprog.artGallery.rest.controller;
+package com.jarqprog.artGallery.rest.controller.heavyDTOsREST;
 
 import com.jarqprog.artGallery.domain.dto.heavyDto.CommentaryDTO;
 import com.jarqprog.artGallery.domain.dto.lightDto.CommentaryDTOLight;
-import com.jarqprog.artGallery.domain.useCases.CommentaryService;
+import com.jarqprog.artGallery.springData.useCases.CommentaryService;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/heavy/pictures/")
-public class SimpleCommentaryController {
+public class CommentaryController {
 
     private final CommentaryService commentaryService;
 
     @Autowired
-    public SimpleCommentaryController(@NonNull CommentaryService commentaryService) {
+    public CommentaryController(@NonNull CommentaryService commentaryService) {
         this.commentaryService = commentaryService;
     }
 
