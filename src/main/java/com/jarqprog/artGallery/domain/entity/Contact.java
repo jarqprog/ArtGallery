@@ -2,9 +2,9 @@ package com.jarqprog.artGallery.domain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -21,19 +21,20 @@ public class Contact extends DomainEntity {
 
     private String nickname;
 
-    @NotNull
+    @NonNull
     @NaturalId(mutable = true)
     @Column(unique = true)
+    @Email
     private String email;
 
     //todo Addressee
 
-    public Contact(@NotNull String firstName, @NotNull String email) {
+    public Contact(@NonNull String firstName, @NonNull String email) {
         this.firstName = firstName;
         this.email = email;
     }
 
-    public Contact(@NotNull String firstName, String lastName, @NotNull String email) {
+    public Contact(@NonNull String firstName, String lastName, @NonNull String email) {
         this(firstName, email);
         this.lastName = lastName;
     }
