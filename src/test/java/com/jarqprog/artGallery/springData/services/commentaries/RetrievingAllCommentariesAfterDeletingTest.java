@@ -1,21 +1,14 @@
 package com.jarqprog.artGallery.springData.services.commentaries;
 
 import com.jarqprog.artGallery.SpringServiceTestConfig;
-import com.jarqprog.artGallery.domain.dto.heavyDto.CommentaryDTO;
-import com.jarqprog.artGallery.domain.useCases.CommentaryService;
+import com.jarqprog.artGallery.springData.useCases.CommentaryService;
 import com.jarqprog.artGallery.springData.repository.CommentaryRepository;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Values used in test methods are related to values set in InitialDataLoader

@@ -2,7 +2,7 @@ package com.jarqprog.artGallery.springData.services.commentaries;
 
 import com.jarqprog.artGallery.SpringServiceTestConfig;
 import com.jarqprog.artGallery.domain.dto.heavyDto.CommentaryDTO;
-import com.jarqprog.artGallery.domain.useCases.CommentaryService;
+import com.jarqprog.artGallery.springData.useCases.CommentaryService;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 

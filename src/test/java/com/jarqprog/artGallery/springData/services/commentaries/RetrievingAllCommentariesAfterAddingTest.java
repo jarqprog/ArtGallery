@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.springData.services.commentaries;
 
 import com.jarqprog.artGallery.SpringServiceTestConfig;
-import com.jarqprog.artGallery.domain.useCases.CommentaryService;
+import com.jarqprog.artGallery.springData.useCases.CommentaryService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
