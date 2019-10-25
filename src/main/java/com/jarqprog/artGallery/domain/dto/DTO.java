@@ -6,5 +6,5 @@ public interface DTO {
     void setId(long id);
     int getVersion();
     void setVersion(int version);
-    
+    boolean isNew();
 }
