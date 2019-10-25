@@ -15,9 +15,9 @@ public interface PictureService {
     PictureDTO findPictureById(long id);
     <T extends PictureDTO> T findPictureById(long id, Class<T> clazz);
 
-    PictureDTO addPicture(@NonNull PictureDTO pictureDTO);
+    long addPicture(@NonNull PictureDTO pictureDTO);
 
-    PictureDTO updatePicture(long id, @NonNull PictureDTO pictureDTO);
+    void updatePicture(long id, @NonNull PictureDTO pictureDTO);
 
     void removePicture(long id);
 }

@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases.impl;
 
+import com.jarqprog.artGallery.api.dataLogic.components.dtoValidators.PictureValidator;
 import com.jarqprog.artGallery.api.dataLogic.repositories.AuthorRepository;
 import com.jarqprog.artGallery.api.dataLogic.repositories.UserRepository;
 import com.jarqprog.artGallery.domain.dto.PictureDTO;
@@ -32,18 +33,21 @@ public class SimplePictureService implements PictureService {
     @NonNull private final AuthorRepository authorRepository;
     @NonNull private final UserRepository userRepository;
     @NonNull private final DtoConverter dtoConverter;
+    @NonNull private final PictureValidator pictureValidator;
 
     @Autowired
     public SimplePictureService(@NonNull PictureRepository pictureRepository,
                                 @NonNull CommentaryRepository commentaryRepository,
                                 @NonNull AuthorRepository authorRepository,
                                 @NonNull UserRepository userRepository,
-                                @NonNull DtoConverter dtoConverter) {
+                                @NonNull DtoConverter dtoConverter,
+                                @NonNull PictureValidator pictureValidator) {
         this.pictureRepository = pictureRepository;
         this.commentaryRepository = commentaryRepository;
         this.authorRepository = authorRepository;
         this.userRepository = userRepository;
         this.dtoConverter = dtoConverter;
+        this.pictureValidator = pictureValidator;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(SimplePictureService.class);
@@ -76,33 +80,33 @@ public class SimplePictureService implements PictureService {
         return dtoConverter.convertEntityToDTO(picture, clazz);
     }
 
-    @Transactional
     @Override
-    public PictureDTO addPicture(@NonNull PictureDTO pictureDTO) {
+    @Transactional
+    public long addPicture(@NonNull PictureDTO pictureDTO) {
         preventCreatingExistingPicture(pictureDTO.getId());
 
-        // validation
-
+        pictureValidator.validateOnCreation(pictureDTO);
         Picture picture = new Picture();
         updatePictureByDTO(picture, pictureDTO);
         Picture saved = pictureRepository.save(picture);
-        return dtoConverter.convertEntityToDTO(saved, PictureThin.class);
+        return saved.getId();
     }
 
-    @Transactional
     @Override
-    public PictureDTO updatePicture(long id, @NonNull PictureDTO pictureDTO) {
+    @Transactional
+    public void updatePicture(long id, @NonNull PictureDTO pictureDTO) {
 
-        // validation
-
+        if (id != pictureDTO.getId()) {
+            throw new IllegalArgumentException("different picture's IDs were given");
+        }
+        pictureValidator.validateOnUpdate(pictureDTO);
         Picture picture = findById(id);
         updatePictureByDTO(picture, pictureDTO);
-        Picture saved = pictureRepository.save(picture);
-        return dtoConverter.convertEntityToDTO(saved, PictureThin.class);
+        pictureRepository.save(picture);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public void removePicture(long id) {
         validatePictureExists(id);
         commentaryRepository.deleteByPictureId(id);
@@ -141,11 +145,11 @@ public class SimplePictureService implements PictureService {
         picture.setTitle(pictureDTO.getTitle());
         picture.setPath(picture.getPath());
 
-        if (pictureDTO.getUserId() > 0) {
+        if (pictureValidator.isAuthorIdValid(pictureDTO)) {
             picture.setUser(findUserById(pictureDTO.getUserId()));
         }
 
-        if (pictureDTO.getAuthorId() > 0) {
+        if (pictureValidator.isUserIdValid(pictureDTO)) {
             picture.setAuthor(findAuthorById(pictureDTO.getAuthorId()));
         }
     }
