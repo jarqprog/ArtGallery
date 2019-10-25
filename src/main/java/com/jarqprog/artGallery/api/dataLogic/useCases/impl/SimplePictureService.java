@@ -6,7 +6,6 @@ import com.jarqprog.artGallery.domain.dto.PictureDTO;
 import com.jarqprog.artGallery.domain.dto.thinDTO.PictureThin;
 import com.jarqprog.artGallery.domain.entity.Author;
 import com.jarqprog.artGallery.domain.entity.Picture;
-import com.jarqprog.artGallery.domain.dto.fatDTO.PictureFat;
 import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceNotFoundException;
@@ -26,7 +25,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class SimplePictureService implements PictureService {
 
     @NonNull private final PictureRepository pictureRepository;
@@ -35,6 +33,7 @@ public class SimplePictureService implements PictureService {
     @NonNull private final UserRepository userRepository;
     @NonNull private final DtoConverter dtoConverter;
 
+    @Autowired
     public SimplePictureService(@NonNull PictureRepository pictureRepository,
                                 @NonNull CommentaryRepository commentaryRepository,
                                 @NonNull AuthorRepository authorRepository,
@@ -46,9 +45,6 @@ public class SimplePictureService implements PictureService {
         this.userRepository = userRepository;
         this.dtoConverter = dtoConverter;
     }
-
-    @Autowired
-
 
     private static final Logger logger = LoggerFactory.getLogger(SimplePictureService.class);
 
@@ -71,7 +67,7 @@ public class SimplePictureService implements PictureService {
     @Override
     public PictureDTO findPictureById(long id) {
         Picture picture = findById(id);
-        return dtoConverter.convertEntityToDTO(picture, PictureFat.class);
+        return dtoConverter.convertEntityToDTO(picture, PictureThin.class);
     }
 
     @Override
@@ -80,6 +76,7 @@ public class SimplePictureService implements PictureService {
         return dtoConverter.convertEntityToDTO(picture, clazz);
     }
 
+    @Transactional
     @Override
     public PictureDTO addPicture(@NonNull PictureDTO pictureDTO) {
         preventCreatingExistingPicture(pictureDTO.getId());
@@ -89,9 +86,10 @@ public class SimplePictureService implements PictureService {
         Picture picture = new Picture();
         updatePictureByDTO(picture, pictureDTO);
         Picture saved = pictureRepository.save(picture);
-        return dtoConverter.convertEntityToDTO(saved, PictureFat.class);
+        return dtoConverter.convertEntityToDTO(saved, PictureThin.class);
     }
 
+    @Transactional
     @Override
     public PictureDTO updatePicture(long id, @NonNull PictureDTO pictureDTO) {
 
@@ -100,15 +98,14 @@ public class SimplePictureService implements PictureService {
         Picture picture = findById(id);
         updatePictureByDTO(picture, pictureDTO);
         Picture saved = pictureRepository.save(picture);
-        return dtoConverter.convertEntityToDTO(saved, PictureFat.class);
+        return dtoConverter.convertEntityToDTO(saved, PictureThin.class);
     }
 
+    @Transactional
     @Override
     public void removePicture(long id) {
         validatePictureExists(id);
-//        Set<Commentary> commentaries = commentaryRepository.findAllCommentaryByPictureId(id);
-//        commentaries.forEach(c -> c.setPicture(null));
-//        commentaryRepository.saveAll(commentaries);
+        commentaryRepository.deleteByPictureId(id);
         pictureRepository.deleteById(id);
     }
 

@@ -4,6 +4,7 @@ import lombok.*;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -19,11 +20,12 @@ public class Commentary extends DomainEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "picture_id")
     private Picture picture;
 
-    public Commentary(String comment) {
+    public Commentary(@NonNull String comment) {
         this.comment = comment;
     }
 }

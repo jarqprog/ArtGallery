@@ -14,4 +14,6 @@ public interface CommentaryRepository extends JpaRepository<Commentary, Long>  {
     Set<Commentary> findAllCommentaryByPictureId(long pictureId);
     Set<Commentary> findAllCommentaryByUserId(long userId);
     void deleteById(long id);
+    void deleteByPictureId(long pictureId);
+    boolean existsByIdAndPictureId(long id, long pictureId);
 }

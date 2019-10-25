@@ -1,6 +1,5 @@
 package com.jarqprog.artGallery.api.rest.controller;
 
-import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.CommentaryService;
 import com.jarqprog.artGallery.domain.dto.fatDTO.CommentaryFat;
@@ -21,17 +20,18 @@ import static com.jarqprog.artGallery.api.rest.controller.OutputMode.FAT;
 public class CommentaryController {
 
     @NonNull private final CommentaryService commentaryService;
-    @NonNull private final DtoConverter dtoConverter;
 
     @Autowired
-    public CommentaryController(@NonNull CommentaryService commentaryService,
-                                @NonNull DtoConverter dtoConverter) {
+    public CommentaryController(@NonNull CommentaryService commentaryService) {
         this.commentaryService = commentaryService;
-        this.dtoConverter = dtoConverter;
     }
 
     @GetMapping("commentaries")
     public List<? extends CommentaryDTO> getAllCommentaries(@RequestParam(required = false, name = "mode") String mode) {
+
+        if (mode == null) {
+            return commentaryService.getAllCommentaries();
+        }
 
         switch (mode) {
             case FAT: return commentaryService.getAllCommentaries(CommentaryFat.class);
@@ -43,18 +43,30 @@ public class CommentaryController {
     public List<? extends CommentaryDTO> getAllCommentariesByPicture(@PathVariable("pictureId") long pictureId,
                                             @RequestParam(required = false, name = "mode") String mode) {
 
+        if (mode == null) {
+            return commentaryService.getAllCommentariesByPicture(pictureId);
+        }
+
         switch (mode) {
             case FAT: return commentaryService.getAllCommentariesByPicture(pictureId, CommentaryFat.class);
             default: return commentaryService.getAllCommentariesByPicture(pictureId);
         }
     }
 
-    @GetMapping("commentaries/{id}")
-    public CommentaryDTO findCommentaryById(@PathVariable("id") long id,
+    @GetMapping("{pictureId}/commentaries/{id}")
+    public CommentaryDTO findCommentaryById(@PathVariable("pictureId") long pictureId,
+                                            @PathVariable("id") long id,
                                             @RequestParam(required = false, name = "mode") String mode) {
+        commentaryService.validateCommentaryExists(pictureId, id);
+
+        if (mode == null) {
+            return commentaryService.findCommentaryById(id);
+        }
         switch (mode) {
-            case FAT: return commentaryService.findCommentaryById(id, CommentaryFat.class);
-            default: return commentaryService.findCommentaryById(id);
+            case FAT:
+                return commentaryService.findCommentaryById(id, CommentaryFat.class);
+            default:
+                return commentaryService.findCommentaryById(id);
         }
     }
 
@@ -75,8 +87,10 @@ public class CommentaryController {
         return ResponseEntity.created(uri).build();
     }
 
-    @DeleteMapping("commentaries/{id}")
-    public void removeCommentary(@PathVariable("id") long id) {
+    @DeleteMapping("{pictureId}/commentaries/{id}")
+    public void removeCommentary(@PathVariable("pictureId") long pictureId,
+                                 @PathVariable("id") long id) {
+        commentaryService.validateCommentaryExists(pictureId, id);
         commentaryService.removeCommentary(id);
     }
 

@@ -1,8 +1,6 @@
 package com.jarqprog.artGallery.domain.entity;
 
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -10,7 +8,6 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@OnDelete(action = OnDeleteAction.CASCADE)
 @Table(name="pictures")
 public class Picture extends DomainEntity {
 

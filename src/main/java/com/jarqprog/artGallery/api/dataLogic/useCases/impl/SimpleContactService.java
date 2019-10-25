@@ -1,11 +1,12 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases.impl;
 
-import com.jarqprog.artGallery.domain.dto.lightDto.ContactDTOLight;
+import com.jarqprog.artGallery.domain.dto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.thinDTO.ContactThin;
 import com.jarqprog.artGallery.domain.entity.Author;
 import com.jarqprog.artGallery.domain.entity.Contact;
 import com.jarqprog.artGallery.domain.entity.User;
-import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.DtoConverter;
+import com.jarqprog.artGallery.domain.dto.fatDTO.ContactFat;
+import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.api.dataLogic.repositories.AuthorRepository;
@@ -43,43 +44,62 @@ public class SimpleContactService implements ContactService {
     public List<ContactDTO> getAllContacts() {
         return contactRepository.findAll()
                 .stream()
-                .map(c -> dtoConverter.convertEntityToDto(c, ContactDTO.class))
+                .map(c -> dtoConverter.convertEntityToDTO(c, ContactThin.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public <T extends ContactDTO> List<ContactDTO> getAllContacts(Class<T> clazz) {
+        return contactRepository.findAll()
+                .stream()
+                .map(c -> dtoConverter.convertEntityToDTO(c, clazz))
                 .collect(Collectors.toList());
     }
 
     @Override
     public ContactDTO findContactById(long id) {
         Contact contact = findById(id);
-        return dtoConverter.convertEntityToDto(contact, ContactDTO.class);
+        return dtoConverter.convertEntityToDTO(contact, ContactThin.class);
     }
 
     @Override
-    public ContactDTO addContact(@NonNull ContactDTOLight contactDTO) {
+    public <T extends ContactDTO> T findContactById(long id, Class<T> clazz) {
+        Contact contact = findById(id);
+        return dtoConverter.convertEntityToDTO(contact, clazz);
+    }
+
+    @Override
+    public ContactDTO addContact(@NonNull ContactDTO contactDTO) {
         preventCreatingExistingContact(contactDTO.getId());
-        Contact contact = dtoConverter.convertDtoToEntity(contactDTO, Contact.class);
+        // validation
+
+        Contact contact = new Contact();
+        updateContactByDTO(contact, contactDTO);
         Contact saved = contactRepository.save(contact);
-        return dtoConverter.convertEntityToDto(saved, ContactDTO.class);
+        return dtoConverter.convertEntityToDTO(saved, ContactThin.class);
     }
 
     @Override
-    public ContactDTO updateContact(long id, @NonNull ContactDTOLight contactDTO) {
-        validateContactExists(id);
-        contactDTO.setId(id);
-        Contact updated = dtoConverter.convertDtoToEntity(contactDTO, Contact.class);
-        Contact saved = contactRepository.save(updated);
-        return dtoConverter.convertEntityToDto(saved, ContactDTO.class);
+    public ContactDTO updateContact(long id, @NonNull ContactDTO contactDTO) {
+
+        //validation
+
+        Contact contact = findById(id);
+        updateContactByDTO(contact, contactDTO);
+        Contact saved = contactRepository.save(contact);
+        return dtoConverter.convertEntityToDTO(saved, ContactThin.class);
     }
 
     @Override
     @Transactional
     public void removeContact(long id) {
         findById(id);
-        User user = findUserByContactId(id);
-        Author author = findAuthorByContactId(id);
-        user.setContact(null);
-        author.setContact(null);
-        userRepository.save(user);
-        authorRepository.save(author);
+//        User user = findUserByContactId(id);
+//        Author author = findAuthorByContactId(id);
+//        user.setContact(null);
+//        author.setContact(null);
+//        userRepository.save(user);
+//        authorRepository.save(author);
         contactRepository.deleteById(id);
     }
 
@@ -107,5 +127,13 @@ public class SimpleContactService implements ContactService {
         if (contactRepository.existsById(contactId)) {
             throw new ResourceAlreadyExists(Contact.class, contactId);
         }
+    }
+
+    private void updateContactByDTO(Contact contact, ContactDTO contactDTO) {
+        contact.setVersion(contactDTO.getVersion());
+        contact.setFirstName(contactDTO.getFirstName());
+        contact.setLastName(contactDTO.getLastName());
+        contact.setEmail(contactDTO.getEmail());
+        contact.setNickname(contactDTO.getNickname());
     }
 }

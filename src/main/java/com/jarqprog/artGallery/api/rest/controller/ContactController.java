@@ -1,21 +1,21 @@
-package com.jarqprog.artGallery.api.rest.controller.heavyDTOsREST;
+package com.jarqprog.artGallery.api.rest.controller;
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.lightDto.ContactDTOLight;
+import com.jarqprog.artGallery.domain.dto.ContactDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.ContactService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/heavy/contacts")
+@RequestMapping("/api/contacts")
 public class ContactController {
 
-    private final ContactService contactService;
+    @NonNull private final ContactService contactService;
 
     @Autowired
-    public ContactController(ContactService contactService) {
+    public ContactController(@NonNull ContactService contactService) {
         this.contactService = contactService;
     }
 
@@ -30,12 +30,12 @@ public class ContactController {
     }
 
     @PostMapping
-    public ContactDTO addContact(@RequestBody ContactDTOLight contactDTO) {
+    public ContactDTO addContact(@RequestBody ContactDTO contactDTO) {
         return contactService.addContact(contactDTO);
     }
 
     @PutMapping("/{id}")
-    public ContactDTO updateContact(@PathVariable("id") long id, @RequestBody ContactDTOLight contactDTO) {
+    public ContactDTO updateContact(@PathVariable("id") long id, @RequestBody ContactDTO contactDTO) {
         return contactService.updateContact(id, contactDTO);
     }
 

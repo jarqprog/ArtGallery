@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.web.service;
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.specials.ContactCreator;
 import com.jarqprog.artGallery.api.dataLogic.useCases.specials.UserCreator;

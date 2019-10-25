@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -30,6 +31,8 @@ public abstract class DomainDTO implements DTO, Serializable {
         return false;
     }
 
+    @JsonIgnore
+    @XmlTransient
     @Override
     public final boolean isNew() {
         return this.id <= 0;

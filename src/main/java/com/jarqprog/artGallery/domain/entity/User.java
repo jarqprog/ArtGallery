@@ -36,7 +36,7 @@ public class User extends DomainEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @Fetch(FetchMode.JOIN)
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User(@NonNull Contact contact, @NonNull String login, @NonNull String password) {
         this.contact = contact;

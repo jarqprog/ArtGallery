@@ -15,7 +15,6 @@ import com.jarqprog.artGallery.api.dataLogic.repositories.CommentaryRepository;
 import com.jarqprog.artGallery.api.dataLogic.repositories.PictureRepository;
 import com.jarqprog.artGallery.api.dataLogic.useCases.CommentaryService;
 import com.jarqprog.artGallery.api.dataLogic.repositories.UserRepository;
-import com.jarqprog.artGallery.web.controller.ErrorController;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class SimpleCommentaryService implements CommentaryService {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleCommentaryService.class);
@@ -99,6 +97,7 @@ public class SimpleCommentaryService implements CommentaryService {
     }
 
     @Override
+    @Transactional
     public CommentaryDTO addCommentary(long pictureId, @NonNull CommentaryDTO commentaryDTO) {
         commentaryValidator.validateOnCreation(commentaryDTO);
 
@@ -118,6 +117,7 @@ public class SimpleCommentaryService implements CommentaryService {
     }
 
     @Override
+    @Transactional
     public CommentaryDTO updateCommentary(long pictureId, long commentaryId,
                                           @NonNull CommentaryDTO commentaryDTO) {
         commentaryValidator.validateOnUpdate(commentaryDTO);
@@ -132,9 +132,17 @@ public class SimpleCommentaryService implements CommentaryService {
     }
 
     @Override
+    @Transactional
     public void removeCommentary(long id) {
         findById(id);
         commentaryRepository.deleteById(id);
+    }
+
+    @Override
+    public void validateCommentaryExists(long pictureId, long commentaryId) {
+        if (!commentaryRepository.existsByIdAndPictureId(commentaryId, pictureId)) {
+            throw new IllegalArgumentException("Given Commentary ID and Picture ID do not match!");
+        }
     }
 
 

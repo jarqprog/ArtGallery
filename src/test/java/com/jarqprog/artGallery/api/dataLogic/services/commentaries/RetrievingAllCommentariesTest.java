@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.api.dataLogic.services.commentaries;
 
 import com.jarqprog.artGallery.SpringServiceTestConfig;
-import com.jarqprog.artGallery.domain.dto.heavyDto.CommentaryDTO;
+import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.CommentaryService;
 
 import org.junit.jupiter.api.extension.ExtendWith;

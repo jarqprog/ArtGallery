@@ -1,6 +1,5 @@
 package com.jarqprog.artGallery.api.rest.controller;
 
-import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.domain.dto.PictureDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.PictureService;
 import com.jarqprog.artGallery.domain.dto.fatDTO.PictureFat;
@@ -17,17 +16,18 @@ import static com.jarqprog.artGallery.api.rest.controller.OutputMode.FAT;
 public class PictureController {
 
     @NonNull private final PictureService pictureService;
-    @NonNull private final DtoConverter dtoConverter;
 
     @Autowired
-    public PictureController(@NonNull PictureService pictureService,
-                             @NonNull DtoConverter dtoConverter) {
+    public PictureController(@NonNull PictureService pictureService) {
         this.pictureService = pictureService;
-        this.dtoConverter = dtoConverter;
     }
 
     @GetMapping()
     public List<? extends PictureDTO> getAllPictures(@RequestParam(required = false, name = "mode") String mode) {
+        if (mode == null) {
+            return pictureService.getAllPictures();
+        }
+
         switch (mode) {
             case FAT: return pictureService.getAllPictures(PictureFat.class);
             default: return pictureService.getAllPictures();
@@ -37,6 +37,10 @@ public class PictureController {
     @GetMapping("/{id}")
     public PictureDTO findPictureById(@PathVariable("id") long id,
                                       @RequestParam(required = false, name = "mode") String mode) {
+        if (mode == null) {
+            return pictureService.findPictureById(id);
+        }
+
         switch (mode) {
             case FAT: return pictureService.findPictureById(id, PictureFat.class);
             default: return pictureService.findPictureById(id);

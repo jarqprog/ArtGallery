@@ -68,7 +68,7 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         contact.setNickname("betty80");
         contactRepository.save(contact);
 
-        User user = createUser(contact, Roles.USER, "betty80", "betty80");
+        User user = createUser(contact, AuthorizationRole.USER, "betty80", "betty80");
 
         Author author = new Author(contact);
         author.setArtisticNickname("betty-artist");
@@ -117,25 +117,25 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
 
     private void initRoles() {
         List<Role> roles = new ArrayList<>();
-        roles.add(new Role(Roles.SUPER_ADMIN));
-        roles.add(new Role(Roles.ADMIN));
-        roles.add(new Role(Roles.USER));
+        roles.add(new Role(AuthorizationRole.SUPER_ADMIN));
+        roles.add(new Role(AuthorizationRole.ADMIN));
+        roles.add(new Role(AuthorizationRole.USER));
         roleRepository.saveAll(roles);
     }
 
     private void initSuperAdmin() {
         Contact superAdminContact = new Contact("super admin", "superAdminContact@mail.com");
         contactRepository.save(superAdminContact);
-        createUser(superAdminContact, Roles.SUPER_ADMIN, "super_admin", "super_admin");
+        createUser(superAdminContact, AuthorizationRole.SUPER_ADMIN, "super_admin", "super_admin");
     }
 
     private void initAdmin() {
         Contact adminContact = new Contact("admin", "adminContact@mail.com");
         contactRepository.save(adminContact);
-        createUser(adminContact, Roles.ADMIN, "admin", "admin");
+        createUser(adminContact, AuthorizationRole.ADMIN, "admin", "admin");
     }
 
-    private User createUser(Contact contact, Roles role, String login, String password) {
+    private User createUser(Contact contact, AuthorizationRole role, String login, String password) {
         Role userRole = roleRepository
                 .findByRole(role).orElseThrow(() -> new ResourceNotFoundException(Role.class));
         return userRepository.save(new User(contact,

@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.api.dataLogic.components.dtoValidators.implementations;
 
-import com.jarqprog.artGallery.domain.dto.lightDto.CommentaryDTOLight;
+import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
 import com.jarqprog.artGallery.api.dataLogic.components.dtoValidators.CommentaryValidator;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class CommentaryDTOValidator implements CommentaryValidator {
 
     @Override
-    public void validateOnCreation(@NonNull CommentaryDTOLight commentaryDTO) {
+    public void validateOnCreation(@NonNull CommentaryDTO commentaryDTO) {
         StringBuilder exceptionMessage = new StringBuilder();
         validateCommentIsNotEmpty(commentaryDTO, exceptionMessage);
         validatePictureId(commentaryDTO, exceptionMessage);
@@ -20,7 +20,7 @@ public class CommentaryDTOValidator implements CommentaryValidator {
     }
 
     @Override
-    public void validateOnUpdate(@NonNull CommentaryDTOLight commentaryDTO) {
+    public void validateOnUpdate(@NonNull CommentaryDTO commentaryDTO) {
         StringBuilder exceptionMessage = new StringBuilder();
         validateId(commentaryDTO, exceptionMessage);
         validateCommentIsNotEmpty(commentaryDTO, exceptionMessage);
@@ -37,25 +37,25 @@ public class CommentaryDTOValidator implements CommentaryValidator {
         }
     }
 
-    private void validateCommentIsNotEmpty(CommentaryDTOLight commentaryDTO, StringBuilder stringBuilder) {
+    private void validateCommentIsNotEmpty(CommentaryDTO commentaryDTO, StringBuilder stringBuilder) {
         if (StringUtils.isBlank(commentaryDTO.getComment())) {
             stringBuilder.append("Comment cannot be empty. ");
         }
     }
 
-    private void validateId(CommentaryDTOLight commentaryDTO, StringBuilder stringBuilder) {
+    private void validateId(CommentaryDTO commentaryDTO, StringBuilder stringBuilder) {
         if (commentaryDTO.getId() <= 0 ) {
             stringBuilder.append("ID is incorrect. ");
         }
     }
 
-    private void validatePictureId(CommentaryDTOLight commentaryDTO, StringBuilder stringBuilder) {
+    private void validatePictureId(CommentaryDTO commentaryDTO, StringBuilder stringBuilder) {
         if (commentaryDTO.getPictureId() <= 0 ) {
             stringBuilder.append("PictureId is incorrect. ");
         }
     }
 
-    private void validateUserId(CommentaryDTOLight commentaryDTO, StringBuilder stringBuilder) {
+    private void validateUserId(CommentaryDTO commentaryDTO, StringBuilder stringBuilder) {
         if (commentaryDTO.getUserId() <= 0 ) {
             stringBuilder.append("UserId is incorrect. ");
         }

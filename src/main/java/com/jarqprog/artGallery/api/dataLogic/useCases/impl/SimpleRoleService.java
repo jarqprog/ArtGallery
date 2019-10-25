@@ -1,10 +1,10 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases.impl;
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.RoleDTO;
+import com.jarqprog.artGallery.domain.dto.fatDTO.RoleFat;
 import com.jarqprog.artGallery.domain.entity.Role;
-import com.jarqprog.artGallery.domain.entity.Roles;
+import com.jarqprog.artGallery.domain.entity.AuthorizationRole;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceNotFoundException;
-import com.jarqprog.artGallery.domain.dto.DtoConverter;
+import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.api.dataLogic.useCases.RoleService;
 import com.jarqprog.artGallery.api.dataLogic.repositories.RoleRepository;
 
@@ -32,9 +32,9 @@ public class SimpleRoleService implements RoleService {
     }
 
     @Override
-    public RoleDTO findByRole(Roles role) {
+    public RoleFat findByRole(AuthorizationRole role) {
         Role founded = roleRepository.findByRole(role)
                 .orElseThrow(() -> new ResourceNotFoundException(Role.class));
-        return dtoConverter.convertEntityToDto(founded, RoleDTO.class);
+        return dtoConverter.convertEntityToDTO(founded, RoleFat.class);
     }
 }

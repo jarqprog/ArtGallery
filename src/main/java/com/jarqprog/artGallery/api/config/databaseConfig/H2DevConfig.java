@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-@Profile("dev")
+@Profile("prod")
 public class H2DevConfig implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "org.h2.Driver";
@@ -44,5 +44,5 @@ public class H2DevConfig implements DatabaseConfig {
         properties.setProperty("spring.h2.console.enabled", "true");
         properties.setProperty("spring.jpa.generate-ddl", "true");
         return properties;
-    }
+     }
 }

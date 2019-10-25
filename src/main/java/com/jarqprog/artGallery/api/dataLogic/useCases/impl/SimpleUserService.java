@@ -1,25 +1,27 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases.impl;
 
-import com.jarqprog.artGallery.domain.dto.lightDto.UserDTOLight;
-import com.jarqprog.artGallery.domain.entity.Commentary;
-import com.jarqprog.artGallery.domain.entity.Picture;
+import com.jarqprog.artGallery.api.dataLogic.repositories.*;
+import com.jarqprog.artGallery.domain.dto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.thinDTO.UserThin;
+import com.jarqprog.artGallery.domain.entity.AuthorizationRole;
+import com.jarqprog.artGallery.domain.entity.Contact;
+import com.jarqprog.artGallery.domain.entity.Role;
 import com.jarqprog.artGallery.domain.entity.User;
-import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.fatDTO.UserFat;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceNotFoundException;
-import com.jarqprog.artGallery.domain.dto.DtoConverter;
-import com.jarqprog.artGallery.api.dataLogic.repositories.CommentaryRepository;
-import com.jarqprog.artGallery.api.dataLogic.repositories.PictureRepository;
-import com.jarqprog.artGallery.api.dataLogic.repositories.UserRepository;
+import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.api.dataLogic.useCases.UserService;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -27,21 +29,23 @@ import java.util.stream.Collectors;
 @Transactional
 public class SimpleUserService implements UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(SimpleCommentaryService.class);
+
     @NonNull private final UserRepository userRepository;
-    @NonNull private final PictureRepository pictureRepository;
-    @NonNull private final CommentaryRepository commentaryRepository;
+    @NonNull private final ContactRepository contactRepository;
+    @NonNull private final RoleRepository roleRepository;
     @NonNull private final DtoConverter dtoConverter;
     @NonNull private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public SimpleUserService(@NonNull UserRepository userRepository,
-                             @NonNull PictureRepository pictureRepository,
-                             @NonNull CommentaryRepository commentaryRepository,
+                             @NonNull ContactRepository contactRepository,
+                             @NonNull RoleRepository roleRepository,
                              @NonNull DtoConverter dtoConverter,
                              @NonNull PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.pictureRepository = pictureRepository;
-        this.commentaryRepository = commentaryRepository;
+        this.contactRepository = contactRepository;
+        this.roleRepository = roleRepository;
         this.dtoConverter = dtoConverter;
         this.passwordEncoder = passwordEncoder;
     }
@@ -50,58 +54,57 @@ public class SimpleUserService implements UserService {
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(p -> dtoConverter.convertEntityToDto(p, UserDTO.class))
+                .map(p -> dtoConverter.convertEntityToDTO(p, UserThin.class))
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDTO findUserById(long id) {
         User User = findById(id);
-        return dtoConverter.convertEntityToDto(User, UserDTO.class);
+        return dtoConverter.convertEntityToDTO(User, UserFat.class);
     }
 
     @Override
-    public UserDTO findUserByLogin(String login) {
+    public UserFat findUserByLogin(String login) {
         User User = findByLogin(login);
-        return dtoConverter.convertEntityToDto(User, UserDTO.class);
+        return dtoConverter.convertEntityToDTO(User, UserFat.class);
     }
 
     @Override
-    public UserDTO addUser(@NonNull UserDTOLight userDTO) {
+    public UserDTO addUser(@NonNull UserDTO userDTO) {
         preventCreatingExistingUser(userDTO.getId());
-        User user = dtoConverter.convertDtoToEntity(userDTO, User.class);
-        String password = user.getPassword();
-        user.setPassword(passwordEncoder.encode(password));
+        // validation
+
+        User user = new User();
+        updateUserByDTO(user, userDTO);
         User saved = userRepository.save(user);
-        return dtoConverter.convertEntityToDto(saved, UserDTO.class);
+        return dtoConverter.convertEntityToDTO(saved, UserFat.class);
     }
 
     @Override
-    public UserDTO updateUser(long id, @NonNull UserDTOLight userDTO) {
+    public UserDTO updateUser(long id, @NonNull UserDTO userDTO) {
         validateUserExists(id);
-        userDTO.setId(id);
-        User updated = dtoConverter.convertDtoToEntity(userDTO, User.class);
-        User saved = userRepository.save(updated);
-        return dtoConverter.convertEntityToDto(saved, UserDTO.class);
+        // validation
+
+        User user = findById(id);
+        updateUserByDTO(user, userDTO);
+        User saved = userRepository.save(user);
+        return dtoConverter.convertEntityToDTO(saved, UserFat.class);
     }
 
     @Override
     public void removeUser(long id) {
         validateUserExists(id);
-
-        Set<Commentary> commentaries = commentaryRepository.findAllCommentaryByUserId(id);
-        commentaries.forEach(c -> c.setUser(null));
-
-        Set<Picture> pictures = pictureRepository.findAllPicturesByUserId(id);
-        pictures.forEach(p -> p.setUser(null));
-
-        commentaryRepository.saveAll(commentaries);
-        pictureRepository.saveAll(pictures);
         userRepository.deleteById(id);
     }
 
     private User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(User.class, id));
+    }
+
+    private Contact findContactById(Long contactId) {
+        return contactRepository
+                .findById(contactId).orElseThrow(() -> new ResourceNotFoundException(Contact.class, contactId));
     }
 
     private User findByLogin(String login) {
@@ -118,5 +121,28 @@ public class SimpleUserService implements UserService {
         if (userRepository.existsById(userId)) {
             throw new ResourceAlreadyExists(User.class, userId);
         }
+    }
+
+    private void updateUserByDTO(User user, UserDTO userDTO) {
+
+        long contactId = userDTO.getContactId();
+        if (contactId > 0) {
+           user.setContact(findContactById(contactId));
+        }
+
+        user.setVersion(userDTO.getVersion());
+        user.setLogin(userDTO.getLogin());
+
+        if (userDTO.getId() <= 0) { // for existing User it should be done using different path
+            user.addRole(roleRepository.findByRole(AuthorizationRole.USER)
+                    .orElseThrow(() -> new ResourceNotFoundException(Role.class)));
+            String password = userDTO.getPassword();
+            if (StringUtils.isNotBlank(password)) {
+                user.setPassword(passwordEncoder.encode(password));
+            } else {
+                logger.warn("Password for new user is blank");
+            }
+        }
+
     }
 }

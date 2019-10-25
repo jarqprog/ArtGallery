@@ -1,7 +1,6 @@
-package com.jarqprog.artGallery.api.rest.controller.heavyDTOsREST;
+package com.jarqprog.artGallery.api.rest.controller;
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
-import com.jarqprog.artGallery.domain.dto.lightDto.UserDTOLight;
+import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.UserService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/heavy/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @NonNull private final UserService userService;
@@ -31,12 +30,12 @@ public class UserController {
     }
 
     @PostMapping
-    public UserDTO addUser(@RequestBody UserDTOLight userDTO) {
+    public UserDTO addUser(@RequestBody UserDTO userDTO) {
         return userService.addUser(userDTO);
     }
 
     @PutMapping("/{id}")
-    public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTOLight userDTO) {
+    public UserDTO updateUser(@PathVariable("id") long id, @RequestBody UserDTO userDTO) {
         return userService.updateUser(id, userDTO);
     }
 

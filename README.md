@@ -3,8 +3,6 @@
 
 Spring Data / MVC / Security project. Java 9 with embedded Tomcat7
 
-Postman would be handy for POST, PUT and DELETE requests.
-
 To run application (using Maven) type in the command line: 'mvn clean install tomcat7:run -Dspring.profiles.active=dev'
 Application will start with 'dev' Profile.
 
@@ -87,7 +85,7 @@ Api functionalities at the moment (wip):
                 }
             }
         }
-
+        
 ***
 ENDPOINTS available at the moment:
 
@@ -108,14 +106,79 @@ Put ID number after resource to get single data, ex.
 URL without ID will return collection of objects
 
 Main concepts (in short):
-* persistence - SQL Databases (MySQL - production, H2 - development, tests)
-* using Spring Data, ORM - Hibernate
-* model/domain objects (entities, DTOs) - anemic/POJO-like (logic is handled by services)
+* typical multi-layered application (model - dao - <entities> - service - <DTOs> - controller - view)
 
-    - 
-    - DTOs ()
-    API - simple layered architecture (dao / services / controllers).
-    Entities  
+* persistence - SQL Databases (MySQL - production, H2 - development, tests).
+* model/domain objects - anemic/POJO-like (logic is handled by services)
+    - entities - ORM's (Hibernate) representation of models
+    - DTOs (Light/Heavy) - transfer representation of models, entities are not visible outside service layer
+    - todo - HATEOAS-like representation of models
+
+--- API (CRUD-like)
+* DAO - using Spring Data (v.5) repositories
+* Service layer - decided to put logic here, so it's the most heavy layer (planning to change architecture in the version 3.0)
+* REST Controllers - using Spring MVC (v.5)
+    
+    Optimistic locking mechanism is used on entities;
+    Using mostly unidirectional relations (in ORM) for better efficiency;
+    Security with Tokens will be used (todo);
+    At the moment only JSons are accepted (XML handling will be added);
+    On POST or PUT (or PATCH - in the future) method nested objects (heavy DTOs) are ignored, so there is no risk
+    to change something accidentally. For example:
+        
+        on endpoint PUT http://......../artgallery/api/heavy/pictures/1/commentaries/1
+        API receive JSon with changed Commentary data and changed related Picture data (Picture is nested object):
+        
+                {
+                    id: 1,
+                    version: 0,
+                    comment: "COMMENT IS CHANGED",
+                    picture: {
+                        id: 1,
+                        version: 0,
+                        title: "TITLE IS CHANGED IN PICTURE",
+                        path: null,
+                    }
+                }
+        
+        Result - only Commentary data will be updated. To update Picture, JSon should be send on proper endpoint:
+        PUT http://......../artgallery/api/heavy/pictures/1
+        
+                {
+                    id: 1,
+                    version: 0,
+                    title: "TITLE IS CHANGED IN PICTURE",
+                    path: null,
+                }
+    
+      
+
+--- Web application
+    Using Spring MVC (v.5) and Thymeleaf. At the moment Web App is within the same monolith as API and there is coupling
+    which I'm planning to remove (version 2.0) by dividing both applications.
+    Web application is protected by Spring Security (v.5) basic authorisation mechanism (login-form, sessions)
+    
+--- Testing-API (Spring Test framework & JUnit 5 Jupiter)
+* DAO + Service + related components - for me this is Unit (let's name it integration test),
+  so I'm not using any Mocks here, putting most effort here
+* REST Controllers - this layer is tested in isolation, so Mocks are involved here
+* small components (if needed), for example EmailValidation, etc.
+
+--- Testing-Web App (Spring Test framework & JUnit 5 Jupiter)
+* Controllers - in isolation, using mocks
+* small components - in isolation, using mocks
+
+--- Loggin
+    Using Logback (log files are generated in logs/ and logs-test/ directories)
+
+--- Exception handling
+    Exceptions are handled in one place - by dedicated controller annotated with Spring Web MVC's @ControllerAdvice
+    After exception is thrown, Controller is creating 'ExceptionInfo' object with unique identifier (UUID), timestamp,
+    message, exception data. That object is both - sent to the Client (it's serializable) and write to log. So Client can
+    share received error's UUID and detailed info in log can be found.    
+    
+
+
 
 todo (next iterations):
 * add service and controllers for commentary domain - DONE

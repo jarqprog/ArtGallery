@@ -24,4 +24,6 @@ public interface CommentaryService {
     CommentaryDTO updateCommentary(long pictureId, long commentaryId, @NonNull CommentaryDTO commentaryDTO);
 
     void removeCommentary(long id);
+
+    void validateCommentaryExists(long pictureId, long commentaryId);
 }

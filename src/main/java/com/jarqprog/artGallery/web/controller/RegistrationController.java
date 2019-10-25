@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.web.controller;
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.UserDTO;
 import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.RegistrationService;
 

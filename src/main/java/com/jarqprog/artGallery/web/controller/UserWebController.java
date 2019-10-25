@@ -1,8 +1,9 @@
 package com.jarqprog.artGallery.web.controller;
 
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.heavyDto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.ContactDTO;
+import com.jarqprog.artGallery.domain.dto.UserDTO;
+import com.jarqprog.artGallery.domain.dto.fatDTO.UserFat;
 import com.jarqprog.artGallery.api.dataLogic.useCases.UserService;
 
 import lombok.NonNull;
@@ -35,7 +36,7 @@ public class UserWebController {
     public String showUserInfo(@NonNull Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
-        UserDTO userDTO = userService.findUserByLogin(login);
+        UserFat userDTO = userService.findUserByLogin(login);
         ContactDTO contactDTO = userDTO.getContact();
         model.addAttribute("login", userDTO.getLogin());
         model.addAttribute("email", contactDTO.getEmail());

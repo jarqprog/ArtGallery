@@ -1,10 +1,10 @@
 package com.jarqprog.artGallery.api.dataLogic.components.dtoValidators;
 
-import com.jarqprog.artGallery.domain.dto.lightDto.CommentaryDTOLight;
+import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
 
 public interface CommentaryValidator {
 
-    void validateOnCreation(CommentaryDTOLight commentaryDTO);
-    void validateOnUpdate(CommentaryDTOLight commentaryDTO);
+    void validateOnCreation(CommentaryDTO commentaryDTO);
+    void validateOnUpdate(CommentaryDTO commentaryDTO);
 
 }

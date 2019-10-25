@@ -22,7 +22,7 @@ public class ErrorController extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected String handleConflict(final Exception exception, final Model model) {
-        handleExceptionInfo("Something gone wrong", exception, model, HttpStatus.INTERNAL_SERVER_ERROR);
+        handleExceptionInfo("Something went wrong", exception, model, HttpStatus.INTERNAL_SERVER_ERROR);
         return "/error/error";
     }
 
