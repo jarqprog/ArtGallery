@@ -1,15 +1,16 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases.impl;
 
 
-import com.jarqprog.artGallery.domain.dto.lightDto.CommentaryDTOLight;
+import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
+import com.jarqprog.artGallery.domain.dto.thinDTO.CommentaryThin;
 import com.jarqprog.artGallery.domain.entity.Commentary;
 import com.jarqprog.artGallery.domain.entity.Picture;
-import com.jarqprog.artGallery.domain.dto.heavyDto.CommentaryDTO;
+import com.jarqprog.artGallery.domain.dto.fatDTO.CommentaryFat;
 import com.jarqprog.artGallery.domain.entity.User;
 import com.jarqprog.artGallery.api.dataLogic.components.dtoValidators.CommentaryValidator;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceNotFoundException;
-import com.jarqprog.artGallery.domain.dto.DtoConverter;
+import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.api.dataLogic.repositories.CommentaryRepository;
 import com.jarqprog.artGallery.api.dataLogic.repositories.PictureRepository;
 import com.jarqprog.artGallery.api.dataLogic.useCases.CommentaryService;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class SimpleCommentaryService implements CommentaryService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ErrorController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleCommentaryService.class);
 
     @NonNull private final CommentaryValidator commentaryValidator;
     @NonNull private final CommentaryRepository commentaryRepository;
@@ -51,13 +52,21 @@ public class SimpleCommentaryService implements CommentaryService {
     }
 
 
-
     @Override
     public List<CommentaryDTO> getAllCommentaries() {
         return commentaryRepository
                 .findAll()
                 .stream()
-                .map(c -> dtoConverter.convertEntityToDto(c, CommentaryDTO.class))
+                .map(c -> dtoConverter.convertEntityToDTO(c, CommentaryThin.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public <T extends CommentaryDTO> List<T> getAllCommentaries(Class<T> clazz) {
+        return commentaryRepository
+                .findAll()
+                .stream()
+                .map(c -> dtoConverter.convertEntityToDTO(c, clazz))
                 .collect(Collectors.toList());
     }
 
@@ -65,24 +74,32 @@ public class SimpleCommentaryService implements CommentaryService {
     public List<CommentaryDTO> getAllCommentariesByPicture(long pictureId) {
         return commentaryRepository.findAllCommentaryByPictureId(pictureId)
                 .stream()
-                .map(c -> dtoConverter.convertEntityToDto(c, CommentaryDTO.class))
+                .map(c -> dtoConverter.convertEntityToDTO(c, CommentaryThin.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public CommentaryDTO findCommentaryById(long pictureId, long commentaryId) {
-        findPictureById(pictureId);
-        return findCommentaryById(commentaryId);
+    public <T extends CommentaryDTO> List<T> getAllCommentariesByPicture(long pictureId, Class<T> clazz) {
+        return commentaryRepository.findAllCommentaryByPictureId(pictureId)
+                .stream()
+                .map(c -> dtoConverter.convertEntityToDTO(c, clazz))
+                .collect(Collectors.toList());
     }
 
     @Override
     public CommentaryDTO findCommentaryById(long id) {
         Commentary commentary = findById(id);
-        return dtoConverter.convertEntityToDto(commentary, CommentaryDTO.class);
+        return dtoConverter.convertEntityToDTO(commentary, CommentaryThin.class);
     }
 
     @Override
-    public CommentaryDTO addCommentary(long pictureId, @NonNull CommentaryDTOLight commentaryDTO) {
+    public <T extends CommentaryDTO> T findCommentaryById(long id, Class<T> clazz) {
+        Commentary commentary = findById(id);
+        return dtoConverter.convertEntityToDTO(commentary, clazz);
+    }
+
+    @Override
+    public CommentaryDTO addCommentary(long pictureId, @NonNull CommentaryDTO commentaryDTO) {
         commentaryValidator.validateOnCreation(commentaryDTO);
 
         preventCreatingAlreadyExistingCommentary(commentaryDTO);
@@ -97,12 +114,12 @@ public class SimpleCommentaryService implements CommentaryService {
         commentary.setUser(user);
 
         Commentary created = commentaryRepository.save(commentary);
-        return dtoConverter.convertEntityToDto(created, CommentaryDTO.class);
+        return dtoConverter.convertEntityToDTO(created, CommentaryFat.class);
     }
 
     @Override
     public CommentaryDTO updateCommentary(long pictureId, long commentaryId,
-                                          @NonNull CommentaryDTOLight commentaryDTO) {
+                                          @NonNull CommentaryDTO commentaryDTO) {
         commentaryValidator.validateOnUpdate(commentaryDTO);
         validateGivenCommentaryIDsAreEqual(commentaryId, commentaryDTO);
         findPictureById(pictureId);
@@ -111,18 +128,7 @@ public class SimpleCommentaryService implements CommentaryService {
         commentary.setComment(commentaryDTO.getComment());
 
         Commentary saved = commentaryRepository.save(commentary);
-        return dtoConverter.convertEntityToDto(saved, CommentaryDTO.class);
-    }
-
-    @Override
-    public void removeCommentary(long pictureId, long commentaryId) {
-        findPictureById(pictureId);
-        Commentary commentary = findById(commentaryId);
-
-        if (pictureId != commentary.getPicture().getId()) {
-            throw new IllegalArgumentException("Incorrect Picture ID");
-        }
-        commentaryRepository.deleteById(commentaryId);
+        return dtoConverter.convertEntityToDTO(saved, CommentaryFat.class);
     }
 
     @Override
@@ -149,20 +155,20 @@ public class SimpleCommentaryService implements CommentaryService {
                 .orElseThrow(() -> new ResourceNotFoundException(User.class, userId));
     }
 
-    private void preventCreatingAlreadyExistingCommentary(CommentaryDTOLight commentaryDTO) {
+    private void preventCreatingAlreadyExistingCommentary(CommentaryDTO commentaryDTO) {
         long id = commentaryDTO.getId();
         if (id > 0 && commentaryRepository.existsById(id)) {
             throw new ResourceAlreadyExists(Commentary.class, id);
         }
     }
 
-    private void validateGivenPictureIDsAreEqual(long pictureId, CommentaryDTOLight commentaryDTO) {
+    private void validateGivenPictureIDsAreEqual(long pictureId, CommentaryDTO commentaryDTO) {
         if (pictureId != commentaryDTO.getPictureId()) {
             throw new IllegalArgumentException("different picture's IDs were given");
         }
     }
 
-    private void validateGivenCommentaryIDsAreEqual(long commentaryId, CommentaryDTOLight commentaryDTO) {
+    private void validateGivenCommentaryIDsAreEqual(long commentaryId, CommentaryDTO commentaryDTO) {
         if (commentaryId != commentaryDTO.getId()) {
             throw new IllegalArgumentException("different commentary's IDs were given");
         }

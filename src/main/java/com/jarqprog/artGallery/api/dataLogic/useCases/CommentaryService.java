@@ -1,8 +1,7 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases;
 
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.CommentaryDTO;
-import com.jarqprog.artGallery.domain.dto.lightDto.CommentaryDTOLight;
+import com.jarqprog.artGallery.domain.dto.CommentaryDTO;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +11,12 @@ import java.util.List;
 public interface CommentaryService {
 
     List<CommentaryDTO> getAllCommentaries();
+    <T extends CommentaryDTO> List<T> getAllCommentaries(Class<T> clazz);
     List<CommentaryDTO> getAllCommentariesByPicture(long pictureId);
-    CommentaryDTO findCommentaryById(long pictureId, long commentaryId);
+    <T extends CommentaryDTO> List<T> getAllCommentariesByPicture(long pictureId, Class<T> clazz);
     CommentaryDTO findCommentaryById(long id);
-    CommentaryDTO addCommentary(long pictureId, @NonNull CommentaryDTOLight commentaryDTO);
-    CommentaryDTO updateCommentary(long pictureId, long commentaryId, @NonNull CommentaryDTOLight commentaryDTO);
-    void removeCommentary(long pictureId, long commentaryId);
+    <T extends CommentaryDTO> T findCommentaryById(long id, Class<T> clazz);
+    CommentaryDTO addCommentary(long pictureId, @NonNull CommentaryDTO commentaryDTO);
+    CommentaryDTO updateCommentary(long pictureId, long commentaryId, @NonNull CommentaryDTO commentaryDTO);
     void removeCommentary(long id);
 }
