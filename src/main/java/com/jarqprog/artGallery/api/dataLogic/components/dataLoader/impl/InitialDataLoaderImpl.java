@@ -24,6 +24,8 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderImpl.class);
 
+    private static final String FAKE_PICTURE_PATH = "fake/path";
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ContactRepository contactRepository;
@@ -78,12 +80,14 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
         spring.setTitle("Spring");
         spring.setAuthor(author);
         spring.setUser(user);
+        spring.setPath(FAKE_PICTURE_PATH);
         pictureRepository.save(spring);
 
         Picture summer = new Picture();
         summer.setTitle("Summer");
         summer.setAuthor(author);
         summer.setUser(user);
+        summer.setPath(FAKE_PICTURE_PATH);
         pictureRepository.save(summer);
 
         Commentary firstCommentary = new Commentary("This is my first painting");
