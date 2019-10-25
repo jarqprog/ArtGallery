@@ -19,9 +19,9 @@ public interface CommentaryService {
     CommentaryDTO findCommentaryById(long id);
     <T extends CommentaryDTO> T findCommentaryById(long id, Class<T> clazz);
 
-    CommentaryDTO addCommentary(long pictureId, @NonNull CommentaryDTO commentaryDTO);
+    long addCommentary(long pictureId, @NonNull CommentaryDTO commentaryDTO);
 
-    CommentaryDTO updateCommentary(long pictureId, long commentaryId, @NonNull CommentaryDTO commentaryDTO);
+    void updateCommentary(long pictureId, long commentaryId, @NonNull CommentaryDTO commentaryDTO);
 
     void removeCommentary(long id);
 

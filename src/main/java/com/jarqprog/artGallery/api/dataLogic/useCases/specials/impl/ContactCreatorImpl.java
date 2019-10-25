@@ -2,7 +2,6 @@ package com.jarqprog.artGallery.api.dataLogic.useCases.specials.impl;
 
 
 import com.jarqprog.artGallery.domain.dto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.fatDTO.ContactFat;
 import com.jarqprog.artGallery.domain.dto.thinDTO.ContactThin;
 import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.specials.ContactCreator;
@@ -24,7 +23,6 @@ public class ContactCreatorImpl implements ContactCreator {
         this.dtoConverter = dtoConverter;
         this.contactService = contactService;
     }
-
 
     @Override
     public ContactDTO createContactFromRegistrationDTO(RegistrationDTO registrationDTO) {

@@ -73,8 +73,8 @@ public class CommentaryController {
     @PostMapping("{pictureId}/commentaries")
     public ResponseEntity addCommentary(@PathVariable("pictureId") long pictureId,
                                                 @RequestBody CommentaryDTO commentaryDTO) {
-        CommentaryDTO created = commentaryService.addCommentary(pictureId, commentaryDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(created.getId()).toUri();
+        long id = commentaryService.addCommentary(pictureId, commentaryDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 
@@ -82,16 +82,15 @@ public class CommentaryController {
     public ResponseEntity updateCommentary(@PathVariable("pictureId") long pictureId,
                                            @PathVariable("commentaryId") long commentaryId,
                                            @RequestBody CommentaryDTO commentaryDTO) {
-        CommentaryDTO created = commentaryService.updateCommentary(pictureId, commentaryId, commentaryDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        commentaryService.updateCommentary(pictureId, commentaryId, commentaryDTO);
+        return ResponseEntity.accepted().build();
     }
 
     @DeleteMapping("{pictureId}/commentaries/{id}")
-    public void removeCommentary(@PathVariable("pictureId") long pictureId,
+    public ResponseEntity removeCommentary(@PathVariable("pictureId") long pictureId,
                                  @PathVariable("id") long id) {
         commentaryService.validateCommentaryExists(pictureId, id);
         commentaryService.removeCommentary(id);
+        return ResponseEntity.accepted().build();
     }
-
 }

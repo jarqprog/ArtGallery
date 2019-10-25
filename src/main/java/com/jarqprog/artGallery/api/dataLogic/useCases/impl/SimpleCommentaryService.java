@@ -98,7 +98,7 @@ public class SimpleCommentaryService implements CommentaryService {
 
     @Override
     @Transactional
-    public CommentaryDTO addCommentary(long pictureId, @NonNull CommentaryDTO commentaryDTO) {
+    public long addCommentary(long pictureId, @NonNull CommentaryDTO commentaryDTO) {
         commentaryValidator.validateOnCreation(commentaryDTO);
 
         preventCreatingAlreadyExistingCommentary(commentaryDTO);
@@ -113,28 +113,25 @@ public class SimpleCommentaryService implements CommentaryService {
         commentary.setUser(user);
 
         Commentary created = commentaryRepository.save(commentary);
-        return dtoConverter.convertEntityToDTO(created, CommentaryFat.class);
+        return created.getId();
     }
 
     @Override
     @Transactional
-    public CommentaryDTO updateCommentary(long pictureId, long commentaryId,
+    public void updateCommentary(long pictureId, long commentaryId,
                                           @NonNull CommentaryDTO commentaryDTO) {
         commentaryValidator.validateOnUpdate(commentaryDTO);
         validateGivenCommentaryIDsAreEqual(commentaryId, commentaryDTO);
-        findPictureById(pictureId);
-
+        Picture picture = findPictureById(pictureId);
         Commentary commentary = findById(commentaryId);
         commentary.setComment(commentaryDTO.getComment());
-
-        Commentary saved = commentaryRepository.save(commentary);
-        return dtoConverter.convertEntityToDTO(saved, CommentaryFat.class);
+        commentary.setPicture(picture);
+        commentaryRepository.save(commentary);
     }
 
     @Override
     @Transactional
     public void removeCommentary(long id) {
-        findById(id);
         commentaryRepository.deleteById(id);
     }
 
