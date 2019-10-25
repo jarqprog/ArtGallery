@@ -37,7 +37,7 @@ Api functionalities at the moment (wip):
     ]
     
     Resources are available in different format:
-        - 'thin' - simplified, nested objects as ID numbers (please see example above);
+        - 'thin' - default, simplified, nested objects as ID numbers (please see example above);
         - 'fat' - where nested objects are fully exposed - use it to avoid triggering multiple requests;
         - 'hateoas' - hateoas like - reources exposed as hyperlinks (not implemented yet);
     
