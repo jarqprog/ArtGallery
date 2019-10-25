@@ -1,7 +1,6 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases;
 
-import com.jarqprog.artGallery.domain.dto.heavyDto.PictureDTO;
-import com.jarqprog.artGallery.domain.dto.lightDto.PictureDTOLight;
+import com.jarqprog.artGallery.domain.dto.PictureDTO;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +10,14 @@ import java.util.List;
 public interface PictureService {
 
     List<PictureDTO> getAllPictures();
-    PictureDTO findPictureById(long id);
-    PictureDTO addPicture(@NonNull PictureDTOLight pictureDTO);
-    PictureDTO updatePicture(long id, @NonNull PictureDTOLight pictureDTO);
-    void removePicture(long id);
+    <T extends PictureDTO> List<T> getAllPictures(Class<T> clazz);
 
+    PictureDTO findPictureById(long id);
+    <T extends PictureDTO> T findPictureById(long id, Class<T> clazz);
+
+    PictureDTO addPicture(@NonNull PictureDTO pictureDTO);
+
+    PictureDTO updatePicture(long id, @NonNull PictureDTO pictureDTO);
+
+    void removePicture(long id);
 }
