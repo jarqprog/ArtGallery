@@ -15,9 +15,9 @@ public interface ContactService {
     ContactDTO findContactById(long id);
     <T extends ContactDTO> T findContactById(long id, Class<T> clazz);
 
-    ContactDTO addContact(@NonNull ContactDTO contactDTO);
+    long addContact(@NonNull ContactDTO contactDTO);
 
-    ContactDTO updateContact(long id, @NonNull ContactDTO contactDTO);
+    void updateContact(long id, @NonNull ContactDTO contactDTO);
 
     void removeContact(long id);
 

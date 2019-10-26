@@ -2,7 +2,7 @@ package com.jarqprog.artGallery.web.controller;
 
 import com.jarqprog.artGallery.api.dataLogic.components.HttpExceptionInfo;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceNotFoundException;
-import com.jarqprog.artGallery.api.dataLogic.components.implementation.HttpExceptionInfoImpl;
+import com.jarqprog.artGallery.api.dataLogic.components.impl.HttpExceptionInfoImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

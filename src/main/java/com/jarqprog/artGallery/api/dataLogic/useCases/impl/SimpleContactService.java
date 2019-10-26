@@ -1,11 +1,11 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases.impl;
 
+import com.jarqprog.artGallery.api.dataLogic.components.dtoValidators.ContactValidator;
 import com.jarqprog.artGallery.domain.dto.ContactDTO;
 import com.jarqprog.artGallery.domain.dto.thinDTO.ContactThin;
 import com.jarqprog.artGallery.domain.entity.Author;
 import com.jarqprog.artGallery.domain.entity.Contact;
 import com.jarqprog.artGallery.domain.entity.User;
-import com.jarqprog.artGallery.domain.dto.fatDTO.ContactFat;
 import com.jarqprog.artGallery.domain.components.DtoConverter;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.dataLogic.exceptions.ResourceNotFoundException;
@@ -24,20 +24,23 @@ import java.util.stream.Collectors;
 @Service
 public class SimpleContactService implements ContactService {
 
-    private final ContactRepository contactRepository;
-    private final UserRepository userRepository;
-    private final AuthorRepository authorRepository;
-    private final DtoConverter dtoConverter;
+    @NonNull private final ContactRepository contactRepository;
+    @NonNull private final UserRepository userRepository;
+    @NonNull private final AuthorRepository authorRepository;
+    @NonNull private final DtoConverter dtoConverter;
+    @NonNull private final ContactValidator contactValidator;
 
     @Autowired
-    public SimpleContactService(ContactRepository contactRepository,
-                                UserRepository userRepository,
-                                AuthorRepository authorRepository,
-                                DtoConverter dtoConverter) {
+    public SimpleContactService(@NonNull ContactRepository contactRepository,
+                                @NonNull UserRepository userRepository,
+                                @NonNull AuthorRepository authorRepository,
+                                @NonNull DtoConverter dtoConverter,
+                                @NonNull ContactValidator contactValidator) {
         this.contactRepository = contactRepository;
         this.userRepository = userRepository;
         this.authorRepository = authorRepository;
         this.dtoConverter = dtoConverter;
+        this.contactValidator = contactValidator;
     }
 
     @Override
@@ -69,25 +72,27 @@ public class SimpleContactService implements ContactService {
     }
 
     @Override
-    public ContactDTO addContact(@NonNull ContactDTO contactDTO) {
+    public long addContact(@NonNull final ContactDTO contactDTO) {
         preventCreatingExistingContact(contactDTO.getId());
-        // validation
 
-        Contact contact = new Contact();
+        contactValidator.validateOnCreation(contactDTO);
+
+        final Contact contact = new Contact();
         updateContactByDTO(contact, contactDTO);
-        Contact saved = contactRepository.save(contact);
-        return dtoConverter.convertEntityToDTO(saved, ContactThin.class);
+        final Contact saved = contactRepository.save(contact);
+        return saved.getId();
     }
 
     @Override
-    public ContactDTO updateContact(long id, @NonNull ContactDTO contactDTO) {
+    public void updateContact(long id, @NonNull final ContactDTO contactDTO) {
+        if (id != contactDTO.getId()) {
+            throw new IllegalArgumentException("different contact's IDs were given");
+        }
+        contactValidator.validateOnUpdate(contactDTO);
 
-        //validation
-
-        Contact contact = findById(id);
+        final Contact contact = findById(id);
         updateContactByDTO(contact, contactDTO);
-        Contact saved = contactRepository.save(contact);
-        return dtoConverter.convertEntityToDTO(saved, ContactThin.class);
+        contactRepository.save(contact);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.api.dataLogic.components;
+package com.jarqprog.artGallery.api.dataLogic.components.validators;
 
 public interface PasswordValidator {
 

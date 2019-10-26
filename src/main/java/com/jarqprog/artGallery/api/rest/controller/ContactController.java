@@ -4,8 +4,11 @@ import com.jarqprog.artGallery.domain.dto.ContactDTO;
 import com.jarqprog.artGallery.api.dataLogic.useCases.ContactService;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,17 +33,21 @@ public class ContactController {
     }
 
     @PostMapping
-    public ContactDTO addContact(@RequestBody ContactDTO contactDTO) {
-        return contactService.addContact(contactDTO);
+    public ResponseEntity addContact(@RequestBody ContactDTO contactDTO) {
+        long id = contactService.addContact(contactDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ContactDTO updateContact(@PathVariable("id") long id, @RequestBody ContactDTO contactDTO) {
-        return contactService.updateContact(id, contactDTO);
+    public ResponseEntity updateContact(@PathVariable("id") long id, @RequestBody ContactDTO contactDTO) {
+        contactService.updateContact(id, contactDTO);
+        return ResponseEntity.accepted().build();
     }
 
     @DeleteMapping("/{id}")
-    public void removeContact(@PathVariable("id") long id) {
+    public ResponseEntity removeContact(@PathVariable("id") long id) {
         contactService.removeContact(id);
+        return ResponseEntity.accepted().build();
     }
 }

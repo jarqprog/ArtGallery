@@ -1,6 +1,5 @@
 package com.jarqprog.artGallery.api.dataLogic.useCases.specials.impl;
 
-
 import com.jarqprog.artGallery.domain.dto.ContactDTO;
 import com.jarqprog.artGallery.domain.dto.thinDTO.ContactThin;
 import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
@@ -25,12 +24,14 @@ public class ContactCreatorImpl implements ContactCreator {
     }
 
     @Override
-    public ContactDTO createContactFromRegistrationDTO(RegistrationDTO registrationDTO) {
-        ContactDTO contactDTO = new ContactThin();
+    public ContactDTO createContactFromRegistrationDTO(final RegistrationDTO registrationDTO) {
+        final ContactDTO contactDTO = new ContactThin();
         contactDTO.setFirstName(registrationDTO.getFirstName());
         contactDTO.setLastName(registrationDTO.getLastName());
         contactDTO.setEmail(registrationDTO.getEmail());
         contactDTO.setNickname(registrationDTO.getNickname());
-        return contactService.addContact(contactDTO);
+        long contactId = contactService.addContact(contactDTO);
+        contactDTO.setId(contactId);
+        return contactDTO;
     }
 }

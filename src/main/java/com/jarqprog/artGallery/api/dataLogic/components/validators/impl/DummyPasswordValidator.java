@@ -1,6 +1,6 @@
-package com.jarqprog.artGallery.api.dataLogic.components.implementation;
+package com.jarqprog.artGallery.api.dataLogic.components.validators.impl;
 
-import com.jarqprog.artGallery.api.dataLogic.components.PasswordValidator;
+import com.jarqprog.artGallery.api.dataLogic.components.validators.PasswordValidator;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
