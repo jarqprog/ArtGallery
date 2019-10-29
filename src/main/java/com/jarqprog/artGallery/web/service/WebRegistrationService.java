@@ -1,13 +1,15 @@
 package com.jarqprog.artGallery.web.service;
 
-import com.jarqprog.artGallery.domain.dto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.UserDTO;
-import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
-import com.jarqprog.artGallery.api.dataLogic.useCases.specials.ContactCreator;
-import com.jarqprog.artGallery.api.dataLogic.useCases.specials.UserCreator;
-import com.jarqprog.artGallery.api.dataLogic.useCases.RegistrationService;
+import com.jarqprog.artGallery.api.domains.useCase.registration.ContactRegistration;
+import com.jarqprog.artGallery.domain.personal.Contact;
+import com.jarqprog.artGallery.domain.personal.User;
+import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationForm;
+import com.jarqprog.artGallery.api.domains.useCase.registration.UserRegistration;
+import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationService;
 
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,19 +19,21 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class WebRegistrationService implements RegistrationService {
 
-    @NonNull private final UserCreator userCreator;
-    @NonNull private final ContactCreator contactCreator;
+    private static final Logger logger = LoggerFactory.getLogger(WebRegistrationService.class);
+
+    @NonNull private final UserRegistration userRegistration;
+    @NonNull private final ContactRegistration contactRegistration;
 
     @Autowired
-    public WebRegistrationService(@NonNull UserCreator userCreator,
-                                  @NonNull ContactCreator contactCreator) {
-        this.userCreator = userCreator;
-        this.contactCreator = contactCreator;
+    public WebRegistrationService(@NonNull UserRegistration userRegistration,
+                                  @NonNull ContactRegistration contactRegistration) {
+        this.userRegistration = userRegistration;
+        this.contactRegistration = contactRegistration;
     }
 
     @Override
-    public UserDTO registerUser(RegistrationDTO registrationDTO) {
-        ContactDTO contactDTO = contactCreator.createContactFromRegistrationDTO(registrationDTO);
-        return userCreator.createUserFromRegistrationDTO(registrationDTO, contactDTO);
+    public User registerUser(RegistrationForm registrationForm) {
+        Contact contact = contactRegistration.createContactFromRegistration(registrationForm);
+        return userRegistration.createUserFromRegistration(registrationForm, contact);
     }
 }

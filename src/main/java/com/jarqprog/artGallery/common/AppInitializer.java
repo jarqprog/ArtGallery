@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.common;
 
-import com.jarqprog.artGallery.api.config.Config;
+import com.jarqprog.artGallery.api.infrastructure.config.Config;
 import com.jarqprog.artGallery.security.config.SimpleSecurityConfig;
 import com.jarqprog.artGallery.web.config.WebMvcConfig;
 import org.springframework.context.annotation.Configuration;

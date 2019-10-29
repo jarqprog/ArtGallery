@@ -1,7 +1,10 @@
 package com.jarqprog.artGallery.security.userDetails;
 
-import com.jarqprog.artGallery.domain.entity.User;
+import com.jarqprog.artGallery.api.domains.personal.user.UserEntity;
+import com.jarqprog.artGallery.api.domains.personal.roleUser.RoleUserRepository;
+import lombok.NonNull;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,16 +13,20 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @ToString(callSuper = true)
-public class SimpleUserDetails extends User implements UserDetails {
+public class SimpleUserDetails extends UserEntity implements UserDetails {
 
+    @NonNull
+    private final RoleUserRepository roleUserRepository;
 
-    SimpleUserDetails(final User user) {
+    @Autowired
+    SimpleUserDetails(final UserEntity user, @NonNull RoleUserRepository roleUserRepository) {
         super(user);
+        this.roleUserRepository = roleUserRepository;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles()
+        return roleUserRepository.findAllByUserLogin(this.getLogin())
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().name()))
                 .collect(Collectors.toList());

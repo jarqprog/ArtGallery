@@ -1,8 +1,8 @@
 package com.jarqprog.artGallery.web.controller;
 
-import com.jarqprog.artGallery.domain.dto.UserDTO;
-import com.jarqprog.artGallery.domain.dto.useCaseDTO.RegistrationDTO;
-import com.jarqprog.artGallery.api.dataLogic.useCases.RegistrationService;
+import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationForm;
+import com.jarqprog.artGallery.domain.personal.User;
+import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationService;
 
 import lombok.NonNull;
 import org.slf4j.Logger;
@@ -35,15 +35,16 @@ public class RegistrationController {
 
     @GetMapping
     public String showRegistrationForm(WebRequest request, Model model) {
-        RegistrationDTO registrationDTO = new RegistrationDTO();
-        model.addAttribute("registration", registrationDTO);
+        RegistrationForm registrationForm = new RegistrationForm();
+        model.addAttribute("registration", registrationForm);
         return "user/registration";
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute("registration") @Valid RegistrationDTO registrationDTO,
+    public String registerUser(@ModelAttribute("registration") @Valid RegistrationForm registrationForm,
                                BindingResult result, WebRequest request, Errors errors, Model model) {
-        UserDTO userDTO = registrationService.registerUser(registrationDTO);
+        User userDTO = registrationService.registerUser(registrationForm);
+        logger.info("User {} registration", userDTO);
         model.addAttribute("login", userDTO.getLogin());
         return "user/registration-success";
     }

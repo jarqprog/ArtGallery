@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery;
 
-import com.jarqprog.artGallery.api.config.Config;
+import com.jarqprog.artGallery.api.infrastructure.config.Config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.*;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.jarqprog.artGallery.api.dataLogic.repositories"})
+@EnableJpaRepositories(basePackages = {"com.jarqprog.artGallery.api.domains"})
 @Import(Config.class)
 @ComponentScan("com.jarqprog.artGallery.api")
 @ActiveProfiles("test")

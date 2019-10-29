@@ -1,10 +1,9 @@
 package com.jarqprog.artGallery.web.controller;
 
 
-import com.jarqprog.artGallery.domain.dto.ContactDTO;
-import com.jarqprog.artGallery.domain.dto.UserDTO;
-import com.jarqprog.artGallery.domain.dto.fatDTO.UserFat;
-import com.jarqprog.artGallery.api.dataLogic.useCases.UserService;
+import com.jarqprog.artGallery.domain.personal.Contact;
+import com.jarqprog.artGallery.api.domains.personal.user.dto.UserFat;
+import com.jarqprog.artGallery.api.domains.personal.user.UserService;
 
 import lombok.NonNull;
 import org.slf4j.Logger;
@@ -36,13 +35,13 @@ public class UserWebController {
     public String showUserInfo(@NonNull Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
-        UserFat userDTO = userService.findUserByLogin(login);
-        ContactDTO contactDTO = userDTO.getContact();
-        model.addAttribute("login", userDTO.getLogin());
-        model.addAttribute("email", contactDTO.getEmail());
-        model.addAttribute("firstName", contactDTO.getFirstName());
-        model.addAttribute("lastName", contactDTO.getLastName());
-        model.addAttribute("nickname", contactDTO.getNickname());
+        UserFat user = userService.findUserByLogin(login, UserFat.class);
+        Contact contact = user.getContact();
+        model.addAttribute("login", user.getLogin());
+        model.addAttribute("email", contact.getEmail());
+        model.addAttribute("firstName", contact.getFirstName());
+        model.addAttribute("lastName", contact.getLastName());
+        model.addAttribute("nickname", contact.getNickname());
         return "/user/user-info";
     }
 }
