@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery;
 
-import com.jarqprog.artGallery.springData.config.PersistenceConfig;
+import com.jarqprog.artGallery.api.infrastructure.config.Config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.*;
@@ -12,10 +12,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = {"com.jarqprog.artGallery.springData.repository"})
-@Import(PersistenceConfig.class)
-@ComponentScan({"com.jarqprog.artGallery.springData.services",
-                "com.jarqprog.artGallery.springData.dataLoader.impl"})
+@EnableJpaRepositories(basePackages = {"com.jarqprog.artGallery.api.domains"})
+@Import(Config.class)
+@ComponentScan("com.jarqprog.artGallery.api")
 @ActiveProfiles("test")
 public class SpringServiceTestConfig {
 
