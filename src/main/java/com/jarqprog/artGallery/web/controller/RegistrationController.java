@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.web.controller;
 
-import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationForm;
-import com.jarqprog.artGallery.domain.personal.User;
+import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationFormDTO;
+import com.jarqprog.artGallery.domain.personal.UserData;
 import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationService;
 
 import lombok.NonNull;
@@ -35,15 +35,15 @@ public class RegistrationController {
 
     @GetMapping
     public String showRegistrationForm(WebRequest request, Model model) {
-        RegistrationForm registrationForm = new RegistrationForm();
-        model.addAttribute("registration", registrationForm);
+        RegistrationFormDTO registrationFormDTO = new RegistrationFormDTO();
+        model.addAttribute("registration", registrationFormDTO);
         return "user/registration";
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute("registration") @Valid RegistrationForm registrationForm,
+    public String registerUser(@ModelAttribute("registration") @Valid RegistrationFormDTO registrationFormDTO,
                                BindingResult result, WebRequest request, Errors errors, Model model) {
-        User userDTO = registrationService.registerUser(registrationForm);
+        UserData userDTO = registrationService.registerUser(registrationFormDTO);
         logger.info("User {} registration", userDTO);
         model.addAttribute("login", userDTO.getLogin());
         return "user/registration-success";

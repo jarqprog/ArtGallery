@@ -2,7 +2,11 @@ package com.jarqprog.artGallery.api.domains.artistic.commentary;
 
 import com.jarqprog.artGallery.api.domains.DomainEntity;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureEntity;
+import com.jarqprog.artGallery.domain.artistic.CommentaryData;
+import com.jarqprog.artGallery.domain.artistic.Commentary;
+import com.jarqprog.artGallery.domain.artistic.Picture;
 import lombok.*;
+import org.apache.commons.lang3.StringUtils;
 
 
 import javax.persistence.*;
@@ -12,8 +16,16 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+@Access(AccessType.FIELD)
 @Table(name="commentaries")
-public class CommentaryEntity extends DomainEntity {
+public class CommentaryEntity extends DomainEntity implements Commentary {
+
+
+    public static CommentaryEntity fromCommentary(@NonNull final Commentary commentary) {
+        assert commentary.getPicture() != null;
+        return new CommentaryEntity(commentary);
+    }
 
     @NonNull
     @NotNull
@@ -28,18 +40,36 @@ public class CommentaryEntity extends DomainEntity {
     @NonNull
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "picture_id")
-    private PictureEntity picture;
+    @JoinColumn(name = "picture_entity_id")
+    private PictureEntity pictureEntity;
 
-    CommentaryEntity(@NonNull @NotNull String comment, @NonNull @NotNull PictureEntity picture) {
-        this.comment = comment;
-        this.picture = picture;
+
+    private CommentaryEntity(@NonNull final Commentary commentary) {
+        this(commentary.getId(),
+            commentary.getVersion(),
+            commentary.getComment(),
+            commentary.getUserLogin(),
+            PictureEntity.fromPicture(commentary.getPicture()));
     }
 
-    CommentaryEntity(@NonNull @NotNull String comment, @NonNull @NotNull String userLogin,
-                     @NonNull @NotNull PictureEntity picture) {
+    private CommentaryEntity(long id, int version, @NonNull String comment, @NonNull String userLogin,
+                             @NonNull final PictureEntity pictureEntity) {
+        super(id, version);
+        assert StringUtils.isNotBlank(comment);
         this.comment = comment;
-        this.userLogin = userLogin;
-        this.picture = picture;
+        this.userLogin = StringUtils.isBlank(userLogin) ? CommentaryData.ANONYMOUS_USER : userLogin;
+        this.pictureEntity = pictureEntity;
+    }
+
+    @Override
+    @Transient
+    public long getPictureId() {
+        return getEntityId(pictureEntity);
+    }
+
+    @Override
+    @Transient
+    public Picture getPicture() {
+        return pictureEntity;
     }
 }

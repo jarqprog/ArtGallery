@@ -3,7 +3,8 @@ package com.jarqprog.artGallery.web.service;
 import com.jarqprog.artGallery.api.domains.useCase.registration.ContactRegistration;
 import com.jarqprog.artGallery.domain.personal.Contact;
 import com.jarqprog.artGallery.domain.personal.User;
-import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationForm;
+import com.jarqprog.artGallery.domain.personal.UserData;
+import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationFormDTO;
 import com.jarqprog.artGallery.api.domains.useCase.registration.UserRegistration;
 import com.jarqprog.artGallery.api.domains.useCase.registration.RegistrationService;
 
@@ -32,8 +33,8 @@ public class WebRegistrationService implements RegistrationService {
     }
 
     @Override
-    public User registerUser(RegistrationForm registrationForm) {
-        Contact contact = contactRegistration.createContactFromRegistration(registrationForm);
-        return userRegistration.createUserFromRegistration(registrationForm, contact);
+    public User registerUser(@NonNull final RegistrationFormDTO registrationFormDTO) {
+        final Contact contact = contactRegistration.createContactFromRegistration(registrationFormDTO);
+        return userRegistration.createUserFromRegistration(registrationFormDTO, contact);
     }
 }

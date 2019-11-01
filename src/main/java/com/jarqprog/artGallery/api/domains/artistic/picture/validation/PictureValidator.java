@@ -1,11 +1,11 @@
 package com.jarqprog.artGallery.api.domains.artistic.picture.validation;
 
-import com.jarqprog.artGallery.domain.artistic.Picture;
+import com.jarqprog.artGallery.domain.artistic.PictureData;
 
 public interface PictureValidator {
 
-    void validateOnCreation(Picture picture);
-    void validateOnUpdate(Picture picture);
-    boolean isAuthorIdValid(Picture picture);
+    void validateOnCreation(PictureData pictureData);
+    void validateOnUpdate(PictureData pictureData);
+    boolean isAuthorIdValid(PictureData pictureData);
 
 }

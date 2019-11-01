@@ -4,8 +4,7 @@ import com.jarqprog.artGallery.api.domains.personal.contact.ContactRepository;
 import com.jarqprog.artGallery.api.domains.personal.user.validation.passwordValidation.PasswordValidator;
 import com.jarqprog.artGallery.api.domains.personal.roleUser.RoleUserEntity;
 import com.jarqprog.artGallery.api.domains.personal.roleUser.RoleUserRepository;
-import com.jarqprog.artGallery.domain.personal.SystemRole;
-import com.jarqprog.artGallery.domain.personal.User;
+import com.jarqprog.artGallery.domain.personal.*;
 import com.jarqprog.artGallery.api.domains.personal.user.dto.UserThin;
 import com.jarqprog.artGallery.api.domains.personal.contact.ContactEntity;
 import com.jarqprog.artGallery.api.domains.personal.user.dto.UserFat;
@@ -55,78 +54,85 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<User> getAllUsers() {
+    public List<UserData> getAllUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(p -> dtoConverter.convertEntityToModel(p, UserThin.class))
+                .map(p -> dtoConverter.transformEntityTo(p, UserThin.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public <U extends User> List<U> getAllUsers(Class<U> clazz) {
+    public <U extends UserData> List<U> getAllUsers(Class<U> clazz) {
         return userRepository.findAll()
                 .stream()
-                .map(p -> dtoConverter.convertEntityToModel(p, clazz))
+                .map(p -> dtoConverter.transformEntityTo(p, clazz))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public User findUserById(long id) {
+    public UserData findUserById(long id) {
         UserEntity userEntity = findById(id);
-        return dtoConverter.convertEntityToModel(userEntity, UserFat.class);
+        return dtoConverter.transformEntityTo(userEntity, UserFat.class);
     }
 
     @Override
-    public <U extends User> U findUserById(long id, Class<U> clazz) {
+    public <U extends UserData> U findUserById(long id, Class<U> clazz) {
         UserEntity userEntity = findById(id);
-        return dtoConverter.convertEntityToModel(userEntity, clazz);
+        return dtoConverter.transformEntityTo(userEntity, clazz);
     }
 
     @Override
-    public User findUserByLogin(String login) {
+    public UserData findUserByLogin(String login) {
         UserEntity userEntity = findByLogin(login);
-        return dtoConverter.convertEntityToModel(userEntity, UserFat.class);
+        return dtoConverter.transformEntityTo(userEntity, UserFat.class);
     }
 
     @Override
-    public <U extends User> U findUserByLogin(String login, Class<U> clazz) {
+    public <U extends UserData> U findUserByLogin(String login, Class<U> clazz) {
         UserEntity userEntity = findByLogin(login);
-        return dtoConverter.convertEntityToModel(userEntity, clazz);
+        return dtoConverter.transformEntityTo(userEntity, clazz);
     }
 
     @Override
-    public long addUser(@NonNull final User user) {
+    public long addUser(@NonNull final UserData userData) {
         final SystemRole defaultRole = SystemRole.USER;
-        return createUserWithRole(user, defaultRole);
+        return createUserWithRole(userData, defaultRole);
     }
 
     @Override
     @Transactional
-    public long createUserWithRole(@NonNull final User user, @NonNull final SystemRole role) {
-        preventCreatingExistingUser(user.getId());
+    public long createUserWithRole(@NonNull final UserData userData, @NonNull final SystemRole role) {
+        preventCreatingExistingUser(userData.getId());
         // validation
-        final UserEntity userEntity = createUserEntity(user);
-        assignPasswordOnUserCreation(userEntity, user);
-        final UserEntity saved = userRepository.save(userEntity);
-        final String login = saved.getLogin();
-        if (roleUserRepository.findByRoleAndUserLogin(role, login).isPresent()) {
+
+        final User user = createUser(userData);
+        final UserEntity userEntity = userRepository.save(UserEntity.fromUser(user));
+
+        final String login = userEntity.getLogin();
+        if (roleUserRepository.findByRoleAndUserEntityLogin(role, login).isPresent()) {
             logger.warn("On User creation: Role-user for login {} already exists - deleting this data", login);
-            roleUserRepository.deleteAllByUserLogin(login);;
+            roleUserRepository.deleteAllByUserEntityLogin(login);
         }
-        RoleUserEntity roleUserEntity = new RoleUserEntity(role, saved);
-        roleUserRepository.save(roleUserEntity);
-        logger.info("User created with login={} and ID={}", saved.getLogin(), saved.getId());
-        return saved.getId();
+
+        RoleUser roleUser = DomainRoleUser.createWith()
+                .role(role)
+                .user(userEntity)
+                .build();
+        roleUserRepository.save(RoleUserEntity.fromRoleUser(roleUser));
+        logger.info("Role {} created for User with login={} and ID={}", role, userEntity.getLogin(), userEntity.getId());
+
+        logger.info("User created with login={} and ID={}", userEntity.getLogin(), userEntity.getId());
+        return userEntity.getId();
     }
 
     @Override
     @Transactional
-    public void updateUser(long id, @NonNull User user) {
+    public void updateUser(long id, @NonNull UserData userData) {
         validateUserExists(id);
         // validation
 
         UserEntity userEntity = findById(id);
-        updateUserEntity(userEntity, user);
+        updateUserEntity(userEntity, userData);
         userRepository.save(userEntity);
         logger.info("User updated with login={} and ID={}", userEntity.getLogin(), userEntity.getId());
     }
@@ -135,7 +141,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void removeUser(long id) {
         UserEntity userEntity = findById(id);
-        roleUserRepository.deleteAllByUserLogin(userEntity.getLogin());
+        roleUserRepository.deleteAllByUserEntityLogin(userEntity.getLogin());
         //todo run query on picture, commentary DB to set login to 'anonymous'
         userRepository.deleteById(id);
         logger.info("removing user with ID={} and login={}", id, userEntity.getLogin());
@@ -166,29 +172,25 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private UserEntity createUserEntity(User userData) {
-        final String login = userData.getLogin();
+    // temporary
+    private User createUser(final UserData userData) {
         long contactId = userData.getContactId();
-        if (contactId > 0) {
-            ContactEntity contactEntity = findContactById(contactId);
-            return new UserEntity(login, contactEntity);
+        //todo
+        String password = userData.getPassword();
+        if (StringUtils.isBlank(password)) { // for existing User it should be done using different path
+            logger.warn("Cannot assign password to User with login {}. Password not exists", userData.getLogin());
+            password = "default";
         }
-        return new UserEntity(login);
+        final String encoded = passwordEncoder.encode(password);
+        return DomainUser
+                .createWith()
+                .login(userData.getLogin())
+                .contact(userData.hasContact() ? findContactById(userData.getContactId()) : null)
+                .password(encoded)
+                .build();
     }
 
-    private void assignPasswordOnUserCreation(UserEntity userEntity, User userData) {
-        //todo - need to handle it properly
-        if (userData.isNew()) {
-            final String password = userData.getPassword();
-            if (!StringUtils.isBlank(password)) { // for existing User it should be done using different path
-                userEntity.setPassword(passwordEncoder.encode(password));
-            } else {
-                logger.warn("Cannot assign password to User with login {}. Password not exists", userData.getLogin());
-            }
-        }
-    }
-
-    private void updateUserEntity(UserEntity userEntity, User userData) {
+    private void updateUserEntity(final UserEntity userEntity, UserData userData) {
         logger.info("Updating user {} - nothing to update", userEntity.getId());
         // do nothing
     }

@@ -1,21 +1,26 @@
 package com.jarqprog.artGallery.api.domains.artistic.picture.model;
 
-import com.jarqprog.artGallery.api.domains.DTOThin;;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import lombok.*;
+
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class PictureThin extends AbstractPictureDTO implements DTOThin {
+public class PictureThin extends DomainDTO implements PictureDTO {
 
+    private String title;
+    private String path;
+    private String userLogin;
     private long authorId;
 
-    public PictureThin(@NonNull String title) {
-        super(title);
-    }
-
-    public PictureThin(@NonNull String title, @NonNull String userLogin) {
-        super(title, userLogin);
+    @Override
+    @JsonIgnore
+    @XmlTransient
+    public boolean hasAuthor() {
+        return authorId > 0;
     }
 }

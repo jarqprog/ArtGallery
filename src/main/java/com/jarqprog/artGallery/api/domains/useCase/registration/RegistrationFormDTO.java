@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @Data
 @ToString
-public class RegistrationForm {
+public class RegistrationFormDTO {
 
     private String firstName;
     private String lastName;

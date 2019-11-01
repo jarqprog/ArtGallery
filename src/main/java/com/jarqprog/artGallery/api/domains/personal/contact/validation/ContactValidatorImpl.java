@@ -2,7 +2,7 @@ package com.jarqprog.artGallery.api.domains.personal.contact.validation;
 
 import com.jarqprog.artGallery.api.domains.personal.contact.policy.NamesValidationPolicy;
 import com.jarqprog.artGallery.api.domains.personal.contact.policy.EmailValidationPolicy;
-import com.jarqprog.artGallery.domain.personal.Contact;
+import com.jarqprog.artGallery.domain.personal.ContactData;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,19 +28,19 @@ public class ContactValidatorImpl implements ContactValidator {
     }
 
     @Override
-    public void validateOnCreation(@NonNull final Contact contact) {
+    public void validateOnCreation(@NonNull final ContactData contactData) {
         StringBuilder exceptionMessage = new StringBuilder();
-        validateFirstName(contact, exceptionMessage);
-        validateEmail(contact, exceptionMessage);
+        validateFirstName(contactData, exceptionMessage);
+        validateEmail(contactData, exceptionMessage);
 
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
     @Override
-    public void validateOnUpdate(@NonNull final Contact contact) {
+    public void validateOnUpdate(@NonNull final ContactData contactData) {
         StringBuilder exceptionMessage = new StringBuilder();
-        validateFirstName(contact, exceptionMessage);
-        validateEmail(contact, exceptionMessage);
+        validateFirstName(contactData, exceptionMessage);
+        validateEmail(contactData, exceptionMessage);
 
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
@@ -59,7 +59,7 @@ public class ContactValidatorImpl implements ContactValidator {
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
-    private StringBuilder validateFirstName(Contact contactDTO, StringBuilder exceptionMessage) {
+    private StringBuilder validateFirstName(ContactData contactDTO, StringBuilder exceptionMessage) {
         if (StringUtils.isBlank(contactDTO.getFirstName())) {
             exceptionMessage.append("First name cannot be empty. ");
         }
@@ -72,7 +72,7 @@ public class ContactValidatorImpl implements ContactValidator {
         return exceptionMessage;
     }
 
-    private StringBuilder validateEmail(Contact contactDTO, StringBuilder exceptionMessage) {
+    private StringBuilder validateEmail(ContactData contactDTO, StringBuilder exceptionMessage) {
         final String email = contactDTO.getEmail();
         if (StringUtils.isBlank(email)) {
             exceptionMessage.append("Email should not be blank. ");

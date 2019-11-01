@@ -1,23 +1,16 @@
 package com.jarqprog.artGallery.api.domains.personal.roleUser.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOThin;
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import com.jarqprog.artGallery.domain.personal.SystemRole;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@ToString
+@Data
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class RoleUserThin extends AbstractRoleUserDTO implements DTOThin {
+public class RoleUserThin extends DomainDTO implements RoleUserDTO {
 
-    @NonNull
-    @NotNull
+    private SystemRole role;
     private String userLogin;
 
-    public RoleUserThin(@NonNull SystemRole role, @NonNull String userLogin) {
-        super(role);
-        this.userLogin = userLogin;
-    }
 }

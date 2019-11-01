@@ -1,25 +1,19 @@
 package com.jarqprog.artGallery.api.domains.artistic.commentary.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOFat;
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import com.jarqprog.artGallery.api.domains.artistic.picture.model.PictureFat;
+import com.jarqprog.artGallery.domain.artistic.Commentary;
 import lombok.*;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+
+@Data
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class CommentaryFat extends AbstractCommentaryDTO implements DTOFat {
+public class CommentaryFat extends DomainDTO implements Commentary, CommentaryDTO {
 
+    private String comment;
+    private String userLogin;
     private PictureFat picture;
-
-    public CommentaryFat(@NonNull String comment, @NonNull PictureFat picture) {
-        super(comment);
-        this.picture = picture;
-    }
-
-    public CommentaryFat(@NonNull String comment, @NonNull String userLogin, @NonNull PictureFat picture) {
-        super(comment, userLogin);
-        this.picture = picture;
-    }
 
     @Override
     public long getPictureId() {

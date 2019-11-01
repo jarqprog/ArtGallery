@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.api.domains.personal.contact;
 
-import com.jarqprog.artGallery.domain.personal.Contact;
+import com.jarqprog.artGallery.domain.personal.ContactData;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +9,15 @@ import java.util.List;
 @Service
 public interface ContactService {
 
-    List<Contact> getAllContacts();
-    <T extends Contact> List<Contact> getAllContacts(Class<T> clazz);
+    List<ContactData> getAllContacts();
+    <T extends ContactData> List<ContactData> getAllContacts(Class<T> clazz);
 
-    Contact findContactById(long id);
-    <T extends Contact> T findContactById(long id, Class<T> clazz);
+    ContactData findContactById(long id);
+    <T extends ContactData> T findContactById(long id, Class<T> clazz);
 
-    long addContact(@NonNull Contact contact);
+    long addContact(@NonNull ContactData contactData);
 
-    void updateContact(long id, @NonNull Contact contact);
+    void updateContact(long id, @NonNull ContactData contactData);
 
     void removeContact(long id);
 

@@ -1,10 +1,10 @@
 package com.jarqprog.artGallery.api.domains.artistic.commentary.validation;
 
-import com.jarqprog.artGallery.domain.artistic.Commentary;
+import com.jarqprog.artGallery.domain.artistic.CommentaryData;
 
 public interface CommentaryValidator {
 
-    void validateOnCreation(Commentary commentary);
-    void validateOnUpdate(Commentary commentary);
+    void validateOnCreation(CommentaryData commentaryData);
+    void validateOnUpdate(CommentaryData commentaryData);
 
 }

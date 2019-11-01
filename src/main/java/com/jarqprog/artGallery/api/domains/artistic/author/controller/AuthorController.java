@@ -1,10 +1,11 @@
 package com.jarqprog.artGallery.api.domains.artistic.author.controller;
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorService;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorDTO;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorFat;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorThin;
-import com.jarqprog.artGallery.domain.artistic.Author;
+import com.jarqprog.artGallery.domain.artistic.AuthorData;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import static com.jarqprog.artGallery.api.domains.OutputMode.FAT;
 
 
 @RestController
-@RequestMapping("/api/authors")
+@RequestMapping(ApiConstants.BASE_URL_PATH + "authors")
 public class AuthorController {
 
     @NonNull
@@ -30,12 +31,12 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<? extends Author> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends AuthorData> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
         return authorService.getAllAuthors(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public Author findAuthorById(@PathVariable("id") long id,
+    public AuthorData findAuthorById(@PathVariable("id") long id,
                                      @RequestParam(required = false, name = "mode") String mode) {
         return authorService.findAuthorById(id, getOutputClass(mode));
     }
@@ -60,7 +61,7 @@ public class AuthorController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends Author> getOutputClass(String mode) {
+    private Class<? extends AuthorData> getOutputClass(String mode) {
         Class<AuthorThin> defaultOutput = AuthorThin.class;
         if (mode == null) {
             return defaultOutput;

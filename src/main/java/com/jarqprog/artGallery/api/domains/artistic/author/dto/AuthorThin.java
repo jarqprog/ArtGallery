@@ -1,22 +1,15 @@
 package com.jarqprog.artGallery.api.domains.artistic.author.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOThin;
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper=true)
-public class AuthorThin extends AbstractAuthorDTO implements DTOThin {
+public class AuthorThin extends DomainDTO implements AuthorDTO {
 
-    public AuthorThin(@NonNull String artisticNickname) {
-        super(artisticNickname);
-    }
+    private String artisticNickname = ANONYMOUS;
+    private long contactId;
 
-    public AuthorThin(@NonNull String artisticNickname, long contactId) {
-        super(artisticNickname, contactId);
-    }
 }

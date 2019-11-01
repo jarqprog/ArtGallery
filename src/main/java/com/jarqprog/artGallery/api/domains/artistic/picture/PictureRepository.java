@@ -11,5 +11,5 @@ import java.util.Set;
 public interface PictureRepository extends JpaRepository<PictureEntity, Long> {
 
     Set<PictureEntity> findAllPicturesByUserLogin(String userLogin);
-    Set<PictureEntity> findAllPicturesByAuthorId(long authorId);
+    Set<PictureEntity> findAllPicturesByAuthorEntityId(long authorEntityId);
 }

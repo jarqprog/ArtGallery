@@ -3,20 +3,14 @@ package com.jarqprog.artGallery.api.infrastructure.components.dataLoader.impl;
 
 
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorService;
-import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorThin;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService;
-import com.jarqprog.artGallery.api.domains.artistic.commentary.dto.CommentaryThin;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureService;
-import com.jarqprog.artGallery.api.domains.artistic.picture.model.PictureThin;
 import com.jarqprog.artGallery.api.domains.personal.contact.ContactService;
-import com.jarqprog.artGallery.api.domains.personal.contact.dto.ContactThin;
 import com.jarqprog.artGallery.api.domains.personal.user.UserService;
-import com.jarqprog.artGallery.api.domains.personal.user.dto.UserThin;
 import com.jarqprog.artGallery.api.infrastructure.components.dataLoader.InitialDataLoader;
 
-import com.jarqprog.artGallery.domain.personal.Contact;
-import com.jarqprog.artGallery.domain.personal.SystemRole;
-import com.jarqprog.artGallery.domain.personal.User;
+import com.jarqprog.artGallery.domain.artistic.*;
+import com.jarqprog.artGallery.domain.personal.*;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +30,7 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
     private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderImpl.class);
 
     private static final String FAKE_PICTURE_PATH = "fake/path";
+
 
 
     @NonNull private final AuthorService authorService;
@@ -72,70 +67,124 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
 
     private void initContactUserPicturesCommentaries() {
         final String login = "betty80";
-        Contact contact = new ContactThin("Betty", "Sue", "bettys@gmail.com");
-        contact.setNickname(login);
-        final long contactId = contactService.addContact(contact);
+        Contact contact = DomainContact
+                .createWith()
+                .firstName("Betty")
+                .lastName("Sue")
+                .nickname(login)
+                .email("bettys@gmail.com")
+                .build();
 
-        User user = new UserThin(login, contactId);
-        user.setPassword(login);
+        long contactID = contactService.addContact(contact);
+
+        Contact updated = DomainContact.mergeID(contactID, contact);
+
+        User user = DomainUser.createWith()
+                .contact(updated)
+                .login(login)
+                .password(login)
+                .build();
+
         userService.addUser(user);
 
-        AuthorThin author = new AuthorThin("betty-artist", contactId);
+        Author author = DomainAuthor.createWith()
+                .artisticNickname("betty-artist")
+                .contactId(contactID)
+                .build();
+
         final long authorId = authorService.addAuthor(author);
 
-        PictureThin spring = new PictureThin("Spring", login);
-        spring.setAuthorId(authorId);
-        spring.setPath(FAKE_PICTURE_PATH);
-        final long springId = pictureService.addPicture(spring);
+        Author updatedAuthor = DomainAuthor.mergeID(authorId, author);
 
-        PictureThin summer = new PictureThin("Summer", login);
-        summer.setAuthorId(authorId);
-        summer.setPath(FAKE_PICTURE_PATH);
-        final long summerId = pictureService.addPicture(summer);
+        Picture spring = createPicture(updatedAuthor, user, "Spring");
+        Picture summer = createPicture(updatedAuthor, user, "Summer");
 
-        CommentaryThin firstCommentary = new CommentaryThin("This is my first painting", springId);
-        firstCommentary.setUserLogin(login);
-        commentaryService.addCommentary(springId, firstCommentary);
-
-        CommentaryThin secondCommentary = new CommentaryThin("Do you like it?", springId);
-        secondCommentary.setUserLogin(login);
-        commentaryService.addCommentary(springId, secondCommentary);
-
-        CommentaryThin thirdCommentary = new CommentaryThin("Enjoy!", springId);
-        thirdCommentary.setUserLogin(login);
-        commentaryService.addCommentary(springId, thirdCommentary);
-
-        CommentaryThin fourthCommentary = new CommentaryThin("I love summer!", summerId);
-        fourthCommentary.setUserLogin(login);
-        commentaryService.addCommentary(summerId, fourthCommentary);
-
+        createCommentary(spring, user, "This is my first painting");
+        createCommentary(spring, user, "Do you like it?");
+        createCommentary(spring, user, "Enjoy");
+        createCommentary(summer, user, "I love summer!");
     }
 
     private void initSomeContacts() {
-        List<Contact> contacts = new ArrayList<>();
-        contacts.add(new ContactThin("Mark", "Smith", "mark@gmail.com"));
-        contacts.add(new ContactThin("John", "Legend", "john@gmail.com"));
-        contacts.add(new ContactThin("Peter", "Miller", "peter@gmail.com"));
-        contacts.add(new ContactThin("Ann", "Bigot", "ann@gmail.com"));
-        contacts.add(new ContactThin("Mary", "Levis", "marry@gmail.com"));
+        List<ContactData> contacts = new ArrayList<>();
+        contacts.add(DomainContact
+                .createWith()
+                .firstName("Mark")
+                .lastName("Smith")
+                .email("mark@gmail.com")
+                .build());
+
+        contacts.add(DomainContact
+                .createWith()
+                .firstName("John")
+                .lastName("Legend")
+                .email("john@gmail.com")
+                .build());
+
+        contacts.add(DomainContact
+                .createWith()
+                .firstName("Peter")
+                .lastName("Miller")
+                .email("peter@gmail.com")
+                .build());
+
         contacts.forEach(contactService::addContact);
     }
 
     private void initSuperAdmin() {
-        Contact superAdminContact = new ContactThin("super admin", "superAdminContact@mail.com");
-        long contactId = contactService.addContact(superAdminContact);
-        createUser(contactId, SystemRole.SUPER_ADMIN, "super_admin", "super_admin");
+        createUser(SystemRole.SUPER_ADMIN, "Super admin",
+                "super-adminContact@mail.com", "super-admin",
+                "super-admin");
     }
 
     private void initAdmin() {
-        Contact adminContact = new ContactThin("admin", "adminContact@mail.com");
-        long contactId = contactService.addContact(adminContact);
-        createUser(contactId, SystemRole.ADMIN, "admin", "admin");
+        createUser(SystemRole.ADMIN, "Admin",
+                "adminContact@mail.com", "admin",
+                "admin");
     }
 
-    private void createUser(long contactId, SystemRole role, String login, String password) {
-        UserThin user = new UserThin(login, contactId);
-        user.setPassword(password);
-        userService.createUserWithRole(user, role);
+    private void createUser(SystemRole role, String firstName,
+                            String email, String login, String password) {
+        logger.info("***************************************************");
+        logger.info("Creating Contact and User");
+        Contact contact = DomainContact.createWith()
+                .firstName(firstName)
+                .email(email)
+                .build();
+
+        long contactID = contactService.addContact(contact);
+
+        Contact updated = DomainContact.mergeID(contactID, contact);
+        logger.info("Contact {} saved", updated.toString());
+
+        UserData userData = DomainUser.createWith()
+                .contact(updated)
+                .login(login)
+                .password(password)
+                .build();
+        userService.createUserWithRole(userData, role);
+        logger.info("User {} saved", userData.toString());
+        logger.info("***************************************************");
+    }
+
+    private Picture createPicture(Author author, UserData userData, String title) {
+        Picture picture = DomainPicture.createWith()
+                .author(author)
+                .path(FAKE_PICTURE_PATH)
+                .userLogin(userData.getLogin())
+                .title(title)
+                .build();
+
+        final long pictureID = pictureService.addPicture(picture);
+        return DomainPicture.mergeID(pictureID, picture);
+    }
+
+    private long createCommentary(Picture picture, UserData userData, String comment) {
+        Commentary commentary = DomainCommentary.createWith()
+                .comment(comment)
+                .userLogin(userData.getLogin())
+                .picture(picture)
+                .build();
+        return commentaryService.addCommentary(picture.getId(), commentary);
     }
 }

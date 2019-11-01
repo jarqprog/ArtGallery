@@ -1,14 +1,10 @@
 package com.jarqprog.artGallery.domain.personal;
 
-import com.jarqprog.artGallery.domain.DomainModel;
+import com.jarqprog.artGallery.domain.Model;
 
-import java.io.Serializable;
+public interface RoleUser extends RoleUserData, Model {
 
-public interface RoleUser extends DomainModel, Serializable {
-
-    String ANONYMOUS = "anonymous";
-
+    User getUser();
     SystemRole getRole();
-    String getUserLogin();
 
 }

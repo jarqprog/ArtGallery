@@ -1,19 +1,15 @@
 package com.jarqprog.artGallery.api.domains.personal.contact.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOThin;
-
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import lombok.*;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class ContactThin extends AbstractContactDTO implements DTOThin {
+public class ContactThin extends DomainDTO implements ContactDTO {
 
-    public ContactThin(@NonNull String firstName, @NonNull String email) {
-        super(firstName, email);
-    }
-
-    public ContactThin(@NonNull String firstName, @NonNull String lastName, @NonNull String email) {
-        super(firstName, lastName, email);
-    }
+    private String firstName;
+    private String lastName;
+    private String nickname;
+    private String email;
 }

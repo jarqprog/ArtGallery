@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.api.domains;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jarqprog.artGallery.domain.DomainModel;
+import com.jarqprog.artGallery.domain.Identity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @ToString
 @Getter
-public abstract class DomainDTO implements DomainModel, Serializable {
+public abstract class DomainDTO implements Identity, Serializable {
 
     @JsonIgnore
     private final String uuid = UUID.randomUUID().toString();

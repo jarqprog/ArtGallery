@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.api.domains;
 
+import com.jarqprog.artGallery.domain.Identity;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,11 +14,10 @@ import java.util.UUID;
 
 @MappedSuperclass
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @ToString
 @EntityListeners(AuditingEntityListener.class)
-public abstract class DomainEntity implements Serializable {
+public abstract class DomainEntity implements Identity, Serializable {
 
     private final String uuid = UUID.randomUUID().toString();
 
@@ -27,6 +27,11 @@ public abstract class DomainEntity implements Serializable {
     //@CreatedBy private User user; //todo
 
     @Version @Setter private int version;
+
+    protected DomainEntity(long id, int version) {
+        this.id = id;
+        this.version = version;
+    }
 
     @Override
     public int hashCode() {
@@ -40,4 +45,15 @@ public abstract class DomainEntity implements Serializable {
             return uuid.equals(((DomainEntity) other).uuid);
         return false;
     }
+
+    protected long getEntityId(DomainEntity entity) {
+        return entity != null ? entity.getId() : 0;
+    }
+
+    @Override
+    public boolean isNew() {
+        return id > 0;
+    }
+
+
 }

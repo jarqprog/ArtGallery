@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.api.domains.artistic.commentary.validation;
 
-import com.jarqprog.artGallery.domain.artistic.Commentary;
+import com.jarqprog.artGallery.domain.artistic.CommentaryData;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -9,19 +9,19 @@ import org.springframework.stereotype.Component;
 public class CommentaryValidatorImpl implements CommentaryValidator {
 
     @Override
-    public void validateOnCreation(@NonNull Commentary commentary) {
+    public void validateOnCreation(@NonNull CommentaryData commentaryData) {
         StringBuilder exceptionMessage = new StringBuilder();
-        validateCommentIsNotEmpty(commentary, exceptionMessage);
-        validatePictureId(commentary, exceptionMessage);
+        validateCommentIsNotEmpty(commentaryData, exceptionMessage);
+        validatePictureId(commentaryData, exceptionMessage);
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
     @Override
-    public void validateOnUpdate(@NonNull Commentary commentary) {
+    public void validateOnUpdate(@NonNull CommentaryData commentaryData) {
         StringBuilder exceptionMessage = new StringBuilder();
-        validateId(commentary, exceptionMessage);
-        validateCommentIsNotEmpty(commentary, exceptionMessage);
-        validatePictureId(commentary, exceptionMessage);
+        validateId(commentaryData, exceptionMessage);
+        validateCommentIsNotEmpty(commentaryData, exceptionMessage);
+        validatePictureId(commentaryData, exceptionMessage);
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
@@ -32,20 +32,20 @@ public class CommentaryValidatorImpl implements CommentaryValidator {
         }
     }
 
-    private void validateCommentIsNotEmpty(Commentary commentary, StringBuilder stringBuilder) {
-        if (StringUtils.isBlank(commentary.getComment())) {
+    private void validateCommentIsNotEmpty(CommentaryData commentaryData, StringBuilder stringBuilder) {
+        if (StringUtils.isBlank(commentaryData.getComment())) {
             stringBuilder.append("Comment cannot be empty. ");
         }
     }
 
-    private void validateId(Commentary commentary, StringBuilder stringBuilder) {
-        if (commentary.getId() <= 0 ) {
+    private void validateId(CommentaryData commentaryData, StringBuilder stringBuilder) {
+        if (commentaryData.getId() <= 0 ) {
             stringBuilder.append("ID is incorrect. ");
         }
     }
 
-    private void validatePictureId(Commentary commentary, StringBuilder stringBuilder) {
-        if (commentary.getPictureId() <= 0 ) {
+    private void validatePictureId(CommentaryData commentaryData, StringBuilder stringBuilder) {
+        if (commentaryData.getPictureId() <= 0 ) {
             stringBuilder.append("PictureId is incorrect. ");
         }
     }

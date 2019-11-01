@@ -1,12 +1,16 @@
 package com.jarqprog.artGallery.api.domains.personal.contact;
 
 import com.jarqprog.artGallery.api.domains.personal.contact.validation.ContactValidator;
-import com.jarqprog.artGallery.domain.personal.Contact;
+import com.jarqprog.artGallery.domain.personal.ContactData;
 import com.jarqprog.artGallery.api.domains.personal.contact.dto.ContactThin;
 import com.jarqprog.artGallery.api.infrastructure.components.DtoConverter;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceNotFoundException;
+import com.jarqprog.artGallery.domain.personal.DomainContact;
+import com.jarqprog.artGallery.domain.personal.Contact;
 import lombok.NonNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl implements ContactService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ContactServiceImpl.class);
 
     @NonNull private final ContactRepository contactRepository;
     @NonNull private final DtoConverter dtoConverter;
@@ -31,54 +37,70 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<Contact> getAllContacts() {
+    public List<ContactData> getAllContacts() {
         return contactRepository.findAll()
                 .stream()
-                .map(c -> dtoConverter.convertEntityToModel(c, ContactThin.class))
+                .map(c -> dtoConverter.transformEntityTo(c, ContactThin.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public <T extends Contact> List<Contact> getAllContacts(Class<T> clazz) {
+    public <T extends ContactData> List<ContactData> getAllContacts(Class<T> clazz) {
         return contactRepository.findAll()
                 .stream()
-                .map(c -> dtoConverter.convertEntityToModel(c, clazz))
+                .map(c -> dtoConverter.transformEntityTo(c, clazz))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Contact findContactById(long id) {
+    public ContactData findContactById(long id) {
         ContactEntity contact = findById(id);
-        return dtoConverter.convertEntityToModel(contact, ContactThin.class);
+        return dtoConverter.transformEntityTo(contact, ContactThin.class);
     }
 
     @Override
-    public <T extends Contact> T findContactById(long id, Class<T> clazz) {
+    public <T extends ContactData> T findContactById(long id, Class<T> clazz) {
         ContactEntity contact = findById(id);
-        return dtoConverter.convertEntityToModel(contact, clazz);
+        return dtoConverter.transformEntityTo(contact, clazz);
     }
 
     @Override
-    public long addContact(@NonNull final Contact contact) {
-        preventCreatingExistingContact(contact.getId());
+    public long addContact(@NonNull final ContactData contactData) {
+        preventCreatingExistingContact(contactData.getId());
 
-        contactValidator.validateOnCreation(contact);
+        contactValidator.validateOnCreation(contactData);
 
-        final ContactEntity contactEntity = new ContactEntity();
-        updateContactByDTO(contactEntity, contact);
+        final Contact contact = DomainContact.createWith()
+                .firstName(contactData.getFirstName())
+                .lastName(contactData.getLastName())
+                .nickname(contactData.getNickname())
+                .email(contactData.getEmail())
+                .build();
+
+        final ContactEntity contactEntity = ContactEntity.fromContact(contact);
         final ContactEntity saved = contactRepository.save(contactEntity);
+        logger.info("Created contact with data: ID={}, first name={}", saved.getId(), saved.getFirstName());
         return saved.getId();
     }
 
     @Override
-    public void updateContact(long id, @NonNull final Contact contact) {
-        if (id != contact.getId()) {
+    public void updateContact(long id, @NonNull final ContactData contactData) {
+        if (id != contactData.getId()) {
             throw new IllegalArgumentException("different contact's IDs were given");
         }
-        contactValidator.validateOnUpdate(contact);
+        contactValidator.validateOnUpdate(contactData);
+        validateContactExists(id);
 
-        final ContactEntity contactEntity = findById(id);
-        updateContactByDTO(contactEntity, contact);
+        final Contact contact = DomainContact.createWith()
+                .id(contactData.getId())
+                .version(contactData.getVersion())
+                .firstName(contactData.getFirstName())
+                .lastName(contactData.getLastName())
+                .nickname(contactData.getNickname())
+                .email(contactData.getEmail())
+                .build();
+
+        final ContactEntity contactEntity = ContactEntity.fromContact(contact);
         contactRepository.save(contactEntity);
     }
 
@@ -87,12 +109,6 @@ public class ContactServiceImpl implements ContactService {
     public void removeContact(long id) {
         findById(id);
         //todo run query on Author DB to nullify contactId;
-//        User user = findUserByContactId(id);
-//        Author author = findAuthorByContactId(id);
-//        user.setContact(null);
-//        author.setContact(null);
-//        userRepository.save(user);
-//        authorRepository.save(author);
         contactRepository.deleteById(id);
     }
 
@@ -110,13 +126,5 @@ public class ContactServiceImpl implements ContactService {
         if (contactRepository.existsById(contactId)) {
             throw new ResourceAlreadyExists(ContactEntity.class, contactId);
         }
-    }
-
-    private void updateContactByDTO(ContactEntity contactEntity, Contact contact) {
-        contactEntity.setVersion(contact.getVersion());
-        contactEntity.setFirstName(contact.getFirstName());
-        contactEntity.setLastName(contact.getLastName());
-        contactEntity.setEmail(contact.getEmail());
-        contactEntity.setNickname(contact.getNickname());
     }
 }

@@ -26,7 +26,7 @@ public class SimpleUserDetails extends UserEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roleUserRepository.findAllByUserLogin(this.getLogin())
+        return roleUserRepository.findAllByUserEntityLogin(this.getLogin())
                 .stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().name()))
                 .collect(Collectors.toList());

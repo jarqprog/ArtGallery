@@ -12,7 +12,7 @@ import java.util.Set;
 @EnableTransactionManagement
 public interface RoleUserRepository extends JpaRepository<RoleUserEntity, Long> {
 
-    Set<RoleUserEntity> findAllByUserLogin(String userLogin);
-    Optional<RoleUserEntity> findByRoleAndUserLogin(SystemRole role, String userLogin);
-    void deleteAllByUserLogin(String userLogin);
+    Set<RoleUserEntity> findAllByUserEntityLogin(String userLogin);
+    Optional<RoleUserEntity> findByRoleAndUserEntityLogin(SystemRole role, String userLogin);
+    void deleteAllByUserEntityLogin(String userLogin);
 }

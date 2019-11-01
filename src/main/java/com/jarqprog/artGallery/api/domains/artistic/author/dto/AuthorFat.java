@@ -1,22 +1,15 @@
 package com.jarqprog.artGallery.api.domains.artistic.author.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOFat;
-
+import com.jarqprog.artGallery.api.domains.DomainDTO;
+import com.jarqprog.artGallery.domain.artistic.Author;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Data
-@NoArgsConstructor
 @EqualsAndHashCode(callSuper=true)
-public class AuthorFat extends AbstractAuthorDTO implements DTOFat {
+public class AuthorFat extends DomainDTO implements AuthorDTO, Author {
 
-    public AuthorFat(@NonNull String artisticNickname) {
-        super(artisticNickname);
-    }
+    private String artisticNickname = ANONYMOUS;
+    private long contactId;
 
-    public AuthorFat(@NonNull String artisticNickname, long contactId) {
-        super(artisticNickname, contactId);
-    }
 }

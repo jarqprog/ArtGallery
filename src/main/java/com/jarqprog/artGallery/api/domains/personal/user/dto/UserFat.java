@@ -1,30 +1,36 @@
 package com.jarqprog.artGallery.api.domains.personal.user.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOFat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import com.jarqprog.artGallery.api.domains.personal.contact.dto.ContactFat;
 
+import com.jarqprog.artGallery.domain.personal.User;
 import lombok.*;
 
-@Getter
-@ToString
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+import javax.xml.bind.annotation.XmlTransient;
+
+@Data
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class UserFat extends AbstractUserDTO implements DTOFat {
+public class UserFat extends DomainDTO implements UserDTO, User {
 
-    @Setter
+    private String login;
+
+    @JsonIgnore
+    @XmlTransient
+    private String password;
+
     private ContactFat contact;
-
-    public UserFat(@NonNull String login) {
-        super(login);
-    }
-
-    public UserFat(@NonNull String login, @NonNull ContactFat contact) {
-        super(login);
-        this.contact = contact;
-    }
 
     @Override
     public long getContactId() {
         return getDTOId(contact);
+    }
+
+    @JsonIgnore
+    @XmlTransient
+    @Override
+    public boolean hasContact() {
+        return contact != null;
     }
 }

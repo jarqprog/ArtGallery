@@ -2,13 +2,16 @@ package com.jarqprog.artGallery.api.domains.artistic.commentary;
 
 
 import com.jarqprog.artGallery.api.domains.artistic.commentary.validation.CommentaryValidator;
-import com.jarqprog.artGallery.domain.artistic.Commentary;
+import com.jarqprog.artGallery.domain.artistic.CommentaryData;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.dto.CommentaryThin;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureEntity;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.api.infrastructure.components.DtoConverter;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureRepository;
+import com.jarqprog.artGallery.domain.artistic.DomainCommentary;
+import com.jarqprog.artGallery.domain.artistic.Commentary;
+import com.jarqprog.artGallery.domain.artistic.Picture;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,77 +45,90 @@ public class CommentaryServiceImpl implements CommentaryService {
 
 
     @Override
-    public List<Commentary> getAllCommentaries() {
+    public List<CommentaryData> getAllCommentaries() {
         return commentaryRepository
                 .findAll()
                 .stream()
-                .map(c -> dtoConverter.convertEntityToModel(c, CommentaryThin.class))
+                .map(c -> dtoConverter.transformEntityTo(c, CommentaryThin.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public <T extends Commentary> List<T> getAllCommentaries(Class<T> clazz) {
+    public <T extends CommentaryData> List<T> getAllCommentaries(Class<T> clazz) {
         return commentaryRepository
                 .findAll()
                 .stream()
-                .map(c -> dtoConverter.convertEntityToModel(c, clazz))
+                .map(c -> dtoConverter.transformEntityTo(c, clazz))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Commentary> getAllCommentariesByPicture(long pictureId) {
-        return commentaryRepository.findAllCommentaryByPictureId(pictureId)
+    public List<CommentaryData> getAllCommentariesByPicture(long pictureId) {
+        return commentaryRepository.findAllCommentaryByPictureEntityId(pictureId)
                 .stream()
-                .map(c -> dtoConverter.convertEntityToModel(c, CommentaryThin.class))
+                .map(c -> dtoConverter.transformEntityTo(c, CommentaryThin.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public <T extends Commentary> List<T> getAllCommentariesByPicture(long pictureId, Class<T> clazz) {
-        return commentaryRepository.findAllCommentaryByPictureId(pictureId)
+    public <T extends CommentaryData> List<T> getAllCommentariesByPicture(long pictureId, Class<T> clazz) {
+        return commentaryRepository.findAllCommentaryByPictureEntityId(pictureId)
                 .stream()
-                .map(c -> dtoConverter.convertEntityToModel(c, clazz))
+                .map(c -> dtoConverter.transformEntityTo(c, clazz))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Commentary findCommentaryById(long id) {
+    public CommentaryData findCommentaryById(long id) {
         CommentaryEntity commentary = findById(id);
-        return dtoConverter.convertEntityToModel(commentary, CommentaryThin.class);
+        return dtoConverter.transformEntityTo(commentary, CommentaryThin.class);
     }
 
     @Override
-    public <T extends Commentary> T findCommentaryById(long id, Class<T> clazz) {
+    public <T extends CommentaryData> T findCommentaryById(long id, Class<T> clazz) {
         CommentaryEntity commentary = findById(id);
-        return dtoConverter.convertEntityToModel(commentary, clazz);
+        return dtoConverter.transformEntityTo(commentary, clazz);
     }
 
     @Override
     @Transactional
-    public long addCommentary(long pictureId, @NonNull Commentary commentary) {
-        commentaryValidator.validateOnCreation(commentary);
+    public long addCommentary(long pictureId, @NonNull CommentaryData commentaryData) {
+        commentaryValidator.validateOnCreation(commentaryData);
 
-        preventCreatingAlreadyExistingCommentary(commentary);
-        validateGivenPictureIDsAreEqual(pictureId, commentary);
-        PictureEntity picture = findPictureById(commentary.getPictureId());
+        preventCreatingAlreadyExistingCommentary(commentaryData);
+        validateGivenPictureIDsAreEqual(pictureId, commentaryData);
+        Picture picture = findPictureById(commentaryData.getPictureId());
 
-        CommentaryEntity commentaryEntity = new CommentaryEntity(commentary.getComment(), picture);
-        commentaryEntity.setUserLogin(commentary.getUserLogin());
-        CommentaryEntity saved = commentaryRepository.save(commentaryEntity);
+        Commentary commentary = DomainCommentary.createWith()
+                .comment(commentaryData.getComment())
+                .picture(picture)
+                .userLogin(commentaryData.getUserLogin())
+                .build();
+
+        CommentaryEntity saved = commentaryRepository.save(CommentaryEntity.fromCommentary(commentary));
         return saved.getId();
     }
 
     @Override
     @Transactional
     public void updateCommentary(long pictureId, long commentaryId,
-                                          @NonNull Commentary commentary) {
-        commentaryValidator.validateOnUpdate(commentary);
-        validateGivenCommentaryIDsAreEqual(commentaryId, commentary);
+                                          @NonNull CommentaryData commentaryData) {
+        commentaryValidator.validateOnUpdate(commentaryData);
+        validateGivenCommentaryIDsAreEqual(commentaryId, commentaryData);
         validateCommentaryExists(pictureId, commentaryId);
-        CommentaryEntity commentaryEntity = findById(commentaryId);
-        commentaryEntity.setVersion(commentary.getVersion());
-        commentaryEntity.setComment(commentary.getComment());
-        commentaryRepository.save(commentaryEntity);
+
+        Picture picture = findPictureById(commentaryData.getPictureId());
+
+        Commentary commentary = DomainCommentary.createWith()
+                .id(commentaryData.getId())
+                .version(commentaryData.getVersion())
+                .comment(commentaryData.getComment())
+                .picture(picture)
+                .userLogin(commentaryData.getUserLogin())
+                .build();
+
+        CommentaryEntity saved = commentaryRepository.save(CommentaryEntity.fromCommentary(commentary));
+        commentaryRepository.save(saved);
     }
 
     @Override
@@ -123,7 +139,7 @@ public class CommentaryServiceImpl implements CommentaryService {
 
     @Override
     public void validateCommentaryExists(long pictureId, long commentaryId) {
-        if (!commentaryRepository.existsByIdAndPictureId(commentaryId, pictureId)) {
+        if (!commentaryRepository.existsByIdAndPictureEntityId(commentaryId, pictureId)) {
             throw new IllegalArgumentException("Given Commentary ID and Picture ID do not match!");
         }
     }
@@ -139,21 +155,21 @@ public class CommentaryServiceImpl implements CommentaryService {
                 .orElseThrow(() -> new ResourceNotFoundException(PictureEntity.class, pictureId));
     }
 
-    private void preventCreatingAlreadyExistingCommentary(Commentary commentary) {
-        long id = commentary.getId();
+    private void preventCreatingAlreadyExistingCommentary(CommentaryData commentaryData) {
+        long id = commentaryData.getId();
         if (id > 0 && commentaryRepository.existsById(id)) {
             throw new ResourceAlreadyExists(CommentaryEntity.class, id);
         }
     }
 
-    private void validateGivenPictureIDsAreEqual(long pictureId, Commentary commentary) {
-        if (pictureId != commentary.getPictureId()) {
+    private void validateGivenPictureIDsAreEqual(long pictureId, CommentaryData commentaryData) {
+        if (pictureId != commentaryData.getPictureId()) {
             throw new IllegalArgumentException("different picture's IDs were given");
         }
     }
 
-    private void validateGivenCommentaryIDsAreEqual(long commentaryId, Commentary commentary) {
-        if (commentaryId != commentary.getId()) {
+    private void validateGivenCommentaryIDsAreEqual(long commentaryId, CommentaryData commentaryData) {
+        if (commentaryId != commentaryData.getId()) {
             throw new IllegalArgumentException("different commentary's IDs were given");
         }
     }

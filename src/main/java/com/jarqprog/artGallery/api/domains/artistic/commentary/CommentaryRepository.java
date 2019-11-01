@@ -10,9 +10,9 @@ import java.util.Set;
 @EnableTransactionManagement
 public interface CommentaryRepository extends JpaRepository<CommentaryEntity, Long> {
 
-    Set<CommentaryEntity> findAllCommentaryByPictureId(long pictureId);
+    Set<CommentaryEntity> findAllCommentaryByPictureEntityId(long pictureEntityId);
     Set<CommentaryEntity> findAllCommentaryByUserLogin(String userLogin);
     void deleteById(long id);
-    void deleteByPictureId(long pictureId);
-    boolean existsByIdAndPictureId(long id, long pictureId);
+    void deleteByPictureEntityId(long pictureEntityId);
+    boolean existsByIdAndPictureEntityId(long id, long pictureEntityId);
 }

@@ -1,6 +1,6 @@
 package com.jarqprog.artGallery.api.domains.artistic.picture.validation;
 
-import com.jarqprog.artGallery.domain.artistic.Picture;
+import com.jarqprog.artGallery.domain.artistic.PictureData;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -9,25 +9,25 @@ import org.springframework.stereotype.Component;
 public class PictureValidatorImpl implements PictureValidator {
 
     @Override
-    public void validateOnCreation(@NonNull Picture picture) {
+    public void validateOnCreation(@NonNull PictureData pictureData) {
         StringBuilder exceptionMessage = new StringBuilder();
-        validatePathIsNotEmpty(picture, exceptionMessage);
+        validatePathIsNotEmpty(pictureData, exceptionMessage);
 
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
     @Override
-    public void validateOnUpdate(@NonNull Picture picture) {
+    public void validateOnUpdate(@NonNull PictureData pictureData) {
         StringBuilder exceptionMessage = new StringBuilder();
-        validateId(picture, exceptionMessage);
-        validatePathIsNotEmpty(picture, exceptionMessage);
+        validateId(pictureData, exceptionMessage);
+        validatePathIsNotEmpty(pictureData, exceptionMessage);
 
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
     @Override
-    public boolean isAuthorIdValid(Picture picture) {
-        return picture.getAuthorId() > 0;
+    public boolean isAuthorIdValid(PictureData pictureData) {
+        return pictureData.getAuthorId() > 0;
     }
 
     private void throwExceptionIfMessageNotEmpty(StringBuilder exceptionMessage) {
@@ -37,14 +37,14 @@ public class PictureValidatorImpl implements PictureValidator {
         }
     }
 
-    private void validateId(Picture picture, StringBuilder stringBuilder) {
-        if (picture.getId() <= 0 ) {
+    private void validateId(PictureData pictureData, StringBuilder stringBuilder) {
+        if (pictureData.getId() <= 0 ) {
             stringBuilder.append("ID is incorrect. ");
         }
     }
 
-    private void validatePathIsNotEmpty(Picture picture, StringBuilder stringBuilder) {
-        if (StringUtils.isBlank(picture.getPath())) {
+    private void validatePathIsNotEmpty(PictureData pictureData, StringBuilder stringBuilder) {
+        if (StringUtils.isBlank(pictureData.getPath())) {
             stringBuilder.append("Path cannot be empty. ");
         }
     }

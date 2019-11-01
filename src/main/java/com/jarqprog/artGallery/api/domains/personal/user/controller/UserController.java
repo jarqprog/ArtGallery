@@ -1,10 +1,11 @@
 package com.jarqprog.artGallery.api.domains.personal.user.controller;
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.domains.personal.user.UserService;
 import com.jarqprog.artGallery.api.domains.personal.user.dto.UserDTO;
 import com.jarqprog.artGallery.api.domains.personal.user.dto.UserFat;
 import com.jarqprog.artGallery.api.domains.personal.user.dto.UserThin;
-import com.jarqprog.artGallery.domain.personal.User;
+import com.jarqprog.artGallery.domain.personal.UserData;
 
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.List;
 import static com.jarqprog.artGallery.api.domains.OutputMode.FAT;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(ApiConstants.BASE_URL_PATH + "users")
 public class UserController {
 
     @NonNull private final UserService userService;
@@ -29,13 +30,13 @@ public class UserController {
     }
 
     @GetMapping
-    public List<? extends User> getAllUsers(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends UserData> getAllUsers(@RequestParam(required = false, name = "mode") String mode) {
         return userService.getAllUsers(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public User findUserById(@RequestParam(required = false, name = "mode") String mode,
-                             @PathVariable("id") long id) {
+    public UserData findUserById(@RequestParam(required = false, name = "mode") String mode,
+                                 @PathVariable("id") long id) {
         return userService.findUserById(id, getOutputClass(mode));
     }
 
@@ -58,7 +59,7 @@ public class UserController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends User> getOutputClass(String mode) {
+    private Class<? extends UserData> getOutputClass(String mode) {
         Class<UserThin> defaultOutput = UserThin.class;
         if (mode == null) {
             return defaultOutput;

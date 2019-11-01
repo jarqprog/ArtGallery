@@ -1,24 +1,29 @@
 package com.jarqprog.artGallery.api.domains.personal.user.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOThin;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlTransient;
 
-@Getter
-@ToString
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+
+@Data
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class UserThin extends AbstractUserDTO implements DTOThin {
+public class UserThin extends DomainDTO implements UserDTO {
 
-    @Setter
+    private String login;
+
+    @JsonIgnore
+    @XmlTransient
+    private String password;
+
     private long contactId;
 
-    public UserThin(@NonNull String login) {
-        super(login);
-    }
-
-    public UserThin(@NonNull String login, long contactId) {
-        super(login);
-        this.contactId = contactId;
+    @JsonIgnore
+    @XmlTransient
+    @Override
+    public boolean hasContact() {
+        return contactId > 0;
     }
 }

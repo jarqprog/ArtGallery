@@ -4,8 +4,10 @@ import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorThin;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceNotFoundException;
 import com.jarqprog.artGallery.api.infrastructure.components.DtoConverter;
-import com.jarqprog.artGallery.domain.artistic.Author;
+import com.jarqprog.artGallery.domain.artistic.AuthorData;
 
+import com.jarqprog.artGallery.domain.artistic.DomainAuthor;
+import com.jarqprog.artGallery.domain.artistic.Author;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,57 +35,67 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<Author> getAllAuthors() {
+    public List<AuthorData> getAllAuthors() {
         return authorRepository.findAll()
                 .stream()
-                .map(a -> dtoConverter.convertEntityToModel(a, defaultOutputClass))
+                .map(a -> dtoConverter.transformEntityTo(a, defaultOutputClass))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public <T extends Author> List<Author> getAllAuthors(Class<T> clazz) {
+    public <T extends AuthorData> List<AuthorData> getAllAuthors(Class<T> clazz) {
         return authorRepository.findAll()
                 .stream()
-                .map(a -> dtoConverter.convertEntityToModel(a, clazz))
+                .map(a -> dtoConverter.transformEntityTo(a, clazz))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Author findAuthorById(long id) {
-        return dtoConverter.convertEntityToModel(findById(id), defaultOutputClass);
+    public AuthorData findAuthorById(long id) {
+        return dtoConverter.transformEntityTo(findById(id), defaultOutputClass);
     }
 
     @Override
-    public <T extends Author> T findAuthorById(long id, Class<T> clazz) {
-        return dtoConverter.convertEntityToModel(findById(id), clazz);
+    public <T extends AuthorData> T findAuthorById(long id, Class<T> clazz) {
+        return dtoConverter.transformEntityTo(findById(id), clazz);
     }
 
     @Override
     @Transactional
-    public long addAuthor(@NonNull final Author author) {
-        preventCreatingAlreadyExistingAuthor(author);
+    public long addAuthor(@NonNull final AuthorData authorData) {
+        preventCreatingAlreadyExistingAuthor(authorData);
 
         // validation
 
-        AuthorEntity authorEntity = new AuthorEntity(author.getArtisticNickname(), author.getContactId());
-        AuthorEntity saved = authorRepository.save(authorEntity);
+        Author author = DomainAuthor
+                .createWith()
+                .artisticNickname(authorData.getArtisticNickname())
+                .contactId(authorData.getContactId())
+                .build();
+
+        AuthorEntity saved = authorRepository.save(AuthorEntity.fromAuthor(author));
         logger.info("Author {} created", saved.toString());
         return saved.getId();
     }
 
     @Override
     @Transactional
-    public void updateAuthor(long id, @NonNull Author author) {
-        validateGivenAuthorIDsAreEqual(id, author);
+    public void updateAuthor(long id, @NonNull AuthorData authorData) {
+        validateGivenAuthorIDsAreEqual(id, authorData);
         validateAuthorExists(id);
 
         // validation
 
-        AuthorEntity authorEntity = findById(id);
-        authorEntity.setArtisticNickname(author.getArtisticNickname());
-        authorEntity.setContactId(author.getContactId());
-        authorRepository.save(authorEntity);
-        logger.info("Author {} updated", authorEntity.toString());
+        Author author = DomainAuthor
+                .createWith()
+                .id(authorData.getId())
+                .version(authorData.getVersion())
+                .artisticNickname(authorData.getArtisticNickname())
+                .contactId(authorData.getContactId())
+                .build();
+
+        AuthorEntity saved = authorRepository.save(AuthorEntity.fromAuthor(author));
+        logger.info("Author {} updated", saved.toString());
     }
 
     @Override
@@ -99,15 +111,15 @@ public class AuthorServiceImpl implements AuthorService {
                 .orElseThrow(() -> new ResourceNotFoundException(AuthorEntity.class, id));
     }
 
-    private void preventCreatingAlreadyExistingAuthor(Author author) {
-        long id = author.getId();
+    private void preventCreatingAlreadyExistingAuthor(AuthorData authorData) {
+        long id = authorData.getId();
         if (id > 0 && authorRepository.existsById(id)) {
             throw new ResourceAlreadyExists(AuthorEntity.class, id);
         }
     }
 
-    private void validateGivenAuthorIDsAreEqual(long authorId, Author author) {
-        if (authorId != author.getId()) {
+    private void validateGivenAuthorIDsAreEqual(long authorId, AuthorData authorData) {
+        if (authorId != authorData.getId()) {
             throw new IllegalArgumentException("different author's IDs were given");
         }
     }

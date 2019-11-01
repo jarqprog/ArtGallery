@@ -1,7 +1,7 @@
 package com.jarqprog.artGallery.web.controller;
 
 
-import com.jarqprog.artGallery.domain.personal.Contact;
+import com.jarqprog.artGallery.domain.personal.ContactData;
 import com.jarqprog.artGallery.api.domains.personal.user.dto.UserFat;
 import com.jarqprog.artGallery.api.domains.personal.user.UserService;
 
@@ -36,12 +36,12 @@ public class UserWebController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String login = authentication.getName();
         UserFat user = userService.findUserByLogin(login, UserFat.class);
-        Contact contact = user.getContact();
+        ContactData contactData = user.getContact();
         model.addAttribute("login", user.getLogin());
-        model.addAttribute("email", contact.getEmail());
-        model.addAttribute("firstName", contact.getFirstName());
-        model.addAttribute("lastName", contact.getLastName());
-        model.addAttribute("nickname", contact.getNickname());
+        model.addAttribute("email", contactData.getEmail());
+        model.addAttribute("firstName", contactData.getFirstName());
+        model.addAttribute("lastName", contactData.getLastName());
+        model.addAttribute("nickname", contactData.getNickname());
         return "/user/user-info";
     }
 }

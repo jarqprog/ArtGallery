@@ -1,22 +1,16 @@
 package com.jarqprog.artGallery.api.domains.artistic.commentary.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOThin;
+import com.jarqprog.artGallery.api.domains.DomainDTO;
 import lombok.*;
 
-@Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-@EqualsAndHashCode(callSuper=true)
-public class CommentaryThin extends AbstractCommentaryDTO implements DTOThin {
 
+@Data
+@ToString(callSuper=true)
+@EqualsAndHashCode(callSuper=true)
+public class CommentaryThin extends DomainDTO implements CommentaryDTO {
+
+    private String comment;
+    private String userLogin;
     private long pictureId;
 
-    public CommentaryThin(@NonNull String comment, long pictureId) {
-        super(comment);
-        this.pictureId = pictureId;
-    }
-
-    public CommentaryThin(@NonNull String comment, @NonNull String userLogin, long pictureId) {
-        super(comment, userLogin);
-        this.pictureId = pictureId;
-    }
 }

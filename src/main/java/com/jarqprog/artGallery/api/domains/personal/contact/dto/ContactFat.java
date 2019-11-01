@@ -1,20 +1,17 @@
 package com.jarqprog.artGallery.api.domains.personal.contact.dto;
 
-import com.jarqprog.artGallery.api.domains.DTOFat;
-
+import com.jarqprog.artGallery.api.domains.DomainDTO;
+import com.jarqprog.artGallery.domain.personal.Contact;
 import lombok.*;
 
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class ContactFat extends AbstractContactDTO implements DTOFat {
+public class ContactFat extends DomainDTO implements ContactDTO, Contact {
 
-    public ContactFat(@NonNull String firstName, @NonNull String email) {
-        super(firstName, email);
-    }
-
-    public ContactFat(@NonNull String firstName, @NonNull String lastName, @NonNull String email) {
-        super(firstName, lastName, email);
-    }
+    private String firstName;
+    private String lastName;
+    private String nickname;
+    private String email;
 }

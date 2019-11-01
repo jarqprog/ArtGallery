@@ -1,8 +1,9 @@
 package com.jarqprog.artGallery.api.domains.personal.contact.controller;
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.domains.personal.contact.ContactService;
 import com.jarqprog.artGallery.api.domains.personal.contact.dto.ContactDTO;
-import com.jarqprog.artGallery.domain.personal.Contact;
+import com.jarqprog.artGallery.domain.personal.ContactData;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/contacts")
+@RequestMapping(ApiConstants.BASE_URL_PATH + "contacts")
 public class ContactController {
 
     @NonNull private final ContactService contactService;
@@ -24,12 +25,12 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<Contact> getAllContacts() {
+    public List<ContactData> getAllContacts() {
         return contactService.getAllContacts();
     }
 
     @GetMapping("/{id}")
-    public Contact findContactById(@PathVariable("id") long id) {
+    public ContactData findContactById(@PathVariable("id") long id) {
         return contactService.findContactById(id);
     }
 

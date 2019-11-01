@@ -1,14 +1,12 @@
 package com.jarqprog.artGallery.api.domains.personal.roleUser;
 
+import com.jarqprog.artGallery.api.domains.personal.roleUser.dto.RoleUserThin;
 import com.jarqprog.artGallery.api.domains.personal.user.UserEntity;
 import com.jarqprog.artGallery.api.domains.personal.user.UserRepository;
-import com.jarqprog.artGallery.api.domains.personal.roleUser.dto.RoleUserFat;
 import com.jarqprog.artGallery.api.infrastructure.components.DtoConverter;
 
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceNotFoundException;
-import com.jarqprog.artGallery.domain.personal.SystemRole;
-import com.jarqprog.artGallery.domain.personal.User;
-import com.jarqprog.artGallery.domain.personal.RoleUser;
+import com.jarqprog.artGallery.domain.personal.*;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,24 +37,32 @@ public class RoleUserServiceImpl implements RoleUserService {
     }
 
     @Override
-    public Set<RoleUser> findByUserLogin(String userLogin) {
-        Set<RoleUserEntity> userRoles = roleUserRepository.findAllByUserLogin(userLogin);
+    public Set<RoleUserData> findByUserLogin(String userLogin) {
+        Set<RoleUserEntity> userRoles = roleUserRepository.findAllByUserEntityLogin(userLogin);
         return userRoles
                 .stream()
-                .map(r -> dtoConverter.convertEntityToModel(r, RoleUserFat.class))
+                .map(r -> dtoConverter.transformEntityTo(r, RoleUserThin.class))
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public RoleUser addUserRole(@NonNull SystemRole role, @NonNull User user) {
-        RoleUserEntity roleUserEntity = roleUserRepository.findByRoleAndUserLogin(role, user.getLogin()).orElse(null);
+    public RoleUserData addUserRole(@NonNull SystemRole role, @NonNull UserData userData) {
+        RoleUserEntity roleUserEntity = roleUserRepository.findByRoleAndUserEntityLogin(role, userData.getLogin()).orElse(null);
         if (roleUserEntity != null) {
             throw new IllegalArgumentException(String.format("Role: %s for user login: %s already exists!",
-                    role, user.getLogin()));
+                    role, userData.getLogin()));
         }
-        UserEntity userEntity = userRepository.findUserByLogin(user.getLogin())
-                .orElseThrow(() -> new ResourceNotFoundException(UserEntity.class, user.getId()));
-        RoleUserEntity saved = roleUserRepository.save(new RoleUserEntity(role, userEntity));
-        return dtoConverter.convertEntityToModel(saved, RoleUserFat.class);
+
+        UserEntity userEntity = userRepository.findUserByLogin(userData.getLogin())
+                .orElseThrow(() -> new ResourceNotFoundException(UserEntity.class, userData.getId()));
+
+        RoleUser roleUser = DomainRoleUser.createWith()
+                .role(role)
+                .user(userEntity)
+                .build();
+
+        RoleUserEntity saved = roleUserRepository.save(RoleUserEntity.fromRoleUser(roleUser));
+        logger.info("Created role={} for user={}", role, userData.getLogin());
+        return dtoConverter.transformEntityTo(saved, RoleUserThin.class);
     }
 }

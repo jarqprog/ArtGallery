@@ -2,7 +2,9 @@ package com.jarqprog.artGallery.api.domains.artistic.picture;
 
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorRepository;
 import com.jarqprog.artGallery.api.domains.artistic.picture.validation.PictureValidator;
+import com.jarqprog.artGallery.domain.artistic.DomainPicture;
 import com.jarqprog.artGallery.domain.artistic.Picture;
+import com.jarqprog.artGallery.domain.artistic.PictureData;
 import com.jarqprog.artGallery.api.domains.artistic.picture.model.PictureThin;
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorEntity;
 import com.jarqprog.artGallery.api.infrastructure.components.DtoConverter;
@@ -45,65 +47,77 @@ public class PictureServiceImpl implements PictureService {
     private static final Logger logger = LoggerFactory.getLogger(PictureServiceImpl.class);
 
     @Override
-    public List<Picture> getAllPictures() {
+    public List<PictureData> getAllPictures() {
         return pictureRepository.findAll()
                 .stream()
-                .map(p -> dtoConverter.convertEntityToModel(p, PictureThin.class))
+                .map(p -> dtoConverter.transformEntityTo(p, PictureThin.class))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public <T extends Picture> List<T> getAllPictures(Class<T> clazz) {
+    public <T extends PictureData> List<T> getAllPictures(Class<T> clazz) {
         return pictureRepository.findAll()
                 .stream()
-                .map(p -> dtoConverter.convertEntityToModel(p, clazz))
+                .map(p -> dtoConverter.transformEntityTo(p, clazz))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Picture findPictureById(long id) {
+    public PictureData findPictureById(long id) {
         PictureEntity picture = findById(id);
-        return dtoConverter.convertEntityToModel(picture, PictureThin.class);
+        return dtoConverter.transformEntityTo(picture, PictureThin.class);
     }
 
     @Override
-    public <T extends Picture> T findPictureById(long id, Class<T> clazz) {
+    public <T extends PictureData> T findPictureById(long id, Class<T> clazz) {
         PictureEntity picture = findById(id);
-        return dtoConverter.convertEntityToModel(picture, clazz);
+        return dtoConverter.transformEntityTo(picture, clazz);
     }
 
     @Override
     @Transactional
-    public long addPicture(@NonNull Picture picture) {
-        preventCreatingExistingPicture(picture.getId());
+    public long addPicture(@NonNull PictureData pictureData) {
+        preventCreatingExistingPicture(pictureData.getId());
 
-        pictureValidator.validateOnCreation(picture);
-        PictureEntity pictureEntity = new PictureEntity();
-        updatePictureByDTO(pictureEntity, picture);
-        pictureEntity.setUserLogin(picture.getUserLogin());
+        pictureValidator.validateOnCreation(pictureData);
 
-        PictureEntity saved = pictureRepository.save(pictureEntity);
+        Picture picture = DomainPicture.createWith()
+                .path(pictureData.getPath())
+                .title(pictureData.getTitle())
+                .userLogin(pictureData.getUserLogin())
+                .author(pictureData.hasAuthor() ? findAuthorById(pictureData.getAuthorId()) : null)
+                .build();
+
+        PictureEntity saved = pictureRepository.save(PictureEntity.fromPicture(picture));
         return saved.getId();
     }
 
     @Override
     @Transactional
-    public void updatePicture(long id, @NonNull Picture pictureDTO) {
+    public void updatePicture(long id, @NonNull PictureData pictureData) {
 
-        if (id != pictureDTO.getId()) {
+        if (id != pictureData.getId()) {
             throw new IllegalArgumentException("different picture's IDs were given");
         }
-        pictureValidator.validateOnUpdate(pictureDTO);
-        PictureEntity picture = findById(id);
-        updatePictureByDTO(picture, pictureDTO);
-        pictureRepository.save(picture);
+        pictureValidator.validateOnUpdate(pictureData);
+
+        Picture picture = DomainPicture.createWith()
+                .id(pictureData.getId())
+                .version(pictureData.getVersion())
+                .path(pictureData.getPath())
+                .title(pictureData.getTitle())
+                .userLogin(pictureData.getUserLogin())
+                .author(pictureData.hasAuthor() ? findAuthorById(pictureData.getAuthorId()) : null)
+                .build();
+
+        pictureRepository.save(PictureEntity.fromPicture(picture));
     }
 
     @Override
     @Transactional
     public void removePicture(long id) {
         validatePictureExists(id);
-        commentaryRepository.deleteByPictureId(id);
+        commentaryRepository.deleteByPictureEntityId(id);
         pictureRepository.deleteById(id);
     }
 
@@ -125,17 +139,6 @@ public class PictureServiceImpl implements PictureService {
     private void preventCreatingExistingPicture(long pictureId) {
         if (pictureRepository.existsById(pictureId)) {
             throw new ResourceAlreadyExists(PictureEntity.class, pictureId);
-        }
-    }
-
-    private void updatePictureByDTO(PictureEntity pictureEntity, Picture picture) {
-        pictureEntity.setVersion(picture.getVersion());
-        pictureEntity.setTitle(picture.getTitle());
-        pictureEntity.setPath(picture.getPath());
-
-        if (pictureValidator.isAuthorIdValid(picture)) {
-            AuthorEntity authorEntity = findAuthorById(picture.getAuthorId());
-            pictureEntity.setAuthor(authorEntity);
         }
     }
 }

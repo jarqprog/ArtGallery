@@ -1,14 +1,7 @@
 package com.jarqprog.artGallery.domain.artistic;
 
-import com.jarqprog.artGallery.domain.DomainModel;
+import com.jarqprog.artGallery.domain.Model;
 
-
-public interface Author extends DomainModel {
-
-    String ANONYMOUS = "anonymous";
-
-    String getArtisticNickname();
-    void setArtisticNickname(String artisticNickname);
-    long getContactId();
+public interface Author extends AuthorData, Model {
 
 }

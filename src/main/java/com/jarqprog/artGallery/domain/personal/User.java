@@ -1,14 +1,9 @@
 package com.jarqprog.artGallery.domain.personal;
 
-import com.jarqprog.artGallery.domain.DomainModel;
-import lombok.NonNull;
+import com.jarqprog.artGallery.domain.Model;
 
+public interface User extends UserData, Model {
 
-public interface User extends DomainModel {
-
-    long getContactId();
-    String getLogin();
-    String getPassword();
-    void setPassword(@NonNull String password);
+    Contact getContact();
 
 }
