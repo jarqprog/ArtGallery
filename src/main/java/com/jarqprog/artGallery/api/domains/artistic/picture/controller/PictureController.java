@@ -5,7 +5,6 @@ import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureService;
 import com.jarqprog.artGallery.api.domains.artistic.picture.model.PictureDTO;
 import com.jarqprog.artGallery.api.domains.artistic.picture.model.PictureThin;
-import com.jarqprog.artGallery.domain.artistic.PictureData;
 import com.jarqprog.artGallery.api.domains.artistic.picture.model.PictureFat;
 
 import lombok.NonNull;
@@ -31,12 +30,12 @@ public class PictureController {
     }
 
     @GetMapping()
-    public List<? extends PictureData> getAllPictures(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends PictureDTO> getAllPictures(@RequestParam(required = false, name = "mode") String mode) {
         return pictureService.getAllPictures(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public PictureData findPictureById(@PathVariable("id") long id,
+    public PictureDTO findPictureById(@PathVariable("id") long id,
                                        @RequestParam(required = false, name = "mode") String mode) {
         return pictureService.findPictureById(id, getOutputClass(mode));
     }
@@ -60,7 +59,7 @@ public class PictureController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends PictureData> getOutputClass(String mode) {
+    private Class<? extends PictureDTO> getOutputClass(String mode) {
         Class<PictureThin> defaultOutput = PictureThin.class;
         if (mode == null) {
             return defaultOutput;

@@ -1,8 +1,7 @@
-package com.jarqprog.artGallery;
+package com.jarqprog.artGallery.api;
 
 import com.jarqprog.artGallery.api.infrastructure.config.Config;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +15,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Import(Config.class)
 @ComponentScan("com.jarqprog.artGallery.api")
 @ActiveProfiles("test")
-public class SpringServiceTestConfig {
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+
+public class SpringServiceTestConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {

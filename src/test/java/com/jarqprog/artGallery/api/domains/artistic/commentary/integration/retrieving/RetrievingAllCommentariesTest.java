@@ -1,7 +1,7 @@
-package com.jarqprog.artGallery.api.infrastructure.dataLogic.services.commentaries;
+package com.jarqprog.artGallery.api.domains.artistic.commentary.integration.retrieving;
 
-import com.jarqprog.artGallery.SpringServiceTestConfig;
-import com.jarqprog.artGallery.domain.artistic.CommentaryData;
+import com.jarqprog.artGallery.api.SpringServiceTestConfig;
+import com.jarqprog.artGallery.api.domains.artistic.commentary.dto.CommentaryDTO;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +28,7 @@ class RetrievingAllCommentariesTest {
 
     private static final Logger logger = LoggerFactory.getLogger(RetrievingAllCommentariesTest.class);
 
-    private final List<CommentaryData> commentaries;
+    private final List<CommentaryDTO> commentaries;
 
     @Autowired
     RetrievingAllCommentariesTest(CommentaryService commentaryService) {

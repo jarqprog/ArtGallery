@@ -13,6 +13,7 @@ public class CommentaryValidatorImpl implements CommentaryValidator {
         StringBuilder exceptionMessage = new StringBuilder();
         validateCommentIsNotEmpty(commentaryData, exceptionMessage);
         validatePictureId(commentaryData, exceptionMessage);
+        validateUserLoginIsNotEmpty(commentaryData, exceptionMessage);
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
@@ -22,6 +23,7 @@ public class CommentaryValidatorImpl implements CommentaryValidator {
         validateId(commentaryData, exceptionMessage);
         validateCommentIsNotEmpty(commentaryData, exceptionMessage);
         validatePictureId(commentaryData, exceptionMessage);
+        validateUserLoginIsNotEmpty(commentaryData, exceptionMessage);
         throwExceptionIfMessageNotEmpty(exceptionMessage);
     }
 
@@ -35,6 +37,12 @@ public class CommentaryValidatorImpl implements CommentaryValidator {
     private void validateCommentIsNotEmpty(CommentaryData commentaryData, StringBuilder stringBuilder) {
         if (StringUtils.isBlank(commentaryData.getComment())) {
             stringBuilder.append("Comment cannot be empty. ");
+        }
+    }
+
+    private void validateUserLoginIsNotEmpty(CommentaryData commentaryData, StringBuilder stringBuilder) {
+        if (StringUtils.isBlank(commentaryData.getUserLogin())) {
+            stringBuilder.append("User login cannot be empty. ");
         }
     }
 

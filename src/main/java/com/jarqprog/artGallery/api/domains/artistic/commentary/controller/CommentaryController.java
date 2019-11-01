@@ -5,7 +5,6 @@ import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService
 import com.jarqprog.artGallery.api.domains.artistic.commentary.dto.CommentaryDTO;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.dto.CommentaryFat;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.dto.CommentaryThin;
-import com.jarqprog.artGallery.domain.artistic.CommentaryData;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,18 +29,18 @@ public class CommentaryController {
     }
 
     @GetMapping("commentaries")
-    public List<? extends CommentaryData> getAllCommentaries(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends CommentaryDTO> getAllCommentaries(@RequestParam(required = false, name = "mode") String mode) {
         return commentaryService.getAllCommentaries(getOutputClass(mode));
     }
 
     @GetMapping("{pictureId}/commentaries")
-    public List<? extends CommentaryData> getAllCommentariesByPicture(@PathVariable("pictureId") long pictureId,
+    public List<? extends CommentaryDTO> getAllCommentariesByPicture(@PathVariable("pictureId") long pictureId,
                                                                       @RequestParam(required = false, name = "mode") String mode) {
         return commentaryService.getAllCommentariesByPicture(pictureId, getOutputClass(mode));
     }
 
     @GetMapping("{pictureId}/commentaries/{id}")
-    public CommentaryData findCommentaryById(@PathVariable("pictureId") long pictureId,
+    public CommentaryDTO findCommentaryById(@PathVariable("pictureId") long pictureId,
                                              @PathVariable("id") long id,
                                              @RequestParam(required = false, name = "mode") String mode) {
         commentaryService.validateCommentaryExists(pictureId, id);
@@ -74,7 +73,7 @@ public class CommentaryController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends CommentaryData> getOutputClass(String mode) {
+    private Class<? extends CommentaryDTO> getOutputClass(String mode) {
         Class<CommentaryThin> defaultOutput = CommentaryThin.class;
 
         if (mode == null) {

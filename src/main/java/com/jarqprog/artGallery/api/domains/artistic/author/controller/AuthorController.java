@@ -31,12 +31,12 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<? extends AuthorData> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends AuthorDTO> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
         return authorService.getAllAuthors(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public AuthorData findAuthorById(@PathVariable("id") long id,
+    public AuthorDTO findAuthorById(@PathVariable("id") long id,
                                      @RequestParam(required = false, name = "mode") String mode) {
         return authorService.findAuthorById(id, getOutputClass(mode));
     }
@@ -61,7 +61,7 @@ public class AuthorController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends AuthorData> getOutputClass(String mode) {
+    private Class<? extends AuthorDTO> getOutputClass(String mode) {
         Class<AuthorThin> defaultOutput = AuthorThin.class;
         if (mode == null) {
             return defaultOutput;

@@ -1,7 +1,7 @@
-package com.jarqprog.artGallery.api.infrastructure.dataLogic.services.commentaries;
+package com.jarqprog.artGallery.api.domains.artistic.commentary.integration.retrieving;
 
 
-import com.jarqprog.artGallery.SpringServiceTestConfig;
+import com.jarqprog.artGallery.api.SpringServiceTestConfig;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
