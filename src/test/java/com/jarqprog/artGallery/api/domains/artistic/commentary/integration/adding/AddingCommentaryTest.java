@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.api.domains.artistic.commentary.integration.adding;
 
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.SpringServiceTestConfig;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.dto.CommentaryDTO;
@@ -10,6 +11,7 @@ import com.jarqprog.artGallery.api.domains.exceptions.ResourceNotFoundException;
 import lombok.NonNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
@@ -28,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
+@EnabledIfSystemProperty(named = "spring.profiles.active", matches = ApiConstants.TEST_PROFILE)
 class AddingCommentaryTest {
 
     @NonNull

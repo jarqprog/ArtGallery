@@ -14,9 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = {"com.jarqprog.artGallery.api.domains"})
 @Import(Config.class)
 @ComponentScan("com.jarqprog.artGallery.api")
-@ActiveProfiles("test")
-
-
+@ActiveProfiles(ApiConstants.TEST_PROFILE)
 public class SpringServiceTestConfig {
 
     @Bean

@@ -1,12 +1,13 @@
 package com.jarqprog.artGallery.api.infrastructure.config.databaseConfig;
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
 @Component
-@Profile("dev")
+@Profile(ApiConstants.DEV_PROFILE)
 public class MySQLConfig implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";

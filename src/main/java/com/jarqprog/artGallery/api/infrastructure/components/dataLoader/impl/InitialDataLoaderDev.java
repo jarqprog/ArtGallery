@@ -2,6 +2,7 @@ package com.jarqprog.artGallery.api.infrastructure.components.dataLoader.impl;
 
 
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorService;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureService;
@@ -23,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Profile({"dev", "test"})
+@Profile(ApiConstants.DEV_PROFILE)
 //@Profile({"dev", "test", "prod"})
-public class InitialDataLoaderImpl implements InitialDataLoader {
+public class InitialDataLoaderDev implements InitialDataLoader {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderDev.class);
 
     private static final String FAKE_PICTURE_PATH = "fake/path";
 
@@ -41,11 +42,11 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
     @NonNull private final UserService userService;
 
     @Autowired
-    public InitialDataLoaderImpl(@NonNull AuthorService authorService,
-                                 @NonNull CommentaryService commentaryService,
-                                 @NonNull PictureService pictureService,
-                                 @NonNull ContactService contactService,
-                                 @NonNull UserService userService) {
+    public InitialDataLoaderDev(@NonNull AuthorService authorService,
+                                @NonNull CommentaryService commentaryService,
+                                @NonNull PictureService pictureService,
+                                @NonNull ContactService contactService,
+                                @NonNull UserService userService) {
         this.authorService = authorService;
         this.commentaryService = commentaryService;
         this.pictureService = pictureService;
