@@ -14,6 +14,7 @@ import java.util.UUID;
 public class HttpExceptionInfoImpl implements HttpExceptionInfo {
 
     private final String uuid;
+    private static final int MAX_MESSAGE_LEN = 30;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private final LocalDateTime dateTime;
@@ -22,13 +23,10 @@ public class HttpExceptionInfoImpl implements HttpExceptionInfo {
 
     private final String message;
 
-    private final String exceptionInfo;
-
     public HttpExceptionInfoImpl(HttpStatus httpStatus, String message, Exception ex) {
         this.uuid = String.valueOf(UUID.randomUUID());
         this.dateTime = LocalDateTime.now();
         this.httpStatus = httpStatus.value();
-        this.message = String.format("%s, exception: %s", message, ex.getClass().getSimpleName());
-        this.exceptionInfo = ex.getClass().getSimpleName();
+        this.message = String.format("Exception: %s occurred:\n\t------> %s", ex.getClass().getSimpleName(), message);
     }
 }

@@ -9,5 +9,4 @@ public interface HttpExceptionInfo extends Serializable {
     long getHttpStatus();
     LocalDateTime getDateTime();
     String getMessage();
-    String getExceptionInfo();
 }
