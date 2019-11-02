@@ -14,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-import static com.jarqprog.artGallery.api.domains.OutputMode.FAT;
+import static com.jarqprog.artGallery.api.OutputMode.FAT;
 
 
 @RestController

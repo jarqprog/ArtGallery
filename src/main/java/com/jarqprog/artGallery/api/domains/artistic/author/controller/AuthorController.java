@@ -5,7 +5,6 @@ import com.jarqprog.artGallery.api.domains.artistic.author.AuthorService;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorDTO;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorFat;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorThin;
-import com.jarqprog.artGallery.domain.artistic.AuthorData;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-import static com.jarqprog.artGallery.api.domains.OutputMode.FAT;
+import static com.jarqprog.artGallery.api.OutputMode.FAT;
 
 
 @RestController
