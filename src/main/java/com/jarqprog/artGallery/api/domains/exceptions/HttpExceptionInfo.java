@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.api.infrastructure.components;
+package com.jarqprog.artGallery.api.domains.exceptions;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

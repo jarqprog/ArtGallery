@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.api.infrastructure.components;
+package com.jarqprog.artGallery.api.domains.exceptions;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -27,6 +27,6 @@ public class HttpExceptionInfoImpl implements HttpExceptionInfo {
         this.uuid = String.valueOf(UUID.randomUUID());
         this.dateTime = LocalDateTime.now();
         this.httpStatus = httpStatus.value();
-        this.message = String.format("Exception: %s occurred:\n\t------> %s", ex.getClass().getSimpleName(), message);
+        this.message = String.format("Exception: %s occurred: ------> %s", ex.getClass().getSimpleName(), message);
     }
 }
