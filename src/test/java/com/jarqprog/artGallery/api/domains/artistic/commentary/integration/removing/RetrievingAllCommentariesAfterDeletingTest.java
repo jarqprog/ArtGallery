@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
-@EnabledIfSystemProperty(named = "spring.profiles.active", matches = ApiConstants.TEST_PROFILE)
+@EnabledIfSystemProperty(named = "spring.profiles.active", matches = SpringServiceTestConfig.INTEGRATION_TEST_REGEX)
 class RetrievingAllCommentariesAfterDeletingTest {
 
     private final CommentaryService commentaryService;
