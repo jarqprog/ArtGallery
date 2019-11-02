@@ -19,8 +19,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.InvalidObjectException;
 
+import static com.jarqprog.artGallery.api.SpringServiceTestConfig.INTEGRATION_TEST_REGEX;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = SpringServiceTestConfig.class)
 @Rollback
 @Transactional
-@EnabledIfSystemProperty(named = "spring.profiles.active", matches = ApiConstants.TEST_PROFILE)
+@EnabledIfSystemProperty(named = "spring.profiles.active", matches = INTEGRATION_TEST_REGEX)
 class AddingCommentaryTest {
 
     @NonNull

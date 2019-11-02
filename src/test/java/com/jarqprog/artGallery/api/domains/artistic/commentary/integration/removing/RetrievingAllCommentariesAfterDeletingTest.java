@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.api.domains.artistic.commentary.integration.retrieving;
+package com.jarqprog.artGallery.api.domains.artistic.commentary.integration.removing;
 
 import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.SpringServiceTestConfig;

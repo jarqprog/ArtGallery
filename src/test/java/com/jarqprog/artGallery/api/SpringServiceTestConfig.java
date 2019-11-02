@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ActiveProfiles(ApiConstants.TEST_PROFILE)
 public class SpringServiceTestConfig {
 
+    public static final String INTEGRATION_TEST_REGEX = ApiConstants.DEV_PROFILE+"|"+ ApiConstants.TEST_PROFILE;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
