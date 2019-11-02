@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.api.domains.personal.user;
 
 import com.jarqprog.artGallery.api.domains.personal.contact.ContactRepository;
+import com.jarqprog.artGallery.api.domains.personal.user.dto.UserDTO;
 import com.jarqprog.artGallery.api.domains.personal.user.validation.passwordValidation.PasswordValidator;
 import com.jarqprog.artGallery.api.domains.personal.roleUser.RoleUserEntity;
 import com.jarqprog.artGallery.api.domains.personal.roleUser.RoleUserRepository;
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserData> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, UserThin.class))
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public <U extends UserData> List<U> getAllUsers(Class<U> clazz) {
+    public <U extends UserDTO> List<U> getAllUsers(Class<U> clazz) {
         return userRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, clazz))
@@ -70,25 +71,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserData findUserById(long id) {
+    public UserDTO findUserById(long id) {
         UserEntity userEntity = findById(id);
         return dtoConverter.transformEntityTo(userEntity, UserFat.class);
     }
 
     @Override
-    public <U extends UserData> U findUserById(long id, Class<U> clazz) {
+    public <U extends UserDTO> U findUserById(long id, Class<U> clazz) {
         UserEntity userEntity = findById(id);
         return dtoConverter.transformEntityTo(userEntity, clazz);
     }
 
     @Override
-    public UserData findUserByLogin(String login) {
+    public UserDTO findUserByLogin(String login) {
         UserEntity userEntity = findByLogin(login);
         return dtoConverter.transformEntityTo(userEntity, UserFat.class);
     }
 
     @Override
-    public <U extends UserData> U findUserByLogin(String login, Class<U> clazz) {
+    public <U extends UserDTO> U findUserByLogin(String login, Class<U> clazz) {
         UserEntity userEntity = findByLogin(login);
         return dtoConverter.transformEntityTo(userEntity, clazz);
     }
@@ -104,6 +105,7 @@ public class UserServiceImpl implements UserService {
     public long createUserWithRole(@NonNull final UserData userData, @NonNull final SystemRole role) {
         preventCreatingExistingUser(userData.getId());
         // validation
+        validateContactExists(userData.getContactId());
 
         final User user = createUser(userData);
         final UserEntity userEntity = userRepository.save(UserEntity.fromUser(user));
@@ -128,8 +130,12 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUser(long id, @NonNull UserData userData) {
+        if (id != userData.getId()) {
+            throw new IllegalArgumentException("Invalid user ID numbers were provided");
+        }
         validateUserExists(id);
         // validation
+        validateContactExists(userData.getContactId());
 
         UserEntity userEntity = findById(id);
         updateUserEntity(userEntity, userData);
@@ -166,6 +172,12 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    private void validateContactExists(long contactId) {
+        if (!contactRepository.existsById(contactId)) {
+            throw new ResourceNotFoundException(ContactEntity.class, contactId);
+        }
+    }
+
     private void preventCreatingExistingUser(long userId) {
         if (userRepository.existsById(userId)) {
             throw new ResourceAlreadyExists(UserEntity.class, userId);
@@ -185,7 +197,7 @@ public class UserServiceImpl implements UserService {
         return DomainUser
                 .createWith()
                 .login(userData.getLogin())
-                .contact(userData.hasContact() ? findContactById(userData.getContactId()) : null)
+                .contact(findContactById(userData.getContactId()))
                 .password(encoded)
                 .build();
     }

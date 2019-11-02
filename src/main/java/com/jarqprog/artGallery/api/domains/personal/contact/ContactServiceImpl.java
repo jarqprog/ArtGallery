@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.api.domains.personal.contact;
 
+import com.jarqprog.artGallery.api.domains.personal.contact.dto.ContactDTO;
 import com.jarqprog.artGallery.api.domains.personal.contact.validation.ContactValidator;
 import com.jarqprog.artGallery.domain.personal.ContactData;
 import com.jarqprog.artGallery.api.domains.personal.contact.dto.ContactThin;
@@ -37,7 +38,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<ContactData> getAllContacts() {
+    public List<ContactDTO> getAllContacts() {
         return contactRepository.findAll()
                 .stream()
                 .map(c -> dtoConverter.transformEntityTo(c, ContactThin.class))
@@ -45,7 +46,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public <T extends ContactData> List<ContactData> getAllContacts(Class<T> clazz) {
+    public <T extends ContactDTO> List<T> getAllContacts(Class<T> clazz) {
         return contactRepository.findAll()
                 .stream()
                 .map(c -> dtoConverter.transformEntityTo(c, clazz))
@@ -53,13 +54,13 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public ContactData findContactById(long id) {
+    public ContactDTO findContactById(long id) {
         ContactEntity contact = findById(id);
         return dtoConverter.transformEntityTo(contact, ContactThin.class);
     }
 
     @Override
-    public <T extends ContactData> T findContactById(long id, Class<T> clazz) {
+    public <T extends ContactDTO> T findContactById(long id, Class<T> clazz) {
         ContactEntity contact = findById(id);
         return dtoConverter.transformEntityTo(contact, clazz);
     }

@@ -21,25 +21,13 @@
         </encoder>
     </appender>
 
-    <logger name="com.jarqprog.artGallery" level="INFO" additivity="false">
+    <logger name="com.jarqprog.artGallery" level="DEBUG">
         <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE" />
     </logger>
 
-    <logger name="org.hibernate" level="ERROR" additivity="false">
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-    <logger name="org.hibernate.type" level="ALL" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-    <logger name="org.hibernate" level="DEBUG" additivity="false">
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-    <root level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
     </root>
 
 </configuration>

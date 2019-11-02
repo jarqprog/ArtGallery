@@ -26,6 +26,8 @@ public class PictureEntity extends DomainEntity implements Picture {
 
     private String title;
     private String path;
+
+    @Column(updatable = false)
     private String userLogin;
 
     @ManyToOne

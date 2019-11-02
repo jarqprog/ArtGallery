@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.api.domains;
+package com.jarqprog.artGallery.api;
 
 
 /**

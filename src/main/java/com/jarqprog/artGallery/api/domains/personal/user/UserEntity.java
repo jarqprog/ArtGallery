@@ -42,10 +42,11 @@ public class UserEntity extends DomainEntity implements User {
     @Setter
     private Boolean tokenExpired = Boolean.FALSE;
 
+    @NonNull
+    @NotNull
     @OneToOne
     @JoinColumn(name = "contact_entity_id")
     private ContactEntity contactEntity;
-
 
     public UserEntity(@NonNull UserEntity user) {
         this.contactEntity = user.getContactEntity();
@@ -61,7 +62,7 @@ public class UserEntity extends DomainEntity implements User {
             user.getVersion(),
             user.getLogin(),
             user.getPassword(),
-            user.hasContact() ? ContactEntity.fromContact(user.getContact()) : null);
+            ContactEntity.fromContact(user.getContact()));
     }
 
     private UserEntity(final UserData userData, ContactEntity contactEntity) {
@@ -69,7 +70,7 @@ public class UserEntity extends DomainEntity implements User {
     }
 
     private UserEntity(long id, int version, String login,
-                       String password, ContactEntity contactEntity) {
+                       String password, @NonNull ContactEntity contactEntity) {
         super(id, version);
         assert StringUtils.isNotBlank(login);
         assert StringUtils.isNotBlank(password);
@@ -94,9 +95,4 @@ public class UserEntity extends DomainEntity implements User {
         return contactEntity;
     }
 
-    @Override
-    @Transient
-    public boolean hasContact() {
-        return contactEntity != null;
-    }
 }

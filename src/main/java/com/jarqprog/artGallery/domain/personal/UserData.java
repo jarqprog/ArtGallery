@@ -8,5 +8,4 @@ public interface UserData extends Identity {
     long getContactId();
     String getLogin();
     String getPassword();
-    boolean hasContact();
 }

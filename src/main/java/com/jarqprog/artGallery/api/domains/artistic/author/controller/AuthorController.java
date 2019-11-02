@@ -5,7 +5,6 @@ import com.jarqprog.artGallery.api.domains.artistic.author.AuthorService;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorDTO;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorFat;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorThin;
-import com.jarqprog.artGallery.domain.artistic.AuthorData;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-import static com.jarqprog.artGallery.api.domains.OutputMode.FAT;
+import static com.jarqprog.artGallery.api.OutputMode.FAT;
 
 
 @RestController
@@ -31,12 +30,12 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<? extends AuthorData> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends AuthorDTO> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
         return authorService.getAllAuthors(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public AuthorData findAuthorById(@PathVariable("id") long id,
+    public AuthorDTO findAuthorById(@PathVariable("id") long id,
                                      @RequestParam(required = false, name = "mode") String mode) {
         return authorService.findAuthorById(id, getOutputClass(mode));
     }
@@ -61,7 +60,7 @@ public class AuthorController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends AuthorData> getOutputClass(String mode) {
+    private Class<? extends AuthorDTO> getOutputClass(String mode) {
         Class<AuthorThin> defaultOutput = AuthorThin.class;
         if (mode == null) {
             return defaultOutput;

@@ -25,25 +25,25 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<ContactData> getAllContacts() {
+    public List<ContactDTO> getAllContacts() {
         return contactService.getAllContacts();
     }
 
     @GetMapping("/{id}")
-    public ContactData findContactById(@PathVariable("id") long id) {
+    public ContactDTO findContactById(@PathVariable("id") long id) {
         return contactService.findContactById(id);
     }
 
     @PostMapping
-    public ResponseEntity addContact(@RequestBody ContactDTO contactDTO) {
-        long id = contactService.addContact(contactDTO);
+    public ResponseEntity addContact(@RequestBody ContactData contactData) {
+        long id = contactService.addContact(contactData);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateContact(@PathVariable("id") long id, @RequestBody ContactDTO contactDTO) {
-        contactService.updateContact(id, contactDTO);
+    public ResponseEntity updateContact(@PathVariable("id") long id, @RequestBody ContactData contactData) {
+        contactService.updateContact(id, contactData);
         return ResponseEntity.accepted().build();
     }
 

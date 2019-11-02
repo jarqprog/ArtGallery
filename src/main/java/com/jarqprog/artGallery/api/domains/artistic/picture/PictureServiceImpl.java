@@ -1,6 +1,7 @@
 package com.jarqprog.artGallery.api.domains.artistic.picture;
 
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorRepository;
+import com.jarqprog.artGallery.api.domains.artistic.picture.model.PictureDTO;
 import com.jarqprog.artGallery.api.domains.artistic.picture.validation.PictureValidator;
 import com.jarqprog.artGallery.domain.artistic.DomainPicture;
 import com.jarqprog.artGallery.domain.artistic.Picture;
@@ -47,7 +48,7 @@ public class PictureServiceImpl implements PictureService {
     private static final Logger logger = LoggerFactory.getLogger(PictureServiceImpl.class);
 
     @Override
-    public List<PictureData> getAllPictures() {
+    public List<PictureDTO> getAllPictures() {
         return pictureRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, PictureThin.class))
@@ -55,7 +56,7 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public <T extends PictureData> List<T> getAllPictures(Class<T> clazz) {
+    public <T extends PictureDTO> List<T> getAllPictures(Class<T> clazz) {
         return pictureRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, clazz))
@@ -63,13 +64,13 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public PictureData findPictureById(long id) {
+    public PictureDTO findPictureById(long id) {
         PictureEntity picture = findById(id);
         return dtoConverter.transformEntityTo(picture, PictureThin.class);
     }
 
     @Override
-    public <T extends PictureData> T findPictureById(long id, Class<T> clazz) {
+    public <T extends PictureDTO> T findPictureById(long id, Class<T> clazz) {
         PictureEntity picture = findById(id);
         return dtoConverter.transformEntityTo(picture, clazz);
     }

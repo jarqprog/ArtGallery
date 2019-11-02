@@ -15,4 +15,5 @@ public interface CommentaryRepository extends JpaRepository<CommentaryEntity, Lo
     void deleteById(long id);
     void deleteByPictureEntityId(long pictureEntityId);
     boolean existsByIdAndPictureEntityId(long id, long pictureEntityId);
+    boolean existsByIdAndPictureEntityIdAndUserLogin(long id, long pictureEntityId, String userLogin);
 }

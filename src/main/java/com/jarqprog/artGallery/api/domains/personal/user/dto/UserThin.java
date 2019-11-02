@@ -20,10 +20,4 @@ public class UserThin extends DomainDTO implements UserDTO {
 
     private long contactId;
 
-    @JsonIgnore
-    @XmlTransient
-    @Override
-    public boolean hasContact() {
-        return contactId > 0;
-    }
 }

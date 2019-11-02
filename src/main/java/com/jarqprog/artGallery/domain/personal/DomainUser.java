@@ -18,7 +18,7 @@ public final class DomainUser extends DomainModel implements User {
     public static DomainUser buildWithData(long id, int version,
                                            @NonNull final String login,
                                            @NonNull final String password,
-                                           final Contact contact) {
+                                           @NonNull final Contact contact) {
         return new DomainUser(id, version, login, password, contact);
     }
 
@@ -27,18 +27,19 @@ public final class DomainUser extends DomainModel implements User {
 
     private final String password;
 
+    @NonNull
     private final Contact contact;
 
-    private DomainUser(long id, @NonNull final User user) {
+    private DomainUser(long id, final User user) {
         this(id, user.getVersion(), user.getLogin(), user.getPassword(), user.getContact());
     }
 
-    private DomainUser(@NonNull final User user) {
+    private DomainUser(final User user) {
         this(user.getId(), user);
     }
 
-    private DomainUser(long id, int version, @NonNull String login,
-                       @NonNull String password, Contact contact) {
+    private DomainUser(long id, int version, String login,
+                       String password, Contact contact) {
         super(id, version);
         assert StringUtils.isNotBlank(login);
         assert StringUtils.isNotBlank(password);
@@ -52,8 +53,4 @@ public final class DomainUser extends DomainModel implements User {
         return getModelId(contact);
     }
 
-    @Override
-    public boolean hasContact() {
-        return contact != null;
-    }
 }

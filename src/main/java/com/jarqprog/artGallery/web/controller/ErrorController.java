@@ -1,8 +1,8 @@
 package com.jarqprog.artGallery.web.controller;
 
-import com.jarqprog.artGallery.api.infrastructure.components.HttpExceptionInfo;
+import com.jarqprog.artGallery.api.domains.exceptions.HttpExceptionInfo;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceNotFoundException;
-import com.jarqprog.artGallery.api.infrastructure.components.HttpExceptionInfoImpl;
+import com.jarqprog.artGallery.api.domains.exceptions.HttpExceptionInfoImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

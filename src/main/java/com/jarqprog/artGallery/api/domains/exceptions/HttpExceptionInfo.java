@@ -1,4 +1,4 @@
-package com.jarqprog.artGallery.api.infrastructure.components;
+package com.jarqprog.artGallery.api.domains.exceptions;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -9,5 +9,4 @@ public interface HttpExceptionInfo extends Serializable {
     long getHttpStatus();
     LocalDateTime getDateTime();
     String getMessage();
-    String getExceptionInfo();
 }
