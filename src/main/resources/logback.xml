@@ -21,7 +21,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.jarqprog.artGallery" level="DEBUG">
+    <logger name="com.jarqprog.artGallery" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
 
