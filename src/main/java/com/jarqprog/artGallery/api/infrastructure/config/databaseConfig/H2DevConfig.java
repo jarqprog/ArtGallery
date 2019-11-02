@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-@Profile(ApiConstants.PROD_PROFILE)
+@Profile(ApiConstants.DEV_PROFILE)
 public class H2DevConfig implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "org.h2.Driver";
