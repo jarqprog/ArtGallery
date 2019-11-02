@@ -31,8 +31,9 @@ public class ContactRegistrationImpl implements ContactRegistration {
                 .nickname(registrationFormDTO.getNickname())
                 .email(registrationFormDTO.getEmail())
                 .build();
-        contactService.addContact(contact);
-        logger.info("Contact added: {}", contact);
-        return contact;
+        long id = contactService.addContact(contact);
+        Contact registered = DomainContact.mergeID(id, contact);
+        logger.info("Contact added: {}", registered);
+        return registered;
     }
 }
