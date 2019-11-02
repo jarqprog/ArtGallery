@@ -116,7 +116,8 @@ public class CommentaryServiceImpl implements CommentaryService {
                                           @NonNull CommentaryData commentaryData) {
         commentaryValidator.validateOnUpdate(commentaryData);
         validateGivenCommentaryIDsAreEqual(commentaryId, commentaryData);
-        validateCommentaryExists(pictureId, commentaryId);
+        validateGivenPictureIDsAreEqual(pictureId, commentaryData);
+        validatePictureIdAndUserLoginOnUpdate(commentaryData);
 
         Picture picture = findPictureById(commentaryData.getPictureId());
 
@@ -128,8 +129,7 @@ public class CommentaryServiceImpl implements CommentaryService {
                 .userLogin(commentaryData.getUserLogin())
                 .build();
 
-        CommentaryEntity saved = commentaryRepository.save(CommentaryEntity.fromCommentary(commentary));
-        commentaryRepository.save(saved);
+        commentaryRepository.save(CommentaryEntity.fromCommentary(commentary));
     }
 
     @Override
@@ -141,7 +141,7 @@ public class CommentaryServiceImpl implements CommentaryService {
     @Override
     public void validateCommentaryExists(long pictureId, long commentaryId) {
         if (!commentaryRepository.existsByIdAndPictureEntityId(commentaryId, pictureId)) {
-            throw new IllegalArgumentException("Given Commentary ID and Picture ID do not match!");
+            throw new ResourceNotFoundException(CommentaryEntity.class, commentaryId);
         }
     }
 
@@ -166,6 +166,17 @@ public class CommentaryServiceImpl implements CommentaryService {
     private void validateGivenPictureIDsAreEqual(long pictureId, CommentaryData commentaryData) {
         if (pictureId != commentaryData.getPictureId()) {
             throw new IllegalArgumentException("different picture's IDs were given");
+        }
+    }
+
+    private void validatePictureIdAndUserLoginOnUpdate(CommentaryData commentaryData) {
+        final long commentaryId = commentaryData.getId();
+        final long pictureId = commentaryData.getPictureId();
+        final String userLogin = commentaryData.getUserLogin();
+        if (!commentaryRepository.existsByIdAndPictureEntityIdAndUserLogin(commentaryId, pictureId, userLogin)) {
+            throw new IllegalArgumentException(String.format("commentary ID=%s not found by picture ID=%s" +
+                    "or user login=%s. Picture or user login update on commentary - forbidden",
+                    commentaryId, pictureId, userLogin));
         }
     }
 
