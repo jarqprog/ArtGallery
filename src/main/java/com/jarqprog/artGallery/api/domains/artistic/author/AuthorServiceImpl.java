@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.api.domains.artistic.author;
 
+import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorDTO;
 import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorThin;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceAlreadyExists;
 import com.jarqprog.artGallery.api.domains.exceptions.ResourceNotFoundException;
@@ -35,7 +36,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorData> getAllAuthors() {
+    public List<AuthorDTO> getAllAuthors() {
         return authorRepository.findAll()
                 .stream()
                 .map(a -> dtoConverter.transformEntityTo(a, defaultOutputClass))
@@ -43,7 +44,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public <T extends AuthorData> List<AuthorData> getAllAuthors(Class<T> clazz) {
+    public <T extends AuthorDTO> List<T> getAllAuthors(Class<T> clazz) {
         return authorRepository.findAll()
                 .stream()
                 .map(a -> dtoConverter.transformEntityTo(a, clazz))
@@ -51,12 +52,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorData findAuthorById(long id) {
+    public AuthorDTO findAuthorById(long id) {
         return dtoConverter.transformEntityTo(findById(id), defaultOutputClass);
     }
 
     @Override
-    public <T extends AuthorData> T findAuthorById(long id, Class<T> clazz) {
+    public <T extends AuthorDTO> T findAuthorById(long id, Class<T> clazz) {
         return dtoConverter.transformEntityTo(findById(id), clazz);
     }
 

@@ -27,10 +27,4 @@ public class UserFat extends DomainDTO implements UserDTO, User {
         return getDTOId(contact);
     }
 
-    @JsonIgnore
-    @XmlTransient
-    @Override
-    public boolean hasContact() {
-        return contact != null;
-    }
 }

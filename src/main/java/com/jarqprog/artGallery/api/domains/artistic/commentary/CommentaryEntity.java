@@ -29,18 +29,17 @@ public class CommentaryEntity extends DomainEntity implements Commentary {
 
     @NonNull
     @NotNull
-    @Setter
     private String comment;
 
     @NonNull
     @NotNull
-    @Setter
+    @Column(updatable = false)
     private String userLogin;
 
     @NonNull
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "picture_entity_id")
+    @JoinColumn(name = "picture_entity_id", updatable = false)
     private PictureEntity pictureEntity;
 
 

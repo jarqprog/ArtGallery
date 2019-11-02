@@ -1,17 +1,20 @@
 package com.jarqprog.artGallery.api.domains.artistic.author;
 
+import com.jarqprog.artGallery.api.domains.artistic.author.dto.AuthorDTO;
 import com.jarqprog.artGallery.domain.artistic.AuthorData;
 import lombok.NonNull;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface AuthorService {
 
-    List<AuthorData> getAllAuthors();
-    <T extends AuthorData> List<AuthorData> getAllAuthors(Class<T> clazz);
+    List<AuthorDTO> getAllAuthors();
+    <T extends AuthorDTO> List<T> getAllAuthors(Class<T> clazz);
 
-    AuthorData findAuthorById(long id);
-    <T extends AuthorData> T findAuthorById(long id, Class<T> clazz);
+    AuthorDTO findAuthorById(long id);
+    <T extends AuthorDTO> T findAuthorById(long id, Class<T> clazz);
 
     long addAuthor(@NonNull AuthorData authorData);
 

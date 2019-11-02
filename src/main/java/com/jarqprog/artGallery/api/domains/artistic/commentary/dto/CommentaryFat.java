@@ -8,6 +8,8 @@ import lombok.*;
 
 @Data
 @ToString(callSuper=true)
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper=true)
 public class CommentaryFat extends DomainDTO implements Commentary, CommentaryDTO {
 

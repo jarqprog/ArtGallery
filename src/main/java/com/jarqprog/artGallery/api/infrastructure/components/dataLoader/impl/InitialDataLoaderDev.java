@@ -2,6 +2,7 @@ package com.jarqprog.artGallery.api.infrastructure.components.dataLoader.impl;
 
 
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorService;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureService;
@@ -23,15 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Profile({"dev", "test"})
-//@Profile({"dev", "test", "prod"})
-public class InitialDataLoaderImpl implements InitialDataLoader {
+@Profile(ApiConstants.DEV_PROFILE)
+public class InitialDataLoaderDev implements InitialDataLoader {
 
-    private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderImpl.class);
-
-    private static final String FAKE_PICTURE_PATH = "fake/path";
-
-
+    private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderDev.class);
 
     @NonNull private final AuthorService authorService;
     @NonNull private final CommentaryService commentaryService;
@@ -41,11 +37,11 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
     @NonNull private final UserService userService;
 
     @Autowired
-    public InitialDataLoaderImpl(@NonNull AuthorService authorService,
-                                 @NonNull CommentaryService commentaryService,
-                                 @NonNull PictureService pictureService,
-                                 @NonNull ContactService contactService,
-                                 @NonNull UserService userService) {
+    public InitialDataLoaderDev(@NonNull AuthorService authorService,
+                                @NonNull CommentaryService commentaryService,
+                                @NonNull PictureService pictureService,
+                                @NonNull ContactService contactService,
+                                @NonNull UserService userService) {
         this.authorService = authorService;
         this.commentaryService = commentaryService;
         this.pictureService = pictureService;
@@ -66,13 +62,12 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
     }
 
     private void initContactUserPicturesCommentaries() {
-        final String login = "betty80";
         Contact contact = DomainContact
                 .createWith()
-                .firstName("Betty")
-                .lastName("Sue")
-                .nickname(login)
-                .email("bettys@gmail.com")
+                .firstName(BETTY_NAME)
+                .lastName(BETTY_LAST_NAME)
+                .nickname(BETTY_LOGIN)
+                .email(BETTY_MAIL)
                 .build();
 
         long contactID = contactService.addContact(contact);
@@ -81,14 +76,14 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
 
         User user = DomainUser.createWith()
                 .contact(updated)
-                .login(login)
-                .password(login)
+                .login(BETTY_LOGIN)
+                .password(BETTY_PASSWORD)
                 .build();
 
         userService.addUser(user);
 
         Author author = DomainAuthor.createWith()
-                .artisticNickname("betty-artist")
+                .artisticNickname(BETTY_ARTIST_NICK)
                 .contactId(contactID)
                 .build();
 
@@ -96,11 +91,11 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
 
         Author updatedAuthor = DomainAuthor.mergeID(authorId, author);
 
-        Picture spring = createPicture(updatedAuthor, user, "Spring");
-        Picture summer = createPicture(updatedAuthor, user, "Summer");
+        Picture spring = createPicture(updatedAuthor, user, BETTY_FIRST_PICTURE_TITLE);
+        Picture summer = createPicture(updatedAuthor, user, BETTY_SECOND_PICTURE_TITLE);
 
-        createCommentary(spring, user, "This is my first painting");
-        createCommentary(spring, user, "Do you like it?");
+        createCommentary(spring, user, BETTY_FIRST_COMMENT);
+        createCommentary(spring, user, BETTY_SECOND_COMMENT);
         createCommentary(spring, user, "Enjoy");
         createCommentary(summer, user, "I love summer!");
     }
@@ -145,8 +140,6 @@ public class InitialDataLoaderImpl implements InitialDataLoader {
 
     private void createUser(SystemRole role, String firstName,
                             String email, String login, String password) {
-        logger.info("***************************************************");
-        logger.info("Creating Contact and User");
         Contact contact = DomainContact.createWith()
                 .firstName(firstName)
                 .email(email)

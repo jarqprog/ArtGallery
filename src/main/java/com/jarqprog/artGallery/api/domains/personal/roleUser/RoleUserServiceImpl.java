@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.api.domains.personal.roleUser;
 
+import com.jarqprog.artGallery.api.domains.personal.roleUser.dto.RoleUserDTO;
 import com.jarqprog.artGallery.api.domains.personal.roleUser.dto.RoleUserThin;
 import com.jarqprog.artGallery.api.domains.personal.user.UserEntity;
 import com.jarqprog.artGallery.api.domains.personal.user.UserRepository;
@@ -37,7 +38,7 @@ public class RoleUserServiceImpl implements RoleUserService {
     }
 
     @Override
-    public Set<RoleUserData> findByUserLogin(String userLogin) {
+    public Set<RoleUserDTO> findByUserLogin(String userLogin) {
         Set<RoleUserEntity> userRoles = roleUserRepository.findAllByUserEntityLogin(userLogin);
         return userRoles
                 .stream()
@@ -46,7 +47,7 @@ public class RoleUserServiceImpl implements RoleUserService {
     }
 
     @Override
-    public RoleUserData addUserRole(@NonNull SystemRole role, @NonNull UserData userData) {
+    public RoleUserDTO addUserRole(@NonNull SystemRole role, @NonNull UserData userData) {
         RoleUserEntity roleUserEntity = roleUserRepository.findByRoleAndUserEntityLogin(role, userData.getLogin()).orElse(null);
         if (roleUserEntity != null) {
             throw new IllegalArgumentException(String.format("Role: %s for user login: %s already exists!",

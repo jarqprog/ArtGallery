@@ -1,5 +1,6 @@
 package com.jarqprog.artGallery.api.infrastructure.components;
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.infrastructure.components.dataLoader.InitialDataLoader;
 
 
@@ -12,7 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile({"test", "dev"})
+@Profile({ApiConstants.DEV_PROFILE, ApiConstants.TEST_PROFILE})
 //@Profile({"dev", "prod"})
 public class MyApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
 
