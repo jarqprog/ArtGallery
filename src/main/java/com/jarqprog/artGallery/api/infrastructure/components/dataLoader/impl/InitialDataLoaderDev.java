@@ -140,8 +140,6 @@ public class InitialDataLoaderDev implements InitialDataLoader {
 
     private void createUser(SystemRole role, String firstName,
                             String email, String login, String password) {
-        logger.info("***************************************************");
-        logger.info("Creating Contact and User");
         Contact contact = DomainContact.createWith()
                 .firstName(firstName)
                 .email(email)

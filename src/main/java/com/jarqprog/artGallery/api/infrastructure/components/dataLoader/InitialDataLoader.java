@@ -1,5 +1,9 @@
 package com.jarqprog.artGallery.api.infrastructure.components.dataLoader;
 
+import com.jarqprog.artGallery.api.ApiConstants;
+import org.springframework.context.annotation.Profile;
+
+@Profile({ApiConstants.TEST_PROFILE, ApiConstants.DEV_PROFILE})
 public interface InitialDataLoader {
 
     String FAKE_PICTURE_PATH = "fake/path";

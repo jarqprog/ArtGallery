@@ -51,12 +51,12 @@ public class InitialDataLoaderTest implements InitialDataLoader {
     @Transactional
     public void populateDb() {
 
-        logger.info("populating DB - START...");
+        logger.info("populating TEST DB - START...");
         initSuperAdmin();
         initAdmin();
         initContactUserPicturesCommentaries();
         initSomeContacts();
-        logger.info("populating DB - DONE!");
+        logger.info("populating TEST DB - DONE!");
     }
 
     private void initContactUserPicturesCommentaries() {
@@ -138,8 +138,6 @@ public class InitialDataLoaderTest implements InitialDataLoader {
 
     private void createUser(SystemRole role, String firstName,
                             String email, String login, String password) {
-        logger.info("***************************************************");
-        logger.info("Creating Contact and User");
         Contact contact = DomainContact.createWith()
                 .firstName(firstName)
                 .email(email)
