@@ -25,14 +25,9 @@ import java.util.List;
 
 @Component
 @Profile(ApiConstants.DEV_PROFILE)
-//@Profile({"dev", "test", "prod"})
 public class InitialDataLoaderDev implements InitialDataLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderDev.class);
-
-    private static final String FAKE_PICTURE_PATH = "fake/path";
-
-
 
     @NonNull private final AuthorService authorService;
     @NonNull private final CommentaryService commentaryService;
@@ -67,13 +62,12 @@ public class InitialDataLoaderDev implements InitialDataLoader {
     }
 
     private void initContactUserPicturesCommentaries() {
-        final String login = "betty80";
         Contact contact = DomainContact
                 .createWith()
-                .firstName("Betty")
-                .lastName("Sue")
-                .nickname(login)
-                .email("bettys@gmail.com")
+                .firstName(BETTY_NAME)
+                .lastName(BETTY_LAST_NAME)
+                .nickname(BETTY_LOGIN)
+                .email(BETTY_MAIL)
                 .build();
 
         long contactID = contactService.addContact(contact);
@@ -82,14 +76,14 @@ public class InitialDataLoaderDev implements InitialDataLoader {
 
         User user = DomainUser.createWith()
                 .contact(updated)
-                .login(login)
-                .password(login)
+                .login(BETTY_LOGIN)
+                .password(BETTY_PASSWORD)
                 .build();
 
         userService.addUser(user);
 
         Author author = DomainAuthor.createWith()
-                .artisticNickname("betty-artist")
+                .artisticNickname(BETTY_ARTIST_NICK)
                 .contactId(contactID)
                 .build();
 
@@ -97,11 +91,11 @@ public class InitialDataLoaderDev implements InitialDataLoader {
 
         Author updatedAuthor = DomainAuthor.mergeID(authorId, author);
 
-        Picture spring = createPicture(updatedAuthor, user, "Spring");
-        Picture summer = createPicture(updatedAuthor, user, "Summer");
+        Picture spring = createPicture(updatedAuthor, user, BETTY_FIRST_PICTURE_TITLE);
+        Picture summer = createPicture(updatedAuthor, user, BETTY_SECOND_PICTURE_TITLE);
 
-        createCommentary(spring, user, "This is my first painting");
-        createCommentary(spring, user, "Do you like it?");
+        createCommentary(spring, user, BETTY_FIRST_COMMENT);
+        createCommentary(spring, user, BETTY_SECOND_COMMENT);
         createCommentary(spring, user, "Enjoy");
         createCommentary(summer, user, "I love summer!");
     }
