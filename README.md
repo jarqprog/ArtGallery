@@ -1,7 +1,7 @@
 # ArtGallery - REST API v1.2
 # ArtGallery - simple web application
 
-Spring Data / MVC / Security project. Java 9 with embedded Tomcat7
+Spring Data / MVC / Security project. Java 11 with embedded Tomcat7
 
 To run application (using Maven) type in the command line:
 
