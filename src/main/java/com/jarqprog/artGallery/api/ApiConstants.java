@@ -10,4 +10,5 @@ public interface ApiConstants {
     String DEV_PROFILE = "dev";
     String PROD_PROFILE = "prod";
     String TEST_PROFILE = "test";
+    String HERO_PROFILE = "hero";//Heroku
 }

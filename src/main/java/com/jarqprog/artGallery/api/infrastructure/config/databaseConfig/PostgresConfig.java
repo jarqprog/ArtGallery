@@ -1,22 +1,23 @@
 package com.jarqprog.artGallery.api.infrastructure.config.databaseConfig;
 
 
+import com.jarqprog.artGallery.api.ApiConstants;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-import static com.jarqprog.artGallery.api.ApiConstants.DEV_PROFILE;
+import static com.jarqprog.artGallery.api.ApiConstants.HERO_PROFILE;
 
 @Component
-@Profile(DEV_PROFILE)
-public class H2DevConfig implements DatabaseConfig {
+@Profile(HERO_PROFILE)
+public class PostgresConfig implements DatabaseConfig {
 
-    private final static String DRIVER_CLASS = "org.h2.Driver";
-    private final static String URL = "jdbc:h2:mem:dev;DB_CLOSE_DELAY=-1";
-    private final static String USER = "sa";
-    private final static String PASSWORD = "";
-    private final static String HIBERNATE_DIALECT = "org.hibernate.dialect.H2Dialect";
+    private final static String DRIVER_CLASS = "org.postgresql.Driver";
+    private final static String URL = System.getenv("JDBC_DATABASE_URL");
+    private final static String USER = System.getenv("JDBC_DATABASE_USERNAME");
+    private final static String PASSWORD = System.getenv("JDBC_DATABASE_PASSWORD");
+    private final static String HIBERNATE_DIALECT = "org.hibernate.dialect.PostgreSQLDialect";
 
     @Override
     public String getDriverClass() {
@@ -41,9 +42,9 @@ public class H2DevConfig implements DatabaseConfig {
     @Override
     public Properties getJPAProperties() {
         Properties properties = new Properties();
-        properties.setProperty("javax.persistence.schema-generation.database.action", "drop-and-create");
+        // Hibernate ddl auto (create, create-drop, validate, update)
+        properties.setProperty("spring.jpa.hibernate.ddl-auto", "create-drop");
         properties.setProperty("hibernate.dialect", HIBERNATE_DIALECT);
-        properties.setProperty("spring.h2.console.enabled", "true");
         properties.setProperty("spring.jpa.generate-ddl", "true");
         return properties;
      }
