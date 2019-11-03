@@ -1,6 +1,8 @@
 # ArtGallery - REST API v1.2
 # ArtGallery - simple web application
 
+ArtGallery on Heroku: https://galleryofart.herokuapp.com/
+
 Spring Data / MVC / Security project. Java 11 with embedded Tomcat9
 
 To build application (using Maven) type in the command line:

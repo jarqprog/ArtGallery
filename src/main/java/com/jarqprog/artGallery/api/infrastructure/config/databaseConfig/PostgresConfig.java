@@ -1,7 +1,6 @@
 package com.jarqprog.artGallery.api.infrastructure.config.databaseConfig;
 
 
-import com.jarqprog.artGallery.api.ApiConstants;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +42,7 @@ public class PostgresConfig implements DatabaseConfig {
     public Properties getJPAProperties() {
         Properties properties = new Properties();
         // Hibernate ddl auto (create, create-drop, validate, update)
-        properties.setProperty("spring.jpa.hibernate.ddl-auto", "create-drop");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect", HIBERNATE_DIALECT);
         properties.setProperty("spring.jpa.generate-ddl", "true");
         return properties;
