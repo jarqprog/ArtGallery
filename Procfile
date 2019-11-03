@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=hero -Dserver.port=8080 -jar target/dependency/webapp-runner.jar target/*.war
+web: java -Dspring.profiles.active=hero -Dserver.port=$PORT $JAVA_OPTS -jar target/dependency/webapp-runner.jar target/*.war
