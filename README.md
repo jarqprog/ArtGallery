@@ -1,26 +1,34 @@
 # ArtGallery - REST API v1.2
 # ArtGallery - simple web application
 
-Spring Data / MVC / Security project. Java 11 with embedded Tomcat7
+Spring Data / MVC / Security project. Java 11 with embedded Tomcat9
 
-To run application (using Maven) type in the command line:
+To build application (using Maven) type in the command line:
 
-        mvn clean install tomcat7:run -Dspring.profiles.active=dev
+        mvn package -Dspring.profiles.active={one of the spring profile: test/dev/prod}
+
+To run application (using webapp-runner):
+
+        java -Dspring.profiles.active={test/dev/prod} -jar target/dependency/webapp-runner.jar target/*.war
+
+for example, to build and run with development profile:
+
+        mvn package -Dspring.profiles.active=dev
+        java -Dspring.profiles.active=dev -jar target/dependency/webapp-runner.jar target/*.war
         
-Application will start with 'dev' Profile.
 
 To run with 'prod' (production) Profile you will need MySQL server and create database 'art_gallery' on it
 (application's ORM handles DB tables creation and populates some initial data).
 
 Api functionalities at the moment (wip):
 
-     {host}/artgallery/api/{version}/resource_name/{resourceID}.... <- resource name should be plural, ex.
+     {host}/api/{version}/resource_name/{resourceID}.... <- resource name should be plural, ex.
      
-    'http://localhost:8080/artgallery/api/v1/pictures/1' with GET method will return data of Picture with ID=1
+    'http://localhost:8080/api/v1/pictures/1' with GET method will return data of Picture with ID=1
 
     Some resources which doesn't exists independently require to use 'parent resource', ex. 
 
-    'http://localhost:8080/artgallery/api/v1/pictures/1/commentaries' with GET method will return all Commentaries
+    'http://localhost:8080/api/v1/pictures/1/commentaries' with GET method will return all Commentaries
     related to Picture with ID=1:
     [
         {
@@ -48,7 +56,7 @@ Api functionalities at the moment (wip):
     Output format depends on provided request parameter '?mode=...' (fat/thin/hateoas) used with GET method (it doesn't
     apply to other http methods), ex:
      
-    'http://localhost:8080/artgallery/api/v1/pictures/1/commentaries/1?mode=fat' with GET method will return Commentary
+    'http://localhost:8080/api/v1/pictures/1/commentaries/1?mode=fat' with GET method will return Commentary
     with ID=1 related to given Picture (ID=1) in the 'fat' format:
     {
         id: 1,
@@ -103,11 +111,11 @@ Api functionalities at the moment (wip):
 
     ENDPOINTS available at the moment:
     
-        /artgallery/api/v1/pictures
-        /artgallery/api/v1/pictures/commentaries
-        /artgallery/api/v1/users
-        /artgallery/api/v1/contacts
-        /artgallery/api/v1/authors
+        /api/v1/pictures
+        /api/v1/pictures/commentaries
+        /api/v1/users
+        /api/v1/contacts
+        /api/v1/authors
     
     Handled Http methods at the moment: GET, POST, PUT, DELETE
     
@@ -118,7 +126,7 @@ Api functionalities at the moment (wip):
 
     On POST or PUT method nested objects are ignored, so there is no risk to change something accidentally. For example:
         
-    on endpoint PUT 'http://......../artgallery/api/v1/pictures/1/commentaries/1'
+    on endpoint PUT 'http://......../api/v1/pictures/1/commentaries/1'
     API receives JSon with changed Commentary data and changed related Picture data (Picture is nested object):
     
             {
@@ -135,7 +143,7 @@ Api functionalities at the moment (wip):
             }
     
     Result - only Commentary data will be updated. To update Picture, JSon should be send on proper endpoint:
-    PUT http://......../artgallery/api/v1/pictures/1
+    PUT http://......../api/v1/pictures/1
     
             {
                 id: 1,
