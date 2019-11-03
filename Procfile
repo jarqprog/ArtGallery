@@ -1,1 +1,1 @@
-web: tomcat7:run -Dspring.profiles.active=dev
+web: java -Dspring.profiles.active=dev -jar target/dependency/webapp-runner.jar target/*.war
