@@ -1,14 +1,15 @@
 package com.jarqprog.artGallery.api.infrastructure.config.databaseConfig;
 
 
-import com.jarqprog.artGallery.api.ApiConstants;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
+import static com.jarqprog.artGallery.api.ApiConstants.DEV_PROFILE;
+
 @Component
-@Profile(ApiConstants.DEV_PROFILE)
+@Profile(DEV_PROFILE)
 public class H2DevConfig implements DatabaseConfig {
 
     private final static String DRIVER_CLASS = "org.h2.Driver";

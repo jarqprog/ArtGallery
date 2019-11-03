@@ -1,1 +1,1 @@
-web: java -Dspring.profiles.active=dev -jar target/dependency/webapp-runner.jar target/*.war
+web: java -Dspring.profiles.active=hero -jar target/dependency/webapp-runner.jar target/*.war

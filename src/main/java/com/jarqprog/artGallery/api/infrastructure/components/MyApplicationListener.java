@@ -12,9 +12,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import static com.jarqprog.artGallery.api.ApiConstants.*;
+
 @Component
-@Profile({ApiConstants.DEV_PROFILE, ApiConstants.TEST_PROFILE})
-//@Profile({"dev", "prod"})
+@Profile({DEV_PROFILE, TEST_PROFILE, HERO_PROFILE})
 public class MyApplicationListener implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(MyApplicationListener.class);

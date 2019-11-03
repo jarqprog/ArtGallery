@@ -23,8 +23,11 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.jarqprog.artGallery.api.ApiConstants.DEV_PROFILE;
+import static com.jarqprog.artGallery.api.ApiConstants.HERO_PROFILE;
+
 @Component
-@Profile(ApiConstants.DEV_PROFILE)
+@Profile({DEV_PROFILE, HERO_PROFILE})
 public class InitialDataLoaderDev implements InitialDataLoader {
 
     private static final Logger logger = LoggerFactory.getLogger(InitialDataLoaderDev.class);
