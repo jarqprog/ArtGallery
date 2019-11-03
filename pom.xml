@@ -6,7 +6,7 @@
 
   <groupId>com.jarqprog.app</groupId>
   <artifactId>artgallery</artifactId>
-  <version>1.2.2</version>
+  <version>1.2.3</version>
   <packaging>war</packaging>
 
   <properties>
@@ -15,14 +15,13 @@
     <maven.compiler.target>1.11</maven.compiler.target>
     <spring.version>5.1.5.RELEASE</spring.version>
     <logback.version>1.2.3</logback.version>
-    <jackson.version>2.10.0</jackson.version>
+    <jackson.version>2.9.7</jackson.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
     <thymeleaf-layout-dialect.version>2.4.1</thymeleaf-layout-dialect.version>
     <thymeleaf-spring-data-dialect.version>3.4.1</thymeleaf-spring-data-dialect.version>
     <thymeleaf-extras-springsecurity5.version>3.0.4.RELEASE</thymeleaf-extras-springsecurity5.version>
     <thymeleaf-extras-java8time.version>3.0.4.RELEASE</thymeleaf-extras-java8time.version>
   </properties>
-
 
   <repositories>
 
@@ -236,42 +235,61 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/com.github.jsimone/webapp-runner -->
+    <dependency>
+      <groupId>com.github.jsimone</groupId>
+      <artifactId>webapp-runner</artifactId>
+      <version>9.0.11.0</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <version>3.1.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
+    <dependency>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-war-plugin</artifactId>
+      <version>3.2.3</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <version>9.0.27</version>
+      <scope>provided</scope>
+    </dependency>
+
+
+
   </dependencies>
 
   <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
+        <!-- JAVA 11 related-->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.0.0-M1</version>
+          <configuration>
+            <argLine>
+              --illegal-access=permit
+            </argLine>
+          </configuration>
+        </plugin>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M1</version>
-        <configuration>
-          <argLine>
-            --illegal-access=permit
-          </argLine>
-        </configuration>
-      </plugin>
-
-      <plugin>
+        <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>versions-maven-plugin</artifactId>
           <version>2.5</version>
           <configuration>
-              <generateBackupPoms>false</generateBackupPoms>
+            <generateBackupPoms>false</generateBackupPoms>
           </configuration>
-      </plugin>
-
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
         </plugin>
 
         <plugin>
@@ -279,9 +297,11 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.1</version>
           <configuration>
-              <release>11</release>
+            <release>11</release>
           </configuration>
         </plugin>
+
+
 
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -294,43 +314,40 @@
         </plugin>
 
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-war-plugin</artifactId>
-          <version>2.1.1</version>
           <extensions>false</extensions>
           <configuration>
             <failOnMissingWebXml>false</failOnMissingWebXml>
           </configuration>
         </plugin>
-
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
-        </plugin>
-
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
       </plugins>
 
     </pluginManagement>
 
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>copy</goal></goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>com.github.jsimone</groupId>
+                  <artifactId>webapp-runner</artifactId>
+                  <destFileName>webapp-runner.jar</destFileName>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
   </build>
+
 </project>
