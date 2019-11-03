@@ -42,7 +42,7 @@ public class PostgresConfig implements DatabaseConfig {
     public Properties getJPAProperties() {
         Properties properties = new Properties();
         // Hibernate ddl auto (create, create-drop, validate, update)
-        properties.setProperty("spring.jpa.hibernate.ddl-auto", "update");
+        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect", HIBERNATE_DIALECT);
         properties.setProperty("spring.jpa.generate-ddl", "true");
         return properties;
