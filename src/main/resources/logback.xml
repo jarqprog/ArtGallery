@@ -13,8 +13,7 @@
             <FileNamePattern>${HOME_LOG}art_gallery_%d{yyyy-MM-dd}.zip</FileNamePattern>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
             <maxHistory>1</maxHistory>
-            <maxFileSize>3MB</maxFileSize>
-            <totalSizeCap>300MB</totalSizeCap>
+            <totalSizeCap>90MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
             <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
