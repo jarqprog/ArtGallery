@@ -26,7 +26,6 @@ import java.util.Set;
 
 @Configuration
 @EnableWebMvc
-@PropertySource("classpath:application.properties")
 @ComponentScan("com.jarqprog.artGallery")
 public class WebMvcConfig implements ApplicationContextAware, WebMvcConfigurer {
 
