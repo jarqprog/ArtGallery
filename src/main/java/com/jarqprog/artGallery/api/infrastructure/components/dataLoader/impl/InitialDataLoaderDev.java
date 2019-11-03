@@ -2,7 +2,6 @@ package com.jarqprog.artGallery.api.infrastructure.components.dataLoader.impl;
 
 
 
-import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.domains.artistic.author.AuthorService;
 import com.jarqprog.artGallery.api.domains.artistic.commentary.CommentaryService;
 import com.jarqprog.artGallery.api.domains.artistic.picture.PictureService;

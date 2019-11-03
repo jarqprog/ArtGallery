@@ -1,6 +1,5 @@
 package com.jarqprog.artGallery.api.infrastructure.components;
 
-import com.jarqprog.artGallery.api.ApiConstants;
 import com.jarqprog.artGallery.api.infrastructure.components.dataLoader.InitialDataLoader;
 
 

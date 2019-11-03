@@ -1,7 +1,6 @@
 package com.jarqprog.artGallery.api.infrastructure.config.databaseConfig;
 
 
-import com.jarqprog.artGallery.api.ApiConstants;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
