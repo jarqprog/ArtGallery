@@ -7,6 +7,5 @@ public interface ContactData extends Identity {
 
     String getFirstName();
     String getLastName();
-    String getNickname();
     String getEmail();
 }

@@ -24,13 +24,9 @@ public class ContactEntity extends DomainEntity implements Contact {
         return new ContactEntity(contact);
     }
 
-    @NonNull
-    @NotNull
     private String firstName;
 
     private String lastName;
-
-    private String nickname;
 
     @NonNull
     @NotNull
@@ -39,19 +35,15 @@ public class ContactEntity extends DomainEntity implements Contact {
     @Email
     private String email;
 
-    private ContactEntity(long id, int version, @NonNull String firstName, String lastName,
-                          String nickname, @NonNull String email) {
+    private ContactEntity(long id, int version, String firstName, String lastName, @NonNull String email) {
         super(id, version);
-        assert StringUtils.isNotEmpty(firstName);
         assert StringUtils.isNotEmpty(email);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.nickname = nickname;
         this.email = email;
     }
 
     private ContactEntity(@NonNull Contact contact) {
-        this(contact.getId(), contact.getVersion(), contact.getFirstName(), contact.getLastName(),
-                contact.getNickname(), contact.getEmail());
+        this(contact.getId(), contact.getVersion(), contact.getFirstName(), contact.getLastName(), contact.getEmail());
     }
 }

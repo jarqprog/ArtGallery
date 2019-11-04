@@ -74,7 +74,6 @@ public class ContactServiceImpl implements ContactService {
         final Contact contact = DomainContact.createWith()
                 .firstName(contactData.getFirstName())
                 .lastName(contactData.getLastName())
-                .nickname(contactData.getNickname())
                 .email(contactData.getEmail())
                 .build();
 
@@ -97,7 +96,6 @@ public class ContactServiceImpl implements ContactService {
                 .version(contactData.getVersion())
                 .firstName(contactData.getFirstName())
                 .lastName(contactData.getLastName())
-                .nickname(contactData.getNickname())
                 .email(contactData.getEmail())
                 .build();
 

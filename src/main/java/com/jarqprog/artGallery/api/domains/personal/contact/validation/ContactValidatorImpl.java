@@ -60,14 +60,13 @@ public class ContactValidatorImpl implements ContactValidator {
     }
 
     private StringBuilder validateFirstName(ContactData contactDTO, StringBuilder exceptionMessage) {
-        if (StringUtils.isBlank(contactDTO.getFirstName())) {
-            exceptionMessage.append("First name cannot be empty. ");
-        }
-        final String firstName = contactDTO.getFirstName();
-        final Matcher matcher = namesValidationPolicy.getPolicy().matcher(firstName);
-        if (!matcher.matches()) {
-            exceptionMessage.append("First Name is incorrect. ");
-            exceptionMessage.append(namesValidationPolicy.getRestriction());
+        if (StringUtils.isNotEmpty(contactDTO.getFirstName())) {
+            final String firstName = contactDTO.getFirstName();
+            final Matcher matcher = namesValidationPolicy.getPolicy().matcher(firstName);
+            if (!matcher.matches()) {
+                exceptionMessage.append("First Name is incorrect. ");
+                exceptionMessage.append(namesValidationPolicy.getRestriction());
+            }
         }
         return exceptionMessage;
     }
@@ -91,6 +90,4 @@ public class ContactValidatorImpl implements ContactValidator {
             throw new IllegalArgumentException(exceptionMessage.toString());
         }
     }
-
-
 }

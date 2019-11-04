@@ -28,7 +28,6 @@ public class ContactRegistrationImpl implements ContactRegistration {
                 .createWith()
                 .firstName(registrationFormDTO.getFirstName())
                 .lastName(registrationFormDTO.getLastName())
-                .nickname(registrationFormDTO.getNickname())
                 .email(registrationFormDTO.getEmail())
                 .build();
         long id = contactService.addContact(contact);

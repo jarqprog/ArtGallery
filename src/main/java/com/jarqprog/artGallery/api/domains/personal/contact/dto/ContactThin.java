@@ -10,6 +10,5 @@ public class ContactThin extends DomainDTO implements ContactDTO {
 
     private String firstName;
     private String lastName;
-    private String nickname;
     private String email;
 }
