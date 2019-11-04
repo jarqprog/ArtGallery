@@ -20,37 +20,28 @@ public final class DomainContact extends DomainModel implements Contact {
     }
 
     @Builder(builderMethodName = "createWith")
-    public static DomainContact buildWithData(long id, int version, @NonNull String firstName, String lastName,
-                                              String nickname, @NonNull String email) {
-        return new DomainContact(id, version, firstName, lastName, nickname, email);
+    public static DomainContact buildWithData(long id, int version, String firstName, String lastName, String email) {
+        return new DomainContact(id, version, firstName, lastName, email);
     }
 
-    @NonNull
     private final String firstName;
 
     private final String lastName;
-
-    private final String nickname;
 
     @NonNull
     private final String email;
 
 
-
-    private DomainContact(long id, int version, @NonNull String firstName, String lastName,
-                          String nickname, @NonNull String email) {
+    private DomainContact(long id, int version, String firstName, String lastName, @NonNull String email) {
         super(id, version);
-        assert StringUtils.isNotEmpty(firstName);
         assert StringUtils.isNotEmpty(email);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.nickname = nickname;
         this.email = email;
     }
 
     private DomainContact(long id, @NonNull Contact contact) {
-        this(id, contact.getVersion(), contact.getFirstName(), contact.getLastName(),
-                contact.getNickname(), contact.getEmail());
+        this(id, contact.getVersion(), contact.getFirstName(), contact.getLastName(), contact.getEmail());
     }
 
     private DomainContact(@NonNull Contact contact) {

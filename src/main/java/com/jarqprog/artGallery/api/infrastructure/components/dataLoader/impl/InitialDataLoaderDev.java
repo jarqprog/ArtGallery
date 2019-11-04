@@ -68,7 +68,6 @@ public class InitialDataLoaderDev implements InitialDataLoader {
                 .createWith()
                 .firstName(BETTY_NAME)
                 .lastName(BETTY_LAST_NAME)
-                .nickname(BETTY_LOGIN)
                 .email(BETTY_MAIL)
                 .build();
 
