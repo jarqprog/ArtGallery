@@ -41,7 +41,6 @@ public class UserWebController {
         model.addAttribute("email", contactData.getEmail());
         model.addAttribute("firstName", contactData.getFirstName());
         model.addAttribute("lastName", contactData.getLastName());
-        model.addAttribute("nickname", contactData.getNickname());
         return "/user/user-info";
     }
 }
