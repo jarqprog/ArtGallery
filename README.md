@@ -124,7 +124,7 @@ Api functionalities at the moment (wip):
     At the moment API consumes data in JSon format, but handling xml will be added soon.
     
     While triggering POST or PUT method you can provide data in different format in request body as long as data matches
-    the specific DTO (interface) types you can find in package com.jarqprog.artGallery.api.domains
+    the specific DTO (interface) types you can find in package com.com.jarqprog.artGallery.api.domains
 
     On POST or PUT method nested objects are ignored, so there is no risk to change something accidentally. For example:
         
@@ -167,12 +167,12 @@ Main concepts (in short):
     - controllers, REST Controllers - using Spring MVC (v.5)
 
 * domain models:
-    - using immutable Value Objects inside API (package com.jarqprog.artGallery.domain)
+    - using immutable Value Objects inside API (package com.com.jarqprog.artGallery.domain)
     - entities - (for ORM-hibernate purposes) - can be created only from VOs by using factory method,
         they are not immutable, but they haven't any setters,
-        using then in DAO and service layer (package com.jarqprog.artGallery.api.domains) 
+        using then in DAO and service layer (package com.com.jarqprog.artGallery.api.domains) 
     - DTO - anemic POJO objects - for serialization/transfer in controller layer - api produces and consumes
-        those kind of objects (com.jarqprog.artGallery.api.domains)
+        those kind of objects (com.com.jarqprog.artGallery.api.domains)
         
 * step towards distributed architecture and DDD - there are two decoupled domains:
     - personal (related to Users, Contacts, Security,  etc.)
