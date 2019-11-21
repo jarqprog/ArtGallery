@@ -4,6 +4,7 @@ package com.jarqprog.web.security.config;
 import com.jarqprog.web.handler.SimpleAccessDeniedHandler;
 import com.jarqprog.web.handler.SimpleAuthenticationFailureHandler;
 import com.jarqprog.web.security.userDetails.SimpleUserDetailsService;
+import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -29,17 +31,6 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(SimpleSecurityConfig.class);
 
-    static {
-
-
-        logger.warn("***********************************************************************************************");
-        logger.warn("***********************************************************************************************");
-        logger.warn("SimpleSecurityConfig CREATED");
-        logger.warn("***********************************************************************************************");
-        logger.warn("***********************************************************************************************");
-
-    }
-
     private UserDetailsService userDetailsService;
 
     public SimpleSecurityConfig() {
@@ -47,7 +38,7 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
+    public void setUserDetailsService(@NonNull UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -70,22 +61,22 @@ public class SimpleSecurityConfig extends WebSecurityConfigurerAdapter {
                             "/img/**",
                             "/webjars/**").permitAll()
                     .antMatchers("/", "/user/registration", "/index", "/about-api").permitAll()
-                    .anyRequest().permitAll(); //.authenticated()
-//                    .and()
-//                .formLogin()
-////                    .failureHandler(authenticationFailureHandler())
-//                    .loginPage("/login")
-//                    .permitAll()
-//                    .and()
-//                .logout()
-//                    .invalidateHttpSession(true)
-//                    .clearAuthentication(true)
-//                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                    .logoutSuccessUrl("/login?logout")
-//                    .permitAll()
-//                    .and()
-//                .exceptionHandling()
-//                    .accessDeniedHandler(accessDeniedHandler());
+                    .anyRequest().authenticated()
+                    .and()
+                .formLogin()
+//                    .failureHandler(authenticationFailureHandler())
+                    .loginPage("/login")
+                    .permitAll()
+                    .and()
+                .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
+                    .and()
+                .exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler());
     }
 
     @Bean
