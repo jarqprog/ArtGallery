@@ -11,26 +11,9 @@ public class MainController {
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 
-
-    static {
-
-
-        logger.warn("***********************************************************************************************");
-        logger.warn("***********************************************************************************************");
-        logger.warn("CONTROLLER CREATED");
-        logger.warn("***********************************************************************************************");
-        logger.warn("***********************************************************************************************");
-
-    }
-
     @GetMapping("/")
     public String root() {
         return "index";
-    }
-
-    @GetMapping("/index1")
-    public String root1() {
-        return "index1";
     }
 
     @GetMapping("/api")
@@ -40,7 +23,7 @@ public class MainController {
 
     @GetMapping("/login")
     public String login() {
-        return "index1";
+        return "login";
     }
 
     @GetMapping("/access-denied")
