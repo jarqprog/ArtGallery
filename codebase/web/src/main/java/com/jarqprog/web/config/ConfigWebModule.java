@@ -1,17 +1,22 @@
 package com.jarqprog.web.config;
 
-import lombok.NonNull;
+import com.jarqprog.web.WebApplication;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.dialect.SpringStandardDialect;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.HashSet;
@@ -20,13 +25,6 @@ import java.util.Set;
 @Configuration
 @EnableWebMvc
 public class ConfigWebModule implements WebMvcConfigurer {
-
-    @NonNull private final ITemplateResolver templateResolver;
-
-    @Autowired
-    public ConfigWebModule(@NonNull ITemplateResolver templateResolver) {
-        this.templateResolver = templateResolver;
-    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -52,7 +50,7 @@ public class ConfigWebModule implements WebMvcConfigurer {
     protected SpringTemplateEngine templateEngine() {
         SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setEnableSpringELCompiler(true);
-        engine.setTemplateResolver(templateResolver);
+        engine.setTemplateResolver(templateResolver());
         engine.setDialects(thymeleafDialects());
         return engine;
     }
@@ -78,5 +76,14 @@ public class ConfigWebModule implements WebMvcConfigurer {
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
+    }
+
+    private ITemplateResolver templateResolver() {
+        SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
+        resolver.setApplicationContext(WebApplication.getApplicationContext());
+        resolver.setPrefix("classpath:/WEB-INF/templates/");
+        resolver.setSuffix(".html");
+        resolver.setTemplateMode(TemplateMode.HTML);
+        return resolver;
     }
 }
