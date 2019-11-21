@@ -324,12 +324,6 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.1</version>
           <configuration>
-<!--            <release>12</release>-->
-<!--          </configuration>-->
-
-<!--          <configuration>-->
-<!--            <source>${java.version}</source>-->
-<!--            <target>${java.version}</target>-->
             <annotationProcessorPaths>
               <path>
                 <groupId>org.projectlombok</groupId>
@@ -345,8 +339,6 @@
             </annotationProcessorPaths>
           </configuration>
         </plugin>
-
-
 
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -369,30 +361,6 @@
       </plugins>
 
     </pluginManagement>
-
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.1.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals><goal>copy</goal></goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>com.github.jsimone</groupId>
-                  <artifactId>webapp-runner</artifactId>
-                  <destFileName>webapp-runner.jar</destFileName>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-
   </build>
 
 </project>

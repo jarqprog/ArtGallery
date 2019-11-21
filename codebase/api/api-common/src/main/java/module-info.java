@@ -29,4 +29,5 @@ module api.common {
     requires slf4j.api;
     requires domain.person;
     requires domain.art;
+    requires spring.security.core;
 }

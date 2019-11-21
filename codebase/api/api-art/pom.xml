@@ -8,11 +8,10 @@
         <version>1.2.3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <artifactId>api-art</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>com.jarqprog</groupId>
             <artifactId>domain-art</artifactId>
@@ -27,82 +26,7 @@
         </dependency>
     </dependencies>
 
-
     <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-            <plugins>
-                <!-- JAVA 11 related-->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0-M1</version>
-                    <configuration>
-                        <argLine>
-                            --illegal-access=permit
-                        </argLine>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.5</version>
-                    <configuration>
-                        <generateBackupPoms>false</generateBackupPoms>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                    <configuration>
-                        <!--            <release>12</release>-->
-                        <!--          </configuration>-->
-
-                        <!--          <configuration>-->
-                        <!--            <source>${java.version}</source>-->
-                        <!--            <target>${java.version}</target>-->
-                        <annotationProcessorPaths>
-                            <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
-                            </path>
-                            <path>
-                                <groupId>org.mapstruct</groupId>
-                                <artifactId>mapstruct-processor</artifactId>
-                                <version>${mapstruct.version}</version>
-                            </path>
-
-                        </annotationProcessorPaths>
-                    </configuration>
-                </plugin>
-
-
-
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M1</version>
-                    <configuration>
-                        <argLine>
-                            --illegal-access=permit
-                        </argLine>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-war-plugin</artifactId>
-                    <extensions>false</extensions>
-                    <configuration>
-                        <failOnMissingWebXml>false</failOnMissingWebXml>
-                    </configuration>
-                </plugin>
-            </plugins>
-
-        </pluginManagement>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -125,8 +49,5 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
-
-
 </project>

@@ -1,12 +1,15 @@
 package com.jarqprog.personapi.database;
 
 
+import com.jarqprog.commonapi.constants.ApiConstants;
 import lombok.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-//@Component
-//@Profile(ApiConstants.TEST_PROFILE)
+@Component
+@Profile(ApiConstants.TEST_PROFILE)
 @Value(staticConstructor = "build")
 public class H2TestConfig implements PersonDatabaseConfig {
 
