@@ -7,6 +7,7 @@
         link to heroku: https://galleryofart-art.herokuapp.com/
 
     web application
+        link to heroku: https://galleryofart-web.herokuapp.com/
     
     monitoring application (todo)
 
