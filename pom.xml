@@ -6,7 +6,7 @@
 
   <groupId>com.jarqprog</groupId>
   <artifactId>artgallery</artifactId>
-  <version>1.2.3</version>
+  <version>1.3.0</version>
   <modules>
     <module>codebase</module>
   </modules>
@@ -14,6 +14,7 @@
   <packaging>pom</packaging>
 
   <properties>
+    <global.version>${project.version}</global.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>12</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
