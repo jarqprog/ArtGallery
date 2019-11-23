@@ -11,3 +11,5 @@
     monitoring application (todo)
 
     please see detailed info under WIKI tab: https://github.com/jarqprog/ArtGallery/wiki
+
+    To run or deploy application please checkout scripts directory
