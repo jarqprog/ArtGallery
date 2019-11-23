@@ -1,11 +1,16 @@
 
-### HEROKU deployment:
+### REST api for person domain
+    heroku link: https://galleryofart-person.herokuapp.com/
 
-heroku plugins:install java
-heroku deploy:jar target/dependency/webapp-runner.jar --app galleryofart-person
-
-heroku ps:scale web=0 --app galleryofart-person
-
-heroku run rails console --app galleryofart-person
-
-heroku logs --tail --app galleryofart-person
+------------------------------
+    HEROKU usefull commands:
+    
+        heroku plugins:install java
+        
+        heroku ps:scale web=1 --app galleryofart-person
+        
+        heroku run rails console --app galleryofart-person
+        
+        heroku logs --tail --app galleryofart-person
+        
+        mvn heroku:deploy-only
