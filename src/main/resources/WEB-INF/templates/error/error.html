@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>Error</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="w3-panel w3-pale-yellow w3-border">
+        <p>Problem occurred: <span th:text="${clientInfo.message}"></span></p>
+        <p>Error ID: <span th:text="${clientInfo.uuid}"></span></p>
+        <p>Date: <span th:text="${clientInfo.dateTime}"></span></p>
+        <p>Status: <span th:text="${clientInfo.httpStatus}"></span></p>
+    </div>
+
+    <button class="w3-btn w3-blue-grey" onclick="goBack()">Go Back</button>
+
+</div>
+</body>
+</html>
