@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/user/registration")
@@ -41,7 +40,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registerUser(@ModelAttribute("registration") @Valid RegistrationFormDTO registrationFormDTO,
+    public String registerUser(@ModelAttribute("registration") RegistrationFormDTO registrationFormDTO,
                                BindingResult result, WebRequest request, Errors errors, Model model) {
         UserData userDTO = registrationService.registerUser(registrationFormDTO);
         logger.info("User {} registration", userDTO);

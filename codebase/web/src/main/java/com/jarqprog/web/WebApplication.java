@@ -9,9 +9,9 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-public class WebApplication implements WebApplicationInitializer {
+import static com.jarqprog.web.config.WebAppConstants.BASE_PACKAGE;
 
-    private static final String BASE_PATH = "com.jarqprog.web";
+public class WebApplication implements WebApplicationInitializer {
 
     private static final AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 
@@ -21,7 +21,7 @@ public class WebApplication implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext container) {
-        rootContext.scan(BASE_PATH);
+        rootContext.scan(BASE_PACKAGE);
         container.addListener(new ContextLoaderListener(rootContext));
         ServletRegistration.Dynamic dispatcher = container
                 .addServlet("mvc", new DispatcherServlet(new GenericWebApplicationContext()));

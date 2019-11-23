@@ -25,6 +25,34 @@
             <version>${global.version}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- thymeleaf -->
+        <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5 -->
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+            <version>${thymeleaf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>${thymeleaf-extras-springsecurity5.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
+            <version>${thymeleaf-extras-java8time.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.jpenren</groupId>
+            <artifactId>thymeleaf-spring-data-dialect</artifactId>
+            <version>${thymeleaf-spring-data-dialect.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>${thymeleaf-layout-dialect.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
