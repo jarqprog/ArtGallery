@@ -9,7 +9,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-import static com.jarqprog.web.config.WebAppConstants.BASE_PACKAGE;
+import static com.jarqprog.web.config.WebAppConstants.*;
 
 public class WebApplication implements WebApplicationInitializer {
 
@@ -22,6 +22,7 @@ public class WebApplication implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext container) {
         rootContext.scan(BASE_PACKAGE);
+        rootContext.scan(BASE_PACKAGE_WILD_CARD);
         container.addListener(new ContextLoaderListener(rootContext));
         ServletRegistration.Dynamic dispatcher = container
                 .addServlet("mvc", new DispatcherServlet(new GenericWebApplicationContext()));
