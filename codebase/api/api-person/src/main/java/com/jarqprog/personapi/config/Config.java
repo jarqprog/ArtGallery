@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -31,6 +32,7 @@ import static com.jarqprog.personapi.config.PersonApiConstants.BASE_PACKAGE_WILD
 
 @Configuration
 @EnableTransactionManagement
+@EnableJpaAuditing
 @EnableJpaRepositories(basePackages = BASE_PACKAGE_WILD_CARD)
 @ComponentScan(BASE_PACKAGE)
 public class Config implements WebMvcConfigurer {

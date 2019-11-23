@@ -1,11 +1,16 @@
 package com.jarqprog.artapi.database;
 
 
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
 import java.util.Properties;
 
+import static com.jarqprog.commonapi.constants.ApiConstants.HERO_PROFILE;
 
-//@Component
-//@Profile(HERO_PROFILE)
+
+@Component
+@Profile(HERO_PROFILE)
 public class PostgresConfig implements ArtDatabaseConfig {
 
     private final static String DRIVER_CLASS = "org.postgresql.Driver";

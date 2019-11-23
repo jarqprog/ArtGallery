@@ -1,13 +1,16 @@
 package com.jarqprog.artapi.database;
 
 
+import com.jarqprog.commonapi.constants.ApiConstants;
 import lombok.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
 
-//@Component
-//@Profile(ApiConstants.DEV_PROFILE)
+@Component
+@Profile(ApiConstants.DEV_PROFILE)
 @Value(staticConstructor = "build")
 public class H2DevConfig implements ArtDatabaseConfig {
 

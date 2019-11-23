@@ -1,9 +1,13 @@
 package com.jarqprog.artapi.database;
 
+import com.jarqprog.commonapi.constants.ApiConstants;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
 import java.util.Properties;
 
-//@Component
-//@Profile(ApiConstants.PROD_PROFILE)
+@Component
+@Profile(ApiConstants.PROD_PROFILE)
 public class MySQLConfig implements ArtDatabaseConfig {
 
     private final static String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";

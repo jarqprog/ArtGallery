@@ -30,4 +30,5 @@ module api.art {
     requires spring.orm;
     requires java.sql;
     requires javax.servlet.api;
+    requires spring.security.core;
 }
