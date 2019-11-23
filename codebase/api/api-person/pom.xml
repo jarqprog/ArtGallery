@@ -29,6 +29,17 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>2.0.13</version>
+                <configuration>
+                    <appName>galleryofart-person</appName>
+                    <processTypes>
+                        <web>java $JAVA_OPTS -Dspring.profiles.active=hero -jar target/dependency/webapp-runner.jar target/*.war --port $PORT</web>
+                    </processTypes>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.1.1</version>
@@ -50,5 +61,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
