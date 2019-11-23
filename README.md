@@ -6,6 +6,8 @@
     art-api - REST api handling art domain (authors, pictures...)
         link to heroku: https://galleryofart-art.herokuapp.com/
 
-    web - web application
+    web application
+    
+    monitoring application (todo)
 
     please see detailed info under WIKI tab: https://github.com/jarqprog/ArtGallery/wiki
