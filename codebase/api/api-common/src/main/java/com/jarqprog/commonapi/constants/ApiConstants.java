@@ -2,7 +2,7 @@ package com.jarqprog.commonapi.constants;
 
 public interface ApiConstants {
 
-    String VERSION = "v1";
+    String VERSION = "v2";
     String BASE_URL_PATH = "/api/" + VERSION + "/";
 
 
