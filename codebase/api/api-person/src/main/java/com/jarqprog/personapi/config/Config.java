@@ -19,7 +19,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -31,10 +31,9 @@ import static com.jarqprog.personapi.config.PersonApiConstants.BASE_PACKAGE_WILD
 
 @Configuration
 @EnableTransactionManagement
-@EnableWebMvc
 @EnableJpaRepositories(basePackages = BASE_PACKAGE_WILD_CARD)
 @ComponentScan(BASE_PACKAGE)
-public class PersonApiModuleConfig {
+public class Config implements WebMvcConfigurer {
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
@@ -91,5 +90,4 @@ public class PersonApiModuleConfig {
          */
         return () -> Optional.ofNullable("auditorProvider");
     }
-
 }
