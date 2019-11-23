@@ -1,4 +1,4 @@
-# Art Gallery is a group of applications build as distributed system:
+# Art Gallery is a group of applications built as distributed system:
 
     person-api - REST api handling person domain (user/contacts..)
         link to heroku: https://galleryofart-person.herokuapp.com/
