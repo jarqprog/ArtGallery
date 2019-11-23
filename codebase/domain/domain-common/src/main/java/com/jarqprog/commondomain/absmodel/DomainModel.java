@@ -14,6 +14,10 @@ public abstract class DomainModel implements Identity {
     private final long id;
     private final int version;
 
+    protected DomainModel(DomainModel domainModel) {
+        this(domainModel.id, domainModel.version);
+    }
+
     protected DomainModel(long id, int version) {
         this.id = id;
         this.version = version;

@@ -2,7 +2,6 @@ package com.jarqprog.web.service;
 
 import com.jarqprog.domainperson.model.contact.DomainContact;
 import com.jarqprog.domainperson.model.user.DomainUser;
-import com.jarqprog.personapi.domains.contact.ContactEntity;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ public class DummyUserService {
 
     public DomainUser getDummyUser() {
         final var mock = "mock";
-        final var contact = ContactEntity.fromContact(DomainContact.createWith()
+        final var contact = DomainContact.fromContact(DomainContact.createWith()
                 .email("username@gmail.com")
                 .firstName(mock)
                 .build());

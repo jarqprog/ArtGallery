@@ -1,7 +1,7 @@
 package com.jarqprog.web.security.userDetails;
 
 
-import com.jarqprog.personapi.domains.user.UserEntity;
+import com.jarqprog.domainperson.model.user.DomainUser;
 import com.jarqprog.web.service.DummyUserService;
 import lombok.NonNull;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class SimpleUserDetailsService implements UserDetailsService {
         final var dummyUser = userService.getDummyUser();
         //userRepository.findUserByLogin(username).orElseThrow(
 //                () -> new UsernameNotFoundException("User Not Found with -> username or email : " + username));
-        final var user = UserEntity.fromUser(dummyUser);
-        return new SimpleUserDetails(user);
+        final var user = DomainUser.fromUser(dummyUser);
+        return SimpleUserDetails.fromUser(user);
     }
 }

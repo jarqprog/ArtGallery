@@ -19,7 +19,6 @@ module web {
     requires thymeleaf.spring5;
     requires spring.tx;
     requires javax.servlet.api;
-    requires api.person;
     requires spring.data.commons;
 
 }
