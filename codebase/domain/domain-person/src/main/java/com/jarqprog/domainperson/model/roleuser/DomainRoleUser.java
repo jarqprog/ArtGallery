@@ -1,4 +1,4 @@
-package com.jarqprog.domainperson.model.userrole;
+package com.jarqprog.domainperson.model.roleuser;
 
 import com.jarqprog.commondomain.absmodel.DomainModel;
 import com.jarqprog.domainperson.model.SystemRole;
