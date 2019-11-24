@@ -1,15 +1,14 @@
 package readuser;
 
 import com.jarqprog.domainperson.model.SystemRole;
-import com.jarqprog.domainperson.model.contact.Contact;
-import com.jarqprog.domainperson.model.user.User;
+import com.jarqprog.domainperson.model.contact.ContactData;
+import com.jarqprog.domainperson.model.user.UserData;
 
-import java.util.Optional;
 import java.util.Set;
 
 public interface ReadUser {
 
-    User user();
-    Optional<Contact> contact();
+    UserData user();
+    ContactData contact();
     Set<SystemRole> roles();
 }

@@ -7,4 +7,5 @@ import com.jarqprog.commondomain.absmodel.Identity;
 public interface DtoConverter {
 
     <D extends Identity> D transformEntityTo(DomainEntity domainEntity, Class<D> destinationType);
+
 }

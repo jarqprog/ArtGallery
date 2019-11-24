@@ -1,24 +1,20 @@
-package com.jarqprog.personapi.read;
+package com.jarqprog.personapi.read.readuser;
 
-import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
 import com.jarqprog.domainperson.model.SystemRole;
 import com.jarqprog.domainperson.model.roleuser.RoleUser;
 import com.jarqprog.domainperson.model.user.DomainUser;
-import com.jarqprog.domainperson.usecase.login.UserLogin;
-import com.jarqprog.personapi.domains.contact.ContactRepository;
+import com.jarqprog.domainperson.model.user.User;
+import com.jarqprog.domainperson.usecase.login.UserLoginDTO;
 import com.jarqprog.personapi.domains.roleUser.RoleUserRepository;
 import com.jarqprog.personapi.domains.user.UserEntity;
 import com.jarqprog.personapi.domains.user.UserRepository;
-import com.jarqprog.personapi.domains.user.validation.passwordValidation.PasswordValidator;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import readuser.DomainReadUser;
-import readuser.ReadUser;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,37 +26,44 @@ public class ReadUserServiceImpl implements ReadUserService {
     private static final Logger logger = LoggerFactory.getLogger(ReadUserServiceImpl.class);
 
     @NonNull private final UserRepository userRepository;
-    @NonNull private final ContactRepository contactRepository;
     @NonNull private final RoleUserRepository roleUserRepository;
-    @NonNull private final DtoConverter dtoConverter;
-    @NonNull private final PasswordEncoder passwordEncoder;
-    @NonNull private final PasswordValidator passwordValidator;
+    @NonNull private final ReadUserDTOConverter readUserDTOConverter;
 
     @Autowired
     public ReadUserServiceImpl(@NonNull UserRepository userRepository,
-                               @NonNull ContactRepository contactRepository,
                                @NonNull RoleUserRepository roleUserRepository,
-                               @NonNull DtoConverter dtoConverter,
-                               @NonNull PasswordEncoder passwordEncoder,
-                               @NonNull PasswordValidator passwordValidator) {
+                               @NonNull ReadUserDTOConverter readUserDTOConverter) {
         this.userRepository = userRepository;
-        this.contactRepository = contactRepository;
         this.roleUserRepository = roleUserRepository;
-        this.dtoConverter = dtoConverter;
-        this.passwordEncoder = passwordEncoder;
-        this.passwordValidator = passwordValidator;
+        this.readUserDTOConverter = readUserDTOConverter;
     }
 
     @Override
-    public ReadUser getReadUserByLogin(@NonNull UserLogin userLogin) {
-        final var login = userLogin.login();
-        final var user = userRepository.findUserByLoginAndPassword(login, userLogin.password())
+    public ApiReadUserDTO getReadUserByLogin(@NonNull UserLoginDTO userLoginDTO) {
+        logger.info("Try to find user by UserLogin: {}", userLoginDTO);
+        final var user = retrieveByUserLogin(userLoginDTO);
+        logger.info("Got User: {}", user);
+        final Set<SystemRole> roles = retrieveRolesByUserLogin(userLoginDTO);
+        logger.info("Got roles: {}", roles);
+        final var readUser = DomainReadUser.createWith()
+                .user(user)
+                .contact(user.getContact())
+                .roles(roles)
+                .build();
+        logger.info("ReadModel: {}", readUser);
+        return readUserDTOConverter.mapToDTO(readUser);
+    }
+
+    private User retrieveByUserLogin(final UserLoginDTO userLoginDTO) {
+        return userRepository.findUserByLoginAndPassword(userLoginDTO.login(), userLoginDTO.password())
                 .map(DomainUser::fromUser)
                 .orElseThrow(() -> new ResourceNotFoundException(UserEntity.class));
-        final Set<SystemRole> roles = roleUserRepository.findAllByUserEntityLogin(login)
+    }
+
+    private Set<SystemRole> retrieveRolesByUserLogin(final UserLoginDTO userLoginDTO) {
+        return roleUserRepository.findAllByUserEntityLogin(userLoginDTO.login())
                 .stream()
                 .map(RoleUser::getRole)
                 .collect(Collectors.toSet());
-        return DomainReadUser.buildWithData(user, roles);
     }
 }

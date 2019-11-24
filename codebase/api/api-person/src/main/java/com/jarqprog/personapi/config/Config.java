@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.modelmapper.ModelMapper;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
@@ -76,6 +77,11 @@ public class Config implements WebMvcConfigurer {
         return DtoConverterImpl.builder()
                 .modelMapper(modelMapper)
                 .build();
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return MapperProviderImpl.provide();
     }
 
     @Bean
