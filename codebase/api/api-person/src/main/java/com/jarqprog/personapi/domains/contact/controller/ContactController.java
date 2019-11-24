@@ -3,7 +3,7 @@ package com.jarqprog.personapi.domains.contact.controller;
 import com.jarqprog.commonapi.constants.ApiConstants;
 import com.jarqprog.domainperson.model.contact.ContactData;
 import com.jarqprog.personapi.domains.contact.ContactService;
-import com.jarqprog.personapi.domains.contact.dto.ContactDTO;
+import com.jarqprog.personapi.domains.contact.dto.ApiContactDTO;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +25,12 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<ContactDTO> getAllContacts() {
+    public List<ApiContactDTO> getAllContacts() {
         return contactService.getAllContacts();
     }
 
     @GetMapping("/{id}")
-    public ContactDTO findContactById(@PathVariable("id") long id) {
+    public ApiContactDTO findContactById(@PathVariable("id") long id) {
         return contactService.findContactById(id);
     }
 

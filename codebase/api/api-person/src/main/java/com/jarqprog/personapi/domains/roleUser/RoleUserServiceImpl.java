@@ -6,7 +6,7 @@ import com.jarqprog.domainperson.model.SystemRole;
 import com.jarqprog.domainperson.model.user.UserData;
 import com.jarqprog.domainperson.model.roleuser.DomainRoleUser;
 import com.jarqprog.domainperson.model.roleuser.RoleUser;
-import com.jarqprog.personapi.domains.roleUser.dto.RoleUserDTO;
+import com.jarqprog.personapi.domains.roleUser.dto.ApiRoleUserDTO;
 import com.jarqprog.personapi.domains.roleUser.dto.RoleUserThin;
 import com.jarqprog.personapi.domains.user.UserEntity;
 import com.jarqprog.personapi.domains.user.UserRepository;
@@ -40,7 +40,7 @@ public class RoleUserServiceImpl implements RoleUserService {
     }
 
     @Override
-    public Set<RoleUserDTO> findByUserLogin(String userLogin) {
+    public Set<ApiRoleUserDTO> findByUserLogin(String userLogin) {
         Set<RoleUserEntity> userRoles = roleUserRepository.findAllByUserEntityLogin(userLogin);
         return userRoles
                 .stream()
@@ -49,7 +49,7 @@ public class RoleUserServiceImpl implements RoleUserService {
     }
 
     @Override
-    public RoleUserDTO addUserRole(@NonNull SystemRole role, @NonNull UserData userData) {
+    public ApiRoleUserDTO addUserRole(@NonNull SystemRole role, @NonNull UserData userData) {
         RoleUserEntity roleUserEntity = roleUserRepository.findByRoleAndUserEntityLogin(role, userData.getLogin()).orElse(null);
         if (roleUserEntity != null) {
             throw new IllegalArgumentException(String.format("Role: %s for user login: %s already exists!",

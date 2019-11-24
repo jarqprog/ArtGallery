@@ -1,6 +1,6 @@
 package com.jarqprog.personapi.domains.roleUser.dto;
 
-import com.jarqprog.commonapi.absmodel.DomainDTO;
+import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
 import com.jarqprog.domainperson.model.SystemRole;
 import com.jarqprog.domainperson.model.roleuser.RoleUser;
 import com.jarqprog.personapi.domains.user.dto.UserFat;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class RoleUserFat extends DomainDTO implements RoleUserDTO, RoleUser {
+public class RoleUserFat extends ApiDomainDTO implements ApiRoleUserDTO, RoleUser {
 
     private SystemRole role;
     private UserFat user;

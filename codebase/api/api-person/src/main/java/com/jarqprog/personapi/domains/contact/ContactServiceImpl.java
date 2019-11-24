@@ -6,7 +6,7 @@ import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
 import com.jarqprog.domainperson.model.contact.Contact;
 import com.jarqprog.domainperson.model.contact.ContactData;
 import com.jarqprog.domainperson.model.contact.DomainContact;
-import com.jarqprog.personapi.domains.contact.dto.ContactDTO;
+import com.jarqprog.personapi.domains.contact.dto.ApiContactDTO;
 import com.jarqprog.personapi.domains.contact.dto.ContactThin;
 import com.jarqprog.personapi.domains.contact.validation.ContactValidator;
 import lombok.NonNull;
@@ -38,7 +38,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public List<ContactDTO> getAllContacts() {
+    public List<ApiContactDTO> getAllContacts() {
         return contactRepository.findAll()
                 .stream()
                 .map(c -> dtoConverter.transformEntityTo(c, ContactThin.class))
@@ -46,7 +46,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public <T extends ContactDTO> List<T> getAllContacts(Class<T> clazz) {
+    public <T extends ApiContactDTO> List<T> getAllContacts(Class<T> clazz) {
         return contactRepository.findAll()
                 .stream()
                 .map(c -> dtoConverter.transformEntityTo(c, clazz))
@@ -54,13 +54,13 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public ContactDTO findContactById(long id) {
+    public ApiContactDTO findContactById(long id) {
         ContactEntity contact = findById(id);
         return dtoConverter.transformEntityTo(contact, ContactThin.class);
     }
 
     @Override
-    public <T extends ContactDTO> T findContactById(long id, Class<T> clazz) {
+    public <T extends ApiContactDTO> T findContactById(long id, Class<T> clazz) {
         ContactEntity contact = findById(id);
         return dtoConverter.transformEntityTo(contact, clazz);
     }

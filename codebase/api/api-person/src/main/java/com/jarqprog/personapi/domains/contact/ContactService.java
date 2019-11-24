@@ -1,7 +1,7 @@
 package com.jarqprog.personapi.domains.contact;
 
 import com.jarqprog.domainperson.model.contact.ContactData;
-import com.jarqprog.personapi.domains.contact.dto.ContactDTO;
+import com.jarqprog.personapi.domains.contact.dto.ApiContactDTO;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import java.util.List;
 @Service
 public interface ContactService {
 
-    List<ContactDTO> getAllContacts();
-    <T extends ContactDTO> List<T> getAllContacts(Class<T> clazz);
+    List<ApiContactDTO> getAllContacts();
+    <T extends ApiContactDTO> List<T> getAllContacts(Class<T> clazz);
 
-    ContactDTO findContactById(long id);
-    <T extends ContactDTO> T findContactById(long id, Class<T> clazz);
+    ApiContactDTO findContactById(long id);
+    <T extends ApiContactDTO> T findContactById(long id, Class<T> clazz);
 
     long addContact(@NonNull ContactData contactData);
 
