@@ -1,6 +1,6 @@
-# Art Gallery is a distributed system to support online gallery. It is written in modular Java with Spring framework.
+# Art Gallery is a distributed system to support online gallery.
 
-    At the moment there are under development:
+    It is written in modular Java with Spring framework. At the moment there are under development:
 
     person-api - REST api handling person domain (user, contacts..)
         link to heroku: https://galleryofart-person.herokuapp.com/
