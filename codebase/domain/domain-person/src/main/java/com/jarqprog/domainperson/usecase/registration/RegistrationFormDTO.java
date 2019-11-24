@@ -1,4 +1,4 @@
-package com.jarqprog.web.service.registration;
+package com.jarqprog.domainperson.usecase.registration;
 
 import lombok.Data;
 import lombok.ToString;

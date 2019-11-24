@@ -2,7 +2,7 @@ package com.jarqprog.web.service;
 
 
 import com.jarqprog.web.service.registration.ContactRegistration;
-import com.jarqprog.web.service.registration.RegistrationFormDTO;
+import com.jarqprog.domainperson.usecase.registration.RegistrationFormDTO;
 import com.jarqprog.web.service.registration.RegistrationService;
 import com.jarqprog.web.service.registration.UserRegistration;
 import com.jarqprog.domainperson.model.contact.Contact;

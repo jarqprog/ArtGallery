@@ -7,8 +7,8 @@ import com.jarqprog.domainperson.model.SystemRole;
 import com.jarqprog.domainperson.model.user.DomainUser;
 import com.jarqprog.domainperson.model.user.User;
 import com.jarqprog.domainperson.model.user.UserData;
-import com.jarqprog.domainperson.model.userrole.DomainRoleUser;
-import com.jarqprog.domainperson.model.userrole.RoleUser;
+import com.jarqprog.domainperson.model.roleuser.DomainRoleUser;
+import com.jarqprog.domainperson.model.roleuser.RoleUser;
 import com.jarqprog.personapi.domains.contact.ContactEntity;
 import com.jarqprog.personapi.domains.contact.ContactRepository;
 import com.jarqprog.personapi.domains.roleUser.RoleUserEntity;
@@ -90,12 +90,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO findUserByLogin(String login) {
         UserEntity userEntity = findByLogin(login);
+        logger.info("Found User {} by login {}", userEntity, login);
         return dtoConverter.transformEntityTo(userEntity, UserFat.class);
     }
 
     @Override
     public <U extends UserDTO> U findUserByLogin(String login, Class<U> clazz) {
         UserEntity userEntity = findByLogin(login);
+        logger.info("Found User {} by login {}", userEntity, login);
         return dtoConverter.transformEntityTo(userEntity, clazz);
     }
 
@@ -168,6 +170,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity findByLogin(String login) {
+        logger.info("Trying to find User by login {}", login);
         return userRepository.findUserByLogin(login).orElseThrow(() -> new ResourceNotFoundException(UserEntity.class));
     }
 

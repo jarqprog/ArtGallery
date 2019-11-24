@@ -2,7 +2,7 @@ package com.jarqprog.web.controller;
 
 
 import com.jarqprog.domainperson.model.user.UserData;
-import com.jarqprog.web.service.registration.RegistrationFormDTO;
+import com.jarqprog.domainperson.usecase.registration.RegistrationFormDTO;
 import com.jarqprog.web.service.registration.RegistrationService;
 import lombok.NonNull;
 import org.slf4j.Logger;

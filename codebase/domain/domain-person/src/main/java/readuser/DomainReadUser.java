@@ -1,10 +1,12 @@
 package readuser;
 
+import com.jarqprog.domainperson.model.SystemRole;
 import com.jarqprog.domainperson.model.contact.Contact;
-import com.jarqprog.domainperson.model.roleuser.RoleUser;
 import com.jarqprog.domainperson.model.user.User;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.util.Set;
 
 @Value
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -13,16 +15,16 @@ import lombok.experimental.Accessors;
 public class DomainReadUser implements ReadUser {
 
     @Builder(builderMethodName = "createWith")
-    public static DomainReadUserBuilder buildWithData(@NonNull User user) {
-        return new DomainReadUserBuilder().user(user);
+    public static ReadUser buildWithData(@NonNull User user, @NonNull Set<SystemRole> roles) {
+        return new DomainReadUser(user, user.getContact(), roles);
     }
 
-    @Builder.Default
     @NonNull
     private final User user;
 
     private final Contact contact;
 
-    private final RoleUser roleUser;
+    @NonNull
+    private final Set<SystemRole> roles;
 
 }
