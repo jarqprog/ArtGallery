@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.commentary;
 
 
-import com.jarqprog.artapi.domains.commentary.dto.CommentaryDTO;
+import com.jarqprog.artapi.domains.commentary.dto.ApiCommentaryDTO;
 import com.jarqprog.artapi.domains.commentary.dto.CommentaryThin;
 import com.jarqprog.artapi.domains.commentary.validation.CommentaryValidator;
 import com.jarqprog.artapi.domains.picture.PictureEntity;
@@ -46,7 +46,7 @@ public class CommentaryServiceImpl implements CommentaryService {
 
 
     @Override
-    public List<CommentaryDTO> getAllCommentaries() {
+    public List<ApiCommentaryDTO> getAllCommentaries() {
         return commentaryRepository
                 .findAll()
                 .stream()
@@ -55,7 +55,7 @@ public class CommentaryServiceImpl implements CommentaryService {
     }
 
     @Override
-    public <T extends CommentaryDTO> List<T> getAllCommentaries(Class<T> clazz) {
+    public <T extends ApiCommentaryDTO> List<T> getAllCommentaries(Class<T> clazz) {
         return commentaryRepository
                 .findAll()
                 .stream()
@@ -64,7 +64,7 @@ public class CommentaryServiceImpl implements CommentaryService {
     }
 
     @Override
-    public List<CommentaryDTO> getAllCommentariesByPicture(long pictureId) {
+    public List<ApiCommentaryDTO> getAllCommentariesByPicture(long pictureId) {
         return commentaryRepository.findAllCommentaryByPictureEntityId(pictureId)
                 .stream()
                 .map(c -> dtoConverter.transformEntityTo(c, CommentaryThin.class))
@@ -72,7 +72,7 @@ public class CommentaryServiceImpl implements CommentaryService {
     }
 
     @Override
-    public <T extends CommentaryDTO> List<T> getAllCommentariesByPicture(long pictureId, Class<T> clazz) {
+    public <T extends ApiCommentaryDTO> List<T> getAllCommentariesByPicture(long pictureId, Class<T> clazz) {
         return commentaryRepository.findAllCommentaryByPictureEntityId(pictureId)
                 .stream()
                 .map(c -> dtoConverter.transformEntityTo(c, clazz))
@@ -80,13 +80,13 @@ public class CommentaryServiceImpl implements CommentaryService {
     }
 
     @Override
-    public CommentaryDTO findCommentaryById(long id) {
+    public ApiCommentaryDTO findCommentaryById(long id) {
         com.jarqprog.artapi.domains.commentary.CommentaryEntity commentary = findById(id);
         return dtoConverter.transformEntityTo(commentary, CommentaryThin.class);
     }
 
     @Override
-    public <T extends CommentaryDTO> T findCommentaryById(long id, Class<T> clazz) {
+    public <T extends ApiCommentaryDTO> T findCommentaryById(long id, Class<T> clazz) {
         com.jarqprog.artapi.domains.commentary.CommentaryEntity commentary = findById(id);
         return dtoConverter.transformEntityTo(commentary, clazz);
     }

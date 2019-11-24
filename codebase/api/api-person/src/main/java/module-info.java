@@ -32,4 +32,5 @@ module api.person {
     requires java.sql;
     requires spring.jdbc;
     requires javax.servlet.api;
+    requires modelmapper;
 }

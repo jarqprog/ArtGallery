@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -25,8 +25,8 @@ public abstract class DomainEntity implements Identity, Serializable {
     private final String uuid = UUID.randomUUID().toString();
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) @Setter private long id;
-    @CreatedDate @Setter @Column(updatable = false) private LocalDateTime createdDate;
-    @LastModifiedDate @Setter private LocalDateTime modifiedDate;
+    @CreatedDate @Setter @Column(updatable = false) private Date createdDate;
+    @LastModifiedDate @Setter private Date modifiedDate;
     //@CreatedBy private User user; //todo
 
     @Version @Setter private int version;

@@ -2,7 +2,7 @@ package com.jarqprog.personapi.domains.user.controller;
 
 import com.jarqprog.commonapi.constants.ApiConstants;
 import com.jarqprog.personapi.domains.user.UserService;
-import com.jarqprog.personapi.domains.user.dto.UserDTO;
+import com.jarqprog.personapi.domains.user.dto.ApiUserDTO;
 import com.jarqprog.personapi.domains.user.dto.UserFat;
 import com.jarqprog.personapi.domains.user.dto.UserThin;
 import lombok.NonNull;
@@ -29,25 +29,25 @@ public class UserController {
     }
 
     @GetMapping
-    public List<? extends UserDTO> getAllUsers(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends ApiUserDTO> getAllUsers(@RequestParam(required = false, name = "mode") String mode) {
         return userService.getAllUsers(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public UserDTO findUserById(@RequestParam(required = false, name = "mode") String mode,
-                                 @PathVariable("id") long id) {
+    public ApiUserDTO findUserById(@RequestParam(required = false, name = "mode") String mode,
+                                   @PathVariable("id") long id) {
         return userService.findUserById(id, getOutputClass(mode));
     }
 
     @PostMapping
-    public ResponseEntity addUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity addUser(@RequestBody ApiUserDTO userDTO) {
         long id = userService.addUser(userDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateUser(@PathVariable("id") long id, @RequestBody UserDTO userDTO) {
+    public ResponseEntity updateUser(@PathVariable("id") long id, @RequestBody ApiUserDTO userDTO) {
         userService.updateUser(id, userDTO);
         return ResponseEntity.accepted().build();
     }
@@ -58,7 +58,7 @@ public class UserController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends UserDTO> getOutputClass(String mode) {
+    private Class<? extends ApiUserDTO> getOutputClass(String mode) {
         Class<UserThin> defaultOutput = UserThin.class;
         if (mode == null) {
             return defaultOutput;

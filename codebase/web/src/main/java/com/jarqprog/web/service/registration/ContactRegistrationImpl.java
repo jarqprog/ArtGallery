@@ -3,6 +3,7 @@ package com.jarqprog.web.service.registration;
 
 import com.jarqprog.domainperson.model.contact.Contact;
 import com.jarqprog.domainperson.model.contact.DomainContact;
+import com.jarqprog.domainperson.usecase.registration.RegistrationFormDTO;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

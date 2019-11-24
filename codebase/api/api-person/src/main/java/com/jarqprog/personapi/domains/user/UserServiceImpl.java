@@ -7,13 +7,13 @@ import com.jarqprog.domainperson.model.SystemRole;
 import com.jarqprog.domainperson.model.user.DomainUser;
 import com.jarqprog.domainperson.model.user.User;
 import com.jarqprog.domainperson.model.user.UserData;
-import com.jarqprog.domainperson.model.userrole.DomainRoleUser;
-import com.jarqprog.domainperson.model.userrole.RoleUser;
+import com.jarqprog.domainperson.model.roleuser.DomainRoleUser;
+import com.jarqprog.domainperson.model.roleuser.RoleUser;
 import com.jarqprog.personapi.domains.contact.ContactEntity;
 import com.jarqprog.personapi.domains.contact.ContactRepository;
 import com.jarqprog.personapi.domains.roleUser.RoleUserEntity;
 import com.jarqprog.personapi.domains.roleUser.RoleUserRepository;
-import com.jarqprog.personapi.domains.user.dto.UserDTO;
+import com.jarqprog.personapi.domains.user.dto.ApiUserDTO;
 import com.jarqprog.personapi.domains.user.dto.UserFat;
 import com.jarqprog.personapi.domains.user.dto.UserThin;
 import com.jarqprog.personapi.domains.user.validation.passwordValidation.PasswordValidator;
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<ApiUserDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, UserThin.class))
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public <U extends UserDTO> List<U> getAllUsers(Class<U> clazz) {
+    public <U extends ApiUserDTO> List<U> getAllUsers(Class<U> clazz) {
         return userRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, clazz))
@@ -76,26 +76,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findUserById(long id) {
+    public ApiUserDTO findUserById(long id) {
         UserEntity userEntity = findById(id);
         return dtoConverter.transformEntityTo(userEntity, UserFat.class);
     }
 
     @Override
-    public <U extends UserDTO> U findUserById(long id, Class<U> clazz) {
+    public <U extends ApiUserDTO> U findUserById(long id, Class<U> clazz) {
         UserEntity userEntity = findById(id);
         return dtoConverter.transformEntityTo(userEntity, clazz);
     }
 
     @Override
-    public UserDTO findUserByLogin(String login) {
+    public ApiUserDTO findUserByLogin(String login) {
         UserEntity userEntity = findByLogin(login);
+        logger.info("Found User {} by login {}", userEntity, login);
         return dtoConverter.transformEntityTo(userEntity, UserFat.class);
     }
 
     @Override
-    public <U extends UserDTO> U findUserByLogin(String login, Class<U> clazz) {
+    public <U extends ApiUserDTO> U findUserByLogin(String login, Class<U> clazz) {
         UserEntity userEntity = findByLogin(login);
+        logger.info("Found User {} by login {}", userEntity, login);
         return dtoConverter.transformEntityTo(userEntity, clazz);
     }
 
@@ -168,6 +170,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity findByLogin(String login) {
+        logger.info("Trying to find User by login {}", login);
         return userRepository.findUserByLogin(login).orElseThrow(() -> new ResourceNotFoundException(UserEntity.class));
     }
 

@@ -1,6 +1,6 @@
 package com.jarqprog.artapi.domains.commentary.dto;
 
-import com.jarqprog.commonapi.absmodel.DomainDTO;
+import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
 import lombok.*;
 
 
@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString(callSuper=true)
 @EqualsAndHashCode(callSuper=true)
-public class CommentaryThin extends DomainDTO implements CommentaryDTO {
+public class CommentaryThin extends ApiDomainDTO implements ApiCommentaryDTO {
 
     private String comment;
     private String userLogin;

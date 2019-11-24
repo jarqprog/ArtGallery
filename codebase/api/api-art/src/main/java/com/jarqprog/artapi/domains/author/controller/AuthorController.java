@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.author.controller;
 
 import com.jarqprog.artapi.domains.author.AuthorService;
-import com.jarqprog.artapi.domains.author.dto.AuthorDTO;
+import com.jarqprog.artapi.domains.author.dto.ApiAuthorDTO;
 import com.jarqprog.artapi.domains.author.dto.AuthorFat;
 import com.jarqprog.artapi.domains.author.dto.AuthorThin;
 import com.jarqprog.commonapi.constants.ApiConstants;
@@ -30,18 +30,18 @@ public class AuthorController {
     }
 
     @GetMapping
-    public List<? extends AuthorDTO> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends ApiAuthorDTO> getAllAuthors(@RequestParam(required = false, name = "mode") String mode) {
         return authorService.getAllAuthors(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public AuthorDTO findAuthorById(@PathVariable("id") long id,
-                                     @RequestParam(required = false, name = "mode") String mode) {
+    public ApiAuthorDTO findAuthorById(@PathVariable("id") long id,
+                                       @RequestParam(required = false, name = "mode") String mode) {
         return authorService.findAuthorById(id, getOutputClass(mode));
     }
 
     @PostMapping
-    public ResponseEntity addAuthor(@RequestBody AuthorDTO authorDTO) {
+    public ResponseEntity addAuthor(@RequestBody ApiAuthorDTO authorDTO) {
         long id = authorService.addAuthor(authorDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
@@ -49,7 +49,7 @@ public class AuthorController {
 
     @PutMapping("/{id}")
     public ResponseEntity updateCommentary(@PathVariable("id") long id,
-                                           @RequestBody AuthorDTO authorDTO) {
+                                           @RequestBody ApiAuthorDTO authorDTO) {
         authorService.updateAuthor(id, authorDTO);
         return ResponseEntity.accepted().build();
     }
@@ -60,7 +60,7 @@ public class AuthorController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends AuthorDTO> getOutputClass(String mode) {
+    private Class<? extends ApiAuthorDTO> getOutputClass(String mode) {
         Class<AuthorThin> defaultOutput = AuthorThin.class;
         if (mode == null) {
             return defaultOutput;

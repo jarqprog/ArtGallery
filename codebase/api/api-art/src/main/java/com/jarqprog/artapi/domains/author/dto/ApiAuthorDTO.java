@@ -2,10 +2,9 @@ package com.jarqprog.artapi.domains.author.dto;
 
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.jarqprog.artdomain.model.author.AuthorData;
-import com.jarqprog.commonapi.absmodel.DTO;
+import com.jarqprog.artdomain.model.author.AuthorDTO;
 
 @JsonDeserialize(as=AuthorThin.class)
-public interface AuthorDTO extends AuthorData, DTO {
+public interface ApiAuthorDTO extends AuthorDTO {
 
 }

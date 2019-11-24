@@ -2,7 +2,7 @@ package com.jarqprog.artapi.domains.picture.controller;
 
 
 import com.jarqprog.artapi.domains.picture.PictureService;
-import com.jarqprog.artapi.domains.picture.dto.PictureDTO;
+import com.jarqprog.artapi.domains.picture.dto.ApiPictureDTO;
 import com.jarqprog.artapi.domains.picture.dto.PictureFat;
 import com.jarqprog.artapi.domains.picture.dto.PictureThin;
 import com.jarqprog.commonapi.constants.ApiConstants;
@@ -30,25 +30,25 @@ public class PictureController {
     }
 
     @GetMapping()
-    public List<? extends PictureDTO> getAllPictures(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends ApiPictureDTO> getAllPictures(@RequestParam(required = false, name = "mode") String mode) {
         return pictureService.getAllPictures(getOutputClass(mode));
     }
 
     @GetMapping("/{id}")
-    public PictureDTO findPictureById(@PathVariable("id") long id,
-                                       @RequestParam(required = false, name = "mode") String mode) {
+    public ApiPictureDTO findPictureById(@PathVariable("id") long id,
+                                         @RequestParam(required = false, name = "mode") String mode) {
         return pictureService.findPictureById(id, getOutputClass(mode));
     }
 
     @PostMapping
-    public ResponseEntity addPicture(@RequestBody PictureDTO pictureDTO) {
+    public ResponseEntity addPicture(@RequestBody ApiPictureDTO pictureDTO) {
         long id = pictureService.addPicture(pictureDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updatePicture(@PathVariable("id")long id, @RequestBody PictureDTO pictureDTO) {
+    public ResponseEntity updatePicture(@PathVariable("id")long id, @RequestBody ApiPictureDTO pictureDTO) {
         pictureService.updatePicture(id, pictureDTO);
         return ResponseEntity.accepted().build();
     }
@@ -59,7 +59,7 @@ public class PictureController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends PictureDTO> getOutputClass(String mode) {
+    private Class<? extends ApiPictureDTO> getOutputClass(String mode) {
         Class<PictureThin> defaultOutput = PictureThin.class;
         if (mode == null) {
             return defaultOutput;

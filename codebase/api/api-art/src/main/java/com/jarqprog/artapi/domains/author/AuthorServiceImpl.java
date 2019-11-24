@@ -1,6 +1,6 @@
 package com.jarqprog.artapi.domains.author;
 
-import com.jarqprog.artapi.domains.author.dto.AuthorDTO;
+import com.jarqprog.artapi.domains.author.dto.ApiAuthorDTO;
 import com.jarqprog.artapi.domains.author.dto.AuthorThin;
 import com.jarqprog.artdomain.model.author.Author;
 import com.jarqprog.artdomain.model.author.AuthorData;
@@ -35,7 +35,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorDTO> getAllAuthors() {
+    public List<ApiAuthorDTO> getAllAuthors() {
         return authorRepository.findAll()
                 .stream()
                 .map(a -> dtoConverter.transformEntityTo(a, defaultOutputClass))
@@ -43,7 +43,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public <T extends AuthorDTO> List<T> getAllAuthors(Class<T> clazz) {
+    public <T extends ApiAuthorDTO> List<T> getAllAuthors(Class<T> clazz) {
         return authorRepository.findAll()
                 .stream()
                 .map(a -> dtoConverter.transformEntityTo(a, clazz))
@@ -51,12 +51,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDTO findAuthorById(long id) {
+    public ApiAuthorDTO findAuthorById(long id) {
         return dtoConverter.transformEntityTo(findById(id), defaultOutputClass);
     }
 
     @Override
-    public <T extends AuthorDTO> T findAuthorById(long id, Class<T> clazz) {
+    public <T extends ApiAuthorDTO> T findAuthorById(long id, Class<T> clazz) {
         return dtoConverter.transformEntityTo(findById(id), clazz);
     }
 

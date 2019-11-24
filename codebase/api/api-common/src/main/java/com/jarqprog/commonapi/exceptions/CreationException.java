@@ -1,7 +1,7 @@
 package com.jarqprog.commonapi.exceptions;
 
 
-import com.jarqprog.commonapi.absmodel.DomainDTO;
+import com.jarqprog.commondomain.absmodel.DomainDTO;
 
 public class CreationException extends RuntimeException {
 
