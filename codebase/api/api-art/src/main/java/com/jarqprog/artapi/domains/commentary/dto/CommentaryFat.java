@@ -2,7 +2,7 @@ package com.jarqprog.artapi.domains.commentary.dto;
 
 import com.jarqprog.artapi.domains.picture.dto.PictureFat;
 import com.jarqprog.artdomain.model.commentary.Commentary;
-import com.jarqprog.commonapi.absmodel.DomainDTO;
+import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
 import lombok.*;
 
 
@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper=true)
-public class CommentaryFat extends DomainDTO implements Commentary, CommentaryDTO {
+public class CommentaryFat extends ApiDomainDTO implements Commentary, ApiCommentaryDTO {
 
     private String comment;
     private String userLogin;

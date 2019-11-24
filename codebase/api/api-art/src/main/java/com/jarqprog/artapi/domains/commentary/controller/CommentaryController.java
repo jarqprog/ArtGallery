@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.commentary.controller;
 
 import com.jarqprog.artapi.domains.commentary.CommentaryService;
-import com.jarqprog.artapi.domains.commentary.dto.CommentaryDTO;
+import com.jarqprog.artapi.domains.commentary.dto.ApiCommentaryDTO;
 import com.jarqprog.artapi.domains.commentary.dto.CommentaryFat;
 import com.jarqprog.artapi.domains.commentary.dto.CommentaryThin;
 import com.jarqprog.commonapi.constants.ApiConstants;
@@ -29,27 +29,27 @@ public class CommentaryController {
     }
 
     @GetMapping("commentaries")
-    public List<? extends CommentaryDTO> getAllCommentaries(@RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends ApiCommentaryDTO> getAllCommentaries(@RequestParam(required = false, name = "mode") String mode) {
         return commentaryService.getAllCommentaries(getOutputClass(mode));
     }
 
     @GetMapping("{pictureId}/commentaries")
-    public List<? extends CommentaryDTO> getAllCommentariesByPicture(@PathVariable("pictureId") long pictureId,
-                                                                      @RequestParam(required = false, name = "mode") String mode) {
+    public List<? extends ApiCommentaryDTO> getAllCommentariesByPicture(@PathVariable("pictureId") long pictureId,
+                                                                        @RequestParam(required = false, name = "mode") String mode) {
         return commentaryService.getAllCommentariesByPicture(pictureId, getOutputClass(mode));
     }
 
     @GetMapping("{pictureId}/commentaries/{id}")
-    public CommentaryDTO findCommentaryById(@PathVariable("pictureId") long pictureId,
-                                             @PathVariable("id") long id,
-                                             @RequestParam(required = false, name = "mode") String mode) {
+    public ApiCommentaryDTO findCommentaryById(@PathVariable("pictureId") long pictureId,
+                                               @PathVariable("id") long id,
+                                               @RequestParam(required = false, name = "mode") String mode) {
         commentaryService.validateCommentaryExists(pictureId, id);
         return commentaryService.findCommentaryById(id, getOutputClass(mode));
     }
 
     @PostMapping("{pictureId}/commentaries")
     public ResponseEntity addCommentary(@PathVariable("pictureId") long pictureId,
-                                        @RequestBody CommentaryDTO commentaryDTO) {
+                                        @RequestBody ApiCommentaryDTO commentaryDTO) {
 
         long id = commentaryService.addCommentary(pictureId, commentaryDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
@@ -59,7 +59,7 @@ public class CommentaryController {
     @PutMapping("{pictureId}/commentaries/{commentaryId}")
     public ResponseEntity updateCommentary(@PathVariable("pictureId") long pictureId,
                                            @PathVariable("commentaryId") long commentaryId,
-                                           @RequestBody CommentaryDTO commentaryDTO) {
+                                           @RequestBody ApiCommentaryDTO commentaryDTO) {
 
         commentaryService.updateCommentary(pictureId, commentaryId, commentaryDTO);
         return ResponseEntity.accepted().build();
@@ -73,7 +73,7 @@ public class CommentaryController {
         return ResponseEntity.accepted().build();
     }
 
-    private Class<? extends CommentaryDTO> getOutputClass(String mode) {
+    private Class<? extends ApiCommentaryDTO> getOutputClass(String mode) {
         Class<CommentaryThin> defaultOutput = CommentaryThin.class;
 
         if (mode == null) {

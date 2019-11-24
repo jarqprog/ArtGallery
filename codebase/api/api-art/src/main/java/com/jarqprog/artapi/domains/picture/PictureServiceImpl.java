@@ -4,7 +4,7 @@ package com.jarqprog.artapi.domains.picture;
 import com.jarqprog.artapi.domains.author.AuthorEntity;
 import com.jarqprog.artapi.domains.author.AuthorRepository;
 import com.jarqprog.artapi.domains.commentary.CommentaryRepository;
-import com.jarqprog.artapi.domains.picture.dto.PictureDTO;
+import com.jarqprog.artapi.domains.picture.dto.ApiPictureDTO;
 import com.jarqprog.artapi.domains.picture.dto.PictureThin;
 import com.jarqprog.artapi.domains.picture.validation.PictureValidator;
 import com.jarqprog.artdomain.model.picture.DomainPicture;
@@ -48,7 +48,7 @@ public class PictureServiceImpl implements PictureService {
     private static final Logger logger = LoggerFactory.getLogger(PictureServiceImpl.class);
 
     @Override
-    public List<PictureDTO> getAllPictures() {
+    public List<ApiPictureDTO> getAllPictures() {
         return pictureRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, PictureThin.class))
@@ -56,7 +56,7 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public <T extends PictureDTO> List<T> getAllPictures(Class<T> clazz) {
+    public <T extends ApiPictureDTO> List<T> getAllPictures(Class<T> clazz) {
         return pictureRepository.findAll()
                 .stream()
                 .map(p -> dtoConverter.transformEntityTo(p, clazz))
@@ -64,13 +64,13 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public PictureDTO findPictureById(long id) {
+    public ApiPictureDTO findPictureById(long id) {
         com.jarqprog.artapi.domains.picture.PictureEntity picture = findById(id);
         return dtoConverter.transformEntityTo(picture, PictureThin.class);
     }
 
     @Override
-    public <T extends PictureDTO> T findPictureById(long id, Class<T> clazz) {
+    public <T extends ApiPictureDTO> T findPictureById(long id, Class<T> clazz) {
         com.jarqprog.artapi.domains.picture.PictureEntity picture = findById(id);
         return dtoConverter.transformEntityTo(picture, clazz);
     }
