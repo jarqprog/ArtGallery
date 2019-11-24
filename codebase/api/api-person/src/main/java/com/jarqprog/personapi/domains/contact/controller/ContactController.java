@@ -1,7 +1,6 @@
 package com.jarqprog.personapi.domains.contact.controller;
 
 import com.jarqprog.commonapi.constants.ApiConstants;
-import com.jarqprog.domainperson.model.contact.ContactData;
 import com.jarqprog.personapi.domains.contact.ContactService;
 import com.jarqprog.personapi.domains.contact.dto.ApiContactDTO;
 import lombok.NonNull;
@@ -35,14 +34,14 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity addContact(@RequestBody ContactData contactData) {
+    public ResponseEntity addContact(@RequestBody ApiContactDTO contactData) {
         long id = contactService.addContact(contactData);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateContact(@PathVariable("id") long id, @RequestBody ContactData contactData) {
+    public ResponseEntity updateContact(@PathVariable("id") long id, @RequestBody ApiContactDTO contactData) {
         contactService.updateContact(id, contactData);
         return ResponseEntity.accepted().build();
     }
