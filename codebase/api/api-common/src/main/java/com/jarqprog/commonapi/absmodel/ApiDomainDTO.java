@@ -1,18 +1,17 @@
 package com.jarqprog.commonapi.absmodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.absmodel.DomainDTO;
 import lombok.Data;
 import lombok.ToString;
 
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
 @ToString
 @Data
-public abstract class DomainDTO implements Identity, Serializable {
+public abstract class ApiDomainDTO implements DomainDTO {
 
     @JsonIgnore
     private final String uuid = UUID.randomUUID().toString();
@@ -28,8 +27,8 @@ public abstract class DomainDTO implements Identity, Serializable {
     @Override
     public boolean equals(Object other) {
         if (other == this) return true;
-        if (other instanceof DomainDTO)
-            return uuid.equals(((DomainDTO) other).uuid);
+        if (other instanceof ApiDomainDTO)
+            return uuid.equals(((ApiDomainDTO) other).uuid);
         return false;
     }
 
@@ -39,7 +38,7 @@ public abstract class DomainDTO implements Identity, Serializable {
         return this.id <= 0;
     }
 
-    protected long getDTOId(DomainDTO dto) {
+    protected long getDTOId(ApiDomainDTO dto) {
         return dto != null ? dto.id : 0;
     }
 }

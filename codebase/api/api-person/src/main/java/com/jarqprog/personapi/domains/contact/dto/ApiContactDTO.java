@@ -1,9 +1,8 @@
 package com.jarqprog.personapi.domains.contact.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.jarqprog.commonapi.absmodel.DTO;
-import com.jarqprog.domainperson.model.contact.ContactData;
+import com.jarqprog.domainperson.model.contact.ContactDTO;
 
 @JsonDeserialize(as=ContactThin.class)
-public interface ContactDTO extends ContactData, DTO {
+public interface ApiContactDTO extends ContactDTO {
 }
