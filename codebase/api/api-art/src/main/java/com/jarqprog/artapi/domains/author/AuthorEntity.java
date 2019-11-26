@@ -2,7 +2,7 @@ package com.jarqprog.artapi.domains.author;
 
 
 import com.jarqprog.commonapi.absmodel.DomainEntity;
-import com.jarqprog.artdomain.model.author.Author;
+import com.jarqprog.artdomain.author.Author;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 

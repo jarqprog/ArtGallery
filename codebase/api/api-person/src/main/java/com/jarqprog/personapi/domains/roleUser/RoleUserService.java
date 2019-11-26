@@ -1,8 +1,8 @@
 package com.jarqprog.personapi.domains.roleUser;
 
 
-import com.jarqprog.domainperson.model.SystemRole;
-import com.jarqprog.domainperson.model.user.UserData;
+import com.jarqprog.domainperson.SystemRole;
+import com.jarqprog.domainperson.user.UserData;
 import com.jarqprog.personapi.domains.roleUser.dto.ApiRoleUserDTO;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;

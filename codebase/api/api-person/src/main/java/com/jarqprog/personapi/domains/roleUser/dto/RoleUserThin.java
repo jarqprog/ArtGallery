@@ -1,7 +1,7 @@
 package com.jarqprog.personapi.domains.roleUser.dto;
 
 import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
-import com.jarqprog.domainperson.model.SystemRole;
+import com.jarqprog.domainperson.SystemRole;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

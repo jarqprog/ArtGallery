@@ -1,7 +1,7 @@
 package com.jarqprog.personapi.domains.user.dto;
 
 import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
-import com.jarqprog.domainperson.model.user.User;
+import com.jarqprog.domainperson.user.User;
 import com.jarqprog.personapi.domains.contact.dto.ContactFat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

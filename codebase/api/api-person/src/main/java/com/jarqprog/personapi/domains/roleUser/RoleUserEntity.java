@@ -1,9 +1,9 @@
 package com.jarqprog.personapi.domains.roleUser;
 
 import com.jarqprog.commonapi.absmodel.DomainEntity;
-import com.jarqprog.domainperson.model.SystemRole;
-import com.jarqprog.domainperson.model.user.User;
-import com.jarqprog.domainperson.model.roleuser.RoleUser;
+import com.jarqprog.domainperson.SystemRole;
+import com.jarqprog.domainperson.user.User;
+import com.jarqprog.domainperson.roleuser.RoleUser;
 import com.jarqprog.personapi.domains.user.UserEntity;
 import lombok.*;
 

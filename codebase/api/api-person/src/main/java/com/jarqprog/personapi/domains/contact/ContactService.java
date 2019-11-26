@@ -1,6 +1,6 @@
 package com.jarqprog.personapi.domains.contact;
 
-import com.jarqprog.domainperson.model.contact.ContactData;
+import com.jarqprog.domainperson.contact.ContactData;
 import com.jarqprog.personapi.domains.contact.dto.ApiContactDTO;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;

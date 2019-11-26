@@ -2,9 +2,9 @@ package com.jarqprog.artapi.domains.commentary;
 
 
 import com.jarqprog.artapi.domains.picture.PictureEntity;
-import com.jarqprog.artdomain.model.commentary.Commentary;
-import com.jarqprog.artdomain.model.commentary.CommentaryData;
-import com.jarqprog.artdomain.model.picture.Picture;
+import com.jarqprog.artdomain.commentary.Commentary;
+import com.jarqprog.artdomain.commentary.CommentaryData;
+import com.jarqprog.artdomain.picture.Picture;
 import com.jarqprog.commonapi.absmodel.DomainEntity;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;

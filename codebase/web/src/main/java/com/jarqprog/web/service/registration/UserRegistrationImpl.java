@@ -1,10 +1,10 @@
 package com.jarqprog.web.service.registration;
 
-import com.jarqprog.domainperson.model.contact.Contact;
-import com.jarqprog.domainperson.model.contact.DomainContact;
-import com.jarqprog.domainperson.usecase.registration.RegistrationFormDTO;
-import com.jarqprog.domainperson.model.user.DomainUser;
-import com.jarqprog.domainperson.model.user.User;
+import com.jarqprog.domainperson.contact.Contact;
+import com.jarqprog.domainperson.contact.DomainContact;
+import com.jarqprog.domainperson.registration.RegistrationFormDTO;
+import com.jarqprog.domainperson.user.DomainUser;
+import com.jarqprog.domainperson.user.User;
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +27,8 @@ public class UserRegistrationImpl implements UserRegistration {
 
         User user = DomainUser
                 .createWith()
-                .login(registrationFormDTO.getLogin())
-                .password(registrationFormDTO.getPassword())
+                .login(registrationFormDTO.login())
+                .password(registrationFormDTO.password())
                 .contact(contact4User)
                 .build();
 

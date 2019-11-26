@@ -1,6 +1,6 @@
 package com.jarqprog.personapi.read.readuser;
 
-import com.jarqprog.domainperson.usecase.login.UserLoginDTO;
+import com.jarqprog.domainperson.login.UserLoginDTO;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 

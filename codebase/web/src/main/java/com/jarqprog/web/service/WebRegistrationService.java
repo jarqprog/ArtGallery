@@ -2,11 +2,11 @@ package com.jarqprog.web.service;
 
 
 import com.jarqprog.web.service.registration.ContactRegistration;
-import com.jarqprog.domainperson.usecase.registration.RegistrationFormDTO;
+import com.jarqprog.domainperson.registration.RegistrationFormDTO;
 import com.jarqprog.web.service.registration.RegistrationService;
 import com.jarqprog.web.service.registration.UserRegistration;
-import com.jarqprog.domainperson.model.contact.Contact;
-import com.jarqprog.domainperson.model.user.User;
+import com.jarqprog.domainperson.contact.Contact;
+import com.jarqprog.domainperson.user.User;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

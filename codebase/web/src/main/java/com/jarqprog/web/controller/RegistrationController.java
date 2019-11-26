@@ -1,8 +1,8 @@
 package com.jarqprog.web.controller;
 
 
-import com.jarqprog.domainperson.model.user.UserData;
-import com.jarqprog.domainperson.usecase.registration.RegistrationFormDTO;
+import com.jarqprog.domainperson.user.UserData;
+import com.jarqprog.domainperson.registration.RegistrationFormDTO;
 import com.jarqprog.web.service.registration.RegistrationService;
 import lombok.NonNull;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class RegistrationController {
 
     @GetMapping
     public String showRegistrationForm(WebRequest request, Model model) {
-        RegistrationFormDTO registrationFormDTO = new RegistrationFormDTO();
+        RegistrationFormDTO registrationFormDTO = RegistrationFormDTO.builder().build();
         model.addAttribute("registration", registrationFormDTO);
         return "user/registration";
     }

@@ -1,7 +1,7 @@
 package com.jarqprog.personapi.domains.contact;
 
 import com.jarqprog.commonapi.absmodel.DomainEntity;
-import com.jarqprog.domainperson.model.contact.Contact;
+import com.jarqprog.domainperson.contact.Contact;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NaturalId;

@@ -1,6 +1,6 @@
 package com.jarqprog.web.adapter.apiperson;
 
-import com.jarqprog.domainperson.model.user.User;
+import com.jarqprog.domainperson.user.User;
 import org.springframework.stereotype.Component;
 
 @Component

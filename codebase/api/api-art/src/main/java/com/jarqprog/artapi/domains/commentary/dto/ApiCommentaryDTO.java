@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.commentary.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.jarqprog.artdomain.model.commentary.CommentaryDTO;
+import com.jarqprog.artdomain.commentary.CommentaryDTO;
 
 
 @JsonDeserialize(as= CommentaryThin.class)

@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.commentary.validation;
 
 
-import com.jarqprog.artdomain.model.commentary.CommentaryData;
+import com.jarqprog.artdomain.commentary.CommentaryData;
 
 public interface CommentaryValidator {
 

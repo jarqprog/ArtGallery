@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.commentary.dto;
 
 import com.jarqprog.artapi.domains.picture.dto.PictureFat;
-import com.jarqprog.artdomain.model.commentary.Commentary;
+import com.jarqprog.artdomain.commentary.Commentary;
 import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
 import lombok.*;
 

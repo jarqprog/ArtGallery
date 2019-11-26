@@ -1,7 +1,7 @@
 package com.jarqprog.personapi.domains.contact.dto;
 
 import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
-import com.jarqprog.domainperson.model.contact.Contact;
+import com.jarqprog.domainperson.contact.Contact;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;

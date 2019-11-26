@@ -2,9 +2,9 @@ package com.jarqprog.artapi.domains.picture;
 
 
 import com.jarqprog.artapi.domains.author.AuthorEntity;
-import com.jarqprog.artdomain.model.author.Author;
-import com.jarqprog.artdomain.model.picture.Picture;
-import com.jarqprog.artdomain.model.picture.PictureData;
+import com.jarqprog.artdomain.author.Author;
+import com.jarqprog.artdomain.picture.Picture;
+import com.jarqprog.artdomain.picture.PictureData;
 import com.jarqprog.commonapi.absmodel.DomainEntity;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;

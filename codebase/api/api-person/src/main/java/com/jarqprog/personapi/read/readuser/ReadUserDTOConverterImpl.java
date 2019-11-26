@@ -6,7 +6,7 @@ import lombok.NonNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import readuser.ReadUser;
+import com.jarqprog.domainperson.readuser.ReadUser;
 
 @Component
 public class ReadUserDTOConverterImpl implements ReadUserDTOConverter {

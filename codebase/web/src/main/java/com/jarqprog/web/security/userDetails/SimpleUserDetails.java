@@ -1,6 +1,6 @@
 package com.jarqprog.web.security.userDetails;
 
-import com.jarqprog.domainperson.model.user.User;
+import com.jarqprog.domainperson.user.User;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

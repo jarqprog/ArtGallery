@@ -2,9 +2,9 @@ package com.jarqprog.artapi.domains.author;
 
 import com.jarqprog.artapi.domains.author.dto.ApiAuthorDTO;
 import com.jarqprog.artapi.domains.author.dto.AuthorThin;
-import com.jarqprog.artdomain.model.author.Author;
-import com.jarqprog.artdomain.model.author.AuthorData;
-import com.jarqprog.artdomain.model.author.DomainAuthor;
+import com.jarqprog.artdomain.author.Author;
+import com.jarqprog.artdomain.author.AuthorData;
+import com.jarqprog.artdomain.author.DomainAuthor;
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceAlreadyExists;
 import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;

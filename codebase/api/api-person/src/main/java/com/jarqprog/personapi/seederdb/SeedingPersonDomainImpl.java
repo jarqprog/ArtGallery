@@ -1,13 +1,13 @@
 package com.jarqprog.personapi.seederdb;
 
 
-import com.jarqprog.domainperson.model.SystemRole;
-import com.jarqprog.domainperson.model.contact.Contact;
-import com.jarqprog.domainperson.model.contact.ContactData;
-import com.jarqprog.domainperson.model.contact.DomainContact;
-import com.jarqprog.domainperson.model.user.DomainUser;
-import com.jarqprog.domainperson.model.user.User;
-import com.jarqprog.domainperson.model.user.UserData;
+import com.jarqprog.domainperson.SystemRole;
+import com.jarqprog.domainperson.contact.Contact;
+import com.jarqprog.domainperson.contact.ContactData;
+import com.jarqprog.domainperson.contact.DomainContact;
+import com.jarqprog.domainperson.user.DomainUser;
+import com.jarqprog.domainperson.user.User;
+import com.jarqprog.domainperson.user.UserData;
 import com.jarqprog.personapi.domains.contact.ContactService;
 import com.jarqprog.personapi.domains.user.UserService;
 import lombok.NonNull;

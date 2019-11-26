@@ -1,6 +1,6 @@
 package com.jarqprog.personapi.read.readuser;
 
-import readuser.ReadUser;
+import com.jarqprog.domainperson.readuser.ReadUser;
 
 public interface ReadUserDTOConverter {
 

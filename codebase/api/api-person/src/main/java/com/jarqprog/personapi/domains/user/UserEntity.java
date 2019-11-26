@@ -1,9 +1,9 @@
 package com.jarqprog.personapi.domains.user;
 
 import com.jarqprog.commonapi.absmodel.DomainEntity;
-import com.jarqprog.domainperson.model.contact.Contact;
-import com.jarqprog.domainperson.model.user.User;
-import com.jarqprog.domainperson.model.user.UserData;
+import com.jarqprog.domainperson.contact.Contact;
+import com.jarqprog.domainperson.user.User;
+import com.jarqprog.domainperson.user.UserData;
 import com.jarqprog.personapi.domains.contact.ContactEntity;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;

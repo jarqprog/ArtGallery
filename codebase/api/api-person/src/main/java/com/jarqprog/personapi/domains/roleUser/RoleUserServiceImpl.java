@@ -2,10 +2,10 @@ package com.jarqprog.personapi.domains.roleUser;
 
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
-import com.jarqprog.domainperson.model.SystemRole;
-import com.jarqprog.domainperson.model.user.UserData;
-import com.jarqprog.domainperson.model.roleuser.DomainRoleUser;
-import com.jarqprog.domainperson.model.roleuser.RoleUser;
+import com.jarqprog.domainperson.SystemRole;
+import com.jarqprog.domainperson.user.UserData;
+import com.jarqprog.domainperson.roleuser.DomainRoleUser;
+import com.jarqprog.domainperson.roleuser.RoleUser;
 import com.jarqprog.personapi.domains.roleUser.dto.ApiRoleUserDTO;
 import com.jarqprog.personapi.domains.roleUser.dto.RoleUserThin;
 import com.jarqprog.personapi.domains.user.UserEntity;

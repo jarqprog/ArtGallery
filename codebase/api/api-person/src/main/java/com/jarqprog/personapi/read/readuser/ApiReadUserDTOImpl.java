@@ -1,9 +1,9 @@
 package com.jarqprog.personapi.read.readuser;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.jarqprog.domainperson.model.SystemRole;
-import com.jarqprog.domainperson.model.contact.ContactDTO;
-import com.jarqprog.domainperson.model.user.UserDTO;
+import com.jarqprog.domainperson.SystemRole;
+import com.jarqprog.domainperson.contact.ContactDTO;
+import com.jarqprog.domainperson.user.UserDTO;
 import lombok.*;
 import lombok.experimental.Accessors;
 

@@ -1,6 +1,6 @@
 package com.jarqprog.personapi.domains.contact.validation;
 
-import com.jarqprog.domainperson.model.contact.ContactData;
+import com.jarqprog.domainperson.contact.ContactData;
 import com.jarqprog.personapi.domains.contact.policy.EmailValidationPolicy;
 import com.jarqprog.personapi.domains.contact.policy.NamesValidationPolicy;
 import lombok.NonNull;

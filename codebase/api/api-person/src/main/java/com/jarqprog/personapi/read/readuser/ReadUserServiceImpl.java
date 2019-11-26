@@ -1,11 +1,11 @@
 package com.jarqprog.personapi.read.readuser;
 
 import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
-import com.jarqprog.domainperson.model.SystemRole;
-import com.jarqprog.domainperson.model.roleuser.RoleUser;
-import com.jarqprog.domainperson.model.user.DomainUser;
-import com.jarqprog.domainperson.model.user.User;
-import com.jarqprog.domainperson.usecase.login.UserLoginDTO;
+import com.jarqprog.domainperson.SystemRole;
+import com.jarqprog.domainperson.roleuser.RoleUser;
+import com.jarqprog.domainperson.user.DomainUser;
+import com.jarqprog.domainperson.user.User;
+import com.jarqprog.domainperson.login.UserLoginDTO;
 import com.jarqprog.personapi.domains.roleUser.RoleUserRepository;
 import com.jarqprog.personapi.domains.user.UserEntity;
 import com.jarqprog.personapi.domains.user.UserRepository;
@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import readuser.DomainReadUser;
+import com.jarqprog.domainperson.readuser.DomainReadUser;
 
 import java.util.Set;
 import java.util.stream.Collectors;
