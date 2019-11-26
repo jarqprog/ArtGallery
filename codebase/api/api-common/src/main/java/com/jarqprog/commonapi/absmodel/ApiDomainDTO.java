@@ -1,7 +1,7 @@
 package com.jarqprog.commonapi.absmodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jarqprog.commondomain.absmodel.DomainDTO;
+import com.jarqprog.commondomain.absmodel.DTO;
 import lombok.Data;
 import lombok.ToString;
 
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @ToString
 @Data
-public abstract class ApiDomainDTO implements DomainDTO {
+public abstract class ApiDomainDTO implements DTO {
 
     @JsonIgnore
     private final String uuid = UUID.randomUUID().toString();

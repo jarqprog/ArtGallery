@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.model.user;
 
-import com.jarqprog.commondomain.absmodel.DomainDTO;
+import com.jarqprog.commondomain.absmodel.DTO;
 
-public interface UserDTO extends DomainDTO, UserData {
+public interface UserDTO extends DTO, UserData {
 }

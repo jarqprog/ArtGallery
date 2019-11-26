@@ -1,6 +1,6 @@
 package com.jarqprog.artdomain.model.commentary;
 
-import com.jarqprog.commondomain.absmodel.DomainDTO;
+import com.jarqprog.commondomain.absmodel.DTO;
 
-public interface CommentaryDTO extends DomainDTO, CommentaryData {
+public interface CommentaryDTO extends DTO, CommentaryData {
 }
