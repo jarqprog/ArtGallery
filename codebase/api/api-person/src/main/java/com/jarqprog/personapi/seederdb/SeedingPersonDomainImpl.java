@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.jarqprog.commonapi.constants.seeder.PersonDomainInitData.*;
+import static com.jarqprog.commonapi.constants.InitPersonDomainData.*;
 
 
 @Component

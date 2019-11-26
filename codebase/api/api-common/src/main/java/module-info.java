@@ -3,9 +3,7 @@ module api.common {
     exports com.jarqprog.commonapi.constants;
     exports com.jarqprog.commonapi.components;
     exports com.jarqprog.commonapi.exceptions;
-    exports com.jarqprog.commonapi.exceptions.exceptionInfo;
     exports com.jarqprog.commonapi;
-    exports com.jarqprog.commonapi.constants.seeder;
 
     requires domain.common;
 

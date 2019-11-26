@@ -1,6 +1,6 @@
-package com.jarqprog.commonapi.constants.seeder;
+package com.jarqprog.commonapi.constants;
 
-public interface PersonDomainInitData {
+public interface InitPersonDomainData {
 
     //person domain related
     String BETTY_LOGIN = "betty80";

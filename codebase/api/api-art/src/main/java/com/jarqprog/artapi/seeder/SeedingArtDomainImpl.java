@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.jarqprog.commonapi.constants.seeder.ArtsDomainInitData.*;
-import static com.jarqprog.commonapi.constants.seeder.PersonDomainInitData.BETTY_ID;
-import static com.jarqprog.commonapi.constants.seeder.PersonDomainInitData.BETTY_LOGIN;
+import static com.jarqprog.commonapi.constants.InitArtsDomainData.*;
+import static com.jarqprog.commonapi.constants.InitPersonDomainData.BETTY_ID;
+import static com.jarqprog.commonapi.constants.InitPersonDomainData.BETTY_LOGIN;
 
 
 @Component

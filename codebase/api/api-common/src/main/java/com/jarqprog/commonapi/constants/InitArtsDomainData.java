@@ -1,6 +1,6 @@
-package com.jarqprog.commonapi.constants.seeder;
+package com.jarqprog.commonapi.constants;
 
-public interface ArtsDomainInitData {
+public interface InitArtsDomainData {
 
     String FAKE_PICTURE_PATH = "fake/path";
     String BETTY_ARTIST_NICK = "betty-artist";
