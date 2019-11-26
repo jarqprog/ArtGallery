@@ -1,4 +1,4 @@
-package com.jarqprog.commondomain.absmodel;
+package com.jarqprog.commondomain;
 
 import java.io.Serializable;
 

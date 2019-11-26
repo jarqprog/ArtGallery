@@ -1,13 +1,13 @@
 package com.jarqprog.artdomain.author;
 
-import com.jarqprog.commondomain.absmodel.DomainModel;
+import com.jarqprog.commondomain.IdentityModel;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
 
 @Value
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class DomainAuthor extends DomainModel implements Author {
+public class DomainAuthor extends IdentityModel implements Author {
 
     public static DomainAuthor mergeID(long id, @NonNull final Author author) {
         assert id > 0;

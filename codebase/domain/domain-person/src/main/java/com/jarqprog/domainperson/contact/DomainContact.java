@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.contact;
 
-import com.jarqprog.commondomain.absmodel.DomainModel;
+import com.jarqprog.commondomain.IdentityModel;
 import com.jarqprog.domainperson.registration.RegistrationFormDTO;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public final class DomainContact extends DomainModel implements Contact {
+public final class DomainContact extends IdentityModel implements Contact {
 
     public static DomainContact fromContact(@NonNull final Contact contact) {
         return new DomainContact(contact);

@@ -1,7 +1,7 @@
 package com.jarqprog.artdomain.commentary;
 
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 
 public interface CommentaryData extends Identity {
 

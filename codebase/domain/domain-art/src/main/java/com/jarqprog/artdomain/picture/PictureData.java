@@ -1,7 +1,7 @@
 package com.jarqprog.artdomain.picture;
 
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 
 public interface PictureData extends Identity {
 

@@ -1,7 +1,7 @@
 package com.jarqprog.domainperson.contact;
 
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 
 public interface ContactData extends Identity {
 

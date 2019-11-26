@@ -1,7 +1,7 @@
 package com.jarqprog.commonapi.components;
 
 import com.jarqprog.commonapi.absmodel.DomainEntity;
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 import lombok.Builder;
 import lombok.NonNull;
 import org.modelmapper.ModelMapper;

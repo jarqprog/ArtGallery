@@ -1,7 +1,7 @@
 package com.jarqprog.commonapi.absmodel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jarqprog.commondomain.absmodel.DTO;
+import com.jarqprog.commondomain.DTO;
 import lombok.Data;
 import lombok.ToString;
 

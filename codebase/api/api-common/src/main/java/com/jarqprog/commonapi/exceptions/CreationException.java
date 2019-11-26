@@ -1,7 +1,7 @@
 package com.jarqprog.commonapi.exceptions;
 
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 
 public class CreationException extends RuntimeException {
 

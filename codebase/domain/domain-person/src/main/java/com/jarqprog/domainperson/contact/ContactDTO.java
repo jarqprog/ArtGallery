@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.contact;
 
-import com.jarqprog.commondomain.absmodel.DTO;
+import com.jarqprog.commondomain.DTO;
 
 public interface ContactDTO extends DTO, ContactData {
 }

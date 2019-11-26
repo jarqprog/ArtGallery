@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.user;
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 
 public interface UserData extends Identity {
 

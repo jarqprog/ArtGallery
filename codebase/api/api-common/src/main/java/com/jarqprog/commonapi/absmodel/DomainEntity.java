@@ -1,6 +1,6 @@
 package com.jarqprog.commonapi.absmodel;
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

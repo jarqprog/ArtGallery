@@ -1,7 +1,7 @@
 package com.jarqprog.domainperson.roleuser;
 
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 import com.jarqprog.domainperson.SystemRole;
 
 import java.io.Serializable;

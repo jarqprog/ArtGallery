@@ -1,6 +1,6 @@
 package com.jarqprog.artdomain.commentary;
 
-import com.jarqprog.commondomain.absmodel.DomainModel;
+import com.jarqprog.commondomain.IdentityModel;
 import com.jarqprog.artdomain.picture.Picture;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 @Value
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class DomainCommentary extends DomainModel implements Commentary {
+public class DomainCommentary extends IdentityModel implements Commentary {
 
     public static DomainCommentary mergeID(long id, @NonNull final Commentary commentary) {
         return new DomainCommentary(id, commentary);

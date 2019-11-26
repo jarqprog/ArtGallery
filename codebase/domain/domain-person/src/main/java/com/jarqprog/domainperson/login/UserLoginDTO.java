@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.login;
 
-import com.jarqprog.commondomain.absmodel.DTO;
+import com.jarqprog.commondomain.DTO;
 
 public interface UserLoginDTO extends DTO {
 

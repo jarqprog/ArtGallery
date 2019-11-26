@@ -1,4 +1,4 @@
-package com.jarqprog.commondomain.absmodel;
+package com.jarqprog.commondomain;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -7,18 +7,18 @@ import java.util.UUID;
 
 @Getter
 @ToString
-public abstract class DomainModel implements Identity {
+public abstract class IdentityModel implements Identity {
 
     private final String uuid = UUID.randomUUID().toString();
 
     private final long id;
     private final int version;
 
-    protected DomainModel(DomainModel domainModel) {
-        this(domainModel.id, domainModel.version);
+    protected IdentityModel(IdentityModel identityModel) {
+        this(identityModel.id, identityModel.version);
     }
 
-    protected DomainModel(long id, int version) {
+    protected IdentityModel(long id, int version) {
         this.id = id;
         this.version = version;
     }
@@ -31,8 +31,8 @@ public abstract class DomainModel implements Identity {
     @Override
     public boolean equals(Object other) {
         if (other == this) return true;
-        if (other instanceof DomainModel)
-            return uuid.equals(((DomainModel) other).uuid);
+        if (other instanceof IdentityModel)
+            return uuid.equals(((IdentityModel) other).uuid);
         return false;
     }
 

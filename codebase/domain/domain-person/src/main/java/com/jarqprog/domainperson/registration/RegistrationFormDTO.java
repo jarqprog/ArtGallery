@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.registration;
 
-import com.jarqprog.commondomain.absmodel.DTO;
+import com.jarqprog.commondomain.DTO;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;

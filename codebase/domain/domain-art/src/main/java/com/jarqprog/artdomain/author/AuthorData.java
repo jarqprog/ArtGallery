@@ -1,7 +1,7 @@
 package com.jarqprog.artdomain.author;
 
 
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 
 public interface AuthorData extends Identity {
 

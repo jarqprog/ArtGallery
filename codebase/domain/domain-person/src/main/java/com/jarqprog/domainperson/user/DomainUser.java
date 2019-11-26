@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.user;
 
-import com.jarqprog.commondomain.absmodel.DomainModel;
+import com.jarqprog.commondomain.IdentityModel;
 import com.jarqprog.domainperson.contact.Contact;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 @Value
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public final class DomainUser extends DomainModel implements User {
+public final class DomainUser extends IdentityModel implements User {
 
     public static DomainUser fromUser(@NonNull final User user) {
         return new DomainUser(user);

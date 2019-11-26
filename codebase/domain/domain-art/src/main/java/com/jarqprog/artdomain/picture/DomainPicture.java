@@ -1,7 +1,7 @@
 package com.jarqprog.artdomain.picture;
 
 
-import com.jarqprog.commondomain.absmodel.DomainModel;
+import com.jarqprog.commondomain.IdentityModel;
 import com.jarqprog.artdomain.author.Author;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 @Value
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public final class DomainPicture extends DomainModel implements Picture {
+public final class DomainPicture extends IdentityModel implements Picture {
 
 
     public static DomainPicture mergeID(long id, @NonNull final Picture picture) {

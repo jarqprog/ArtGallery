@@ -2,7 +2,7 @@ package com.jarqprog.commonapi.components;
 
 
 import com.jarqprog.commonapi.absmodel.DomainEntity;
-import com.jarqprog.commondomain.absmodel.Identity;
+import com.jarqprog.commondomain.Identity;
 
 public interface DtoConverter {
 

@@ -1,6 +1,6 @@
 package com.jarqprog.domainperson.roleuser;
 
-import com.jarqprog.commondomain.absmodel.DomainModel;
+import com.jarqprog.commondomain.IdentityModel;
 import com.jarqprog.domainperson.SystemRole;
 import com.jarqprog.domainperson.user.User;
 import lombok.*;
@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class DomainRoleUser extends DomainModel implements RoleUser {
+public class DomainRoleUser extends IdentityModel implements RoleUser {
 
     public static DomainRoleUser mergeID(long id, @NonNull final RoleUser roleUser) {
         assert id > 0;
