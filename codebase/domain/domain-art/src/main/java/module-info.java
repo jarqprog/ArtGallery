@@ -1,7 +1,7 @@
 module domain.art {
-    exports com.jarqprog.artdomain.model.author;
-    exports com.jarqprog.artdomain.model.commentary;
-    exports com.jarqprog.artdomain.model.picture;
+    exports com.jarqprog.artdomain.author;
+    exports com.jarqprog.artdomain.commentary;
+    exports com.jarqprog.artdomain.picture;
 
     requires lombok;
     requires org.apache.commons.lang3;
