@@ -5,5 +5,5 @@ module domain.art {
 
     requires lombok;
     requires org.apache.commons.lang3;
-    requires domain.common;
+    requires domain.shared;
 }

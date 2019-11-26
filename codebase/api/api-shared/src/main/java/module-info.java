@@ -1,11 +1,11 @@
-module api.common {
+module api.shared {
     exports com.jarqprog.commonapi.absmodel;
     exports com.jarqprog.commonapi.constants;
     exports com.jarqprog.commonapi.components;
     exports com.jarqprog.commonapi.exceptions;
     exports com.jarqprog.commonapi;
 
-    requires domain.common;
+    requires domain.shared;
 
     requires lombok;
     requires java.persistence;

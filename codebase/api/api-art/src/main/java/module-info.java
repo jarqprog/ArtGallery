@@ -23,7 +23,7 @@ module api.art {
     requires slf4j.api;
     requires spring.beans;
     requires domain.art;
-    requires api.common;
+    requires api.shared;
     requires spring.webmvc;
     requires java.xml.bind;
     requires spring.jdbc;

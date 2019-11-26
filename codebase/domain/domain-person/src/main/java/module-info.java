@@ -9,5 +9,5 @@ module domain.person {
 
     requires lombok;
     requires org.apache.commons.lang3;
-    requires domain.common;
+    requires domain.shared;
 }

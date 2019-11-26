@@ -11,11 +11,11 @@
     <packaging>jar</packaging>
 
 
-    <artifactId>api-common</artifactId>
+    <artifactId>api-shared</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.jarqprog</groupId>
-            <artifactId>domain-common</artifactId>
+            <artifactId>domain-shared</artifactId>
             <version>${global.version}</version>
             <scope>compile</scope>
         </dependency>

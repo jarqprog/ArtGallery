@@ -1,4 +1,4 @@
-module domain.common {
+module domain.shared {
     exports com.jarqprog.commondomain;
 
     requires lombok;
