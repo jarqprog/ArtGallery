@@ -1,9 +1,9 @@
 module api.person {
-    exports com.jarqprog.personapi.domains.contact;
-    exports com.jarqprog.personapi.domains.contact.dto;
-    exports com.jarqprog.personapi.domains.user;
-    exports com.jarqprog.personapi.domains.user.dto;
-    exports com.jarqprog.personapi.domains.roleUser;
+    exports com.jarqprog.personapi.contact;
+    exports com.jarqprog.personapi.contact.dto;
+    exports com.jarqprog.personapi.user;
+    exports com.jarqprog.personapi.user.dto;
+    exports com.jarqprog.personapi.roleUser;
 
     requires api.shared;
     requires domain.person;

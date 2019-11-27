@@ -1,8 +1,8 @@
 package com.jarqprog.personapi.rest;
 
 import com.jarqprog.commonapi.constants.ApiConstants;
-import com.jarqprog.personapi.domains.contact.ContactService;
-import com.jarqprog.personapi.domains.contact.dto.ApiContactDTO;
+import com.jarqprog.personapi.contact.ContactService;
+import com.jarqprog.personapi.contact.dto.ApiContactDTO;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

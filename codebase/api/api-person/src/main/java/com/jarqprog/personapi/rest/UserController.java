@@ -1,10 +1,10 @@
 package com.jarqprog.personapi.rest;
 
 import com.jarqprog.commonapi.constants.ApiConstants;
-import com.jarqprog.personapi.domains.user.UserService;
-import com.jarqprog.personapi.domains.user.dto.ApiUserDTO;
-import com.jarqprog.personapi.domains.user.dto.UserFat;
-import com.jarqprog.personapi.domains.user.dto.UserThin;
+import com.jarqprog.personapi.user.UserService;
+import com.jarqprog.personapi.user.dto.ApiUserDTO;
+import com.jarqprog.personapi.user.dto.UserFat;
+import com.jarqprog.personapi.user.dto.UserThin;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
