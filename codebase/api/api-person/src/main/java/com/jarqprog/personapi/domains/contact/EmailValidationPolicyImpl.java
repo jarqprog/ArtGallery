@@ -1,11 +1,9 @@
-package com.jarqprog.personapi.domains.contact.policy;
-
-import org.springframework.stereotype.Component;
+package com.jarqprog.personapi.domains.contact;
 
 import java.util.regex.Pattern;
 
-@Component
-public class EmailValidationPolicyImpl implements EmailValidationPolicy {
+
+class EmailValidationPolicyImpl implements EmailValidationPolicy {
 
     private static final String RESTRICTION = "1) A-Z characters allowed\n" +
             "2) a-z characters allowed\n" +

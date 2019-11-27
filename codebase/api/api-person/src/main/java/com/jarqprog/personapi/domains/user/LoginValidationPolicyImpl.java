@@ -1,11 +1,8 @@
-package com.jarqprog.personapi.domains.user.policy;
-
-import org.springframework.stereotype.Component;
+package com.jarqprog.personapi.domains.user;
 
 import java.util.regex.Pattern;
 
-@Component
-public class LoginValidationPolicyImpl implements LoginValidationPolicy {
+class LoginValidationPolicyImpl implements LoginValidationPolicy {
 
     private static final String RESTRICTION = "1) can only start and end with letter\n" +
             "2) length is between 5 and 14 characters\n" +

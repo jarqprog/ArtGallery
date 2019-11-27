@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.database;
+package com.jarqprog.personapi.configuration;
 
 
 import com.jarqprog.commonapi.constants.ApiConstants;
@@ -12,7 +12,7 @@ import java.util.Properties;
 @Component
 @Profile(ApiConstants.DEV_PROFILE)
 @Value(staticConstructor = "build")
-public class H2DevConfig implements PersonDatabaseConfig {
+class ConfigH2Dev implements ConfigDatabase {
 
     private final static String DRIVER_CLASS = "org.h2.Driver";
     private final static String URL = String.format("jdbc:h2:mem:%s_dev;DB_CLOSE_DELAY=-1", DATABASE_NAME);

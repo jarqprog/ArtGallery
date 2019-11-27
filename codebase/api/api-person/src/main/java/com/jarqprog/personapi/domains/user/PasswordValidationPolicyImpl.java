@@ -1,11 +1,8 @@
-package com.jarqprog.personapi.domains.user.policy;
-
-import org.springframework.stereotype.Component;
+package com.jarqprog.personapi.domains.user;
 
 import java.util.regex.Pattern;
 
-@Component
-public class PasswordValidationPolicyImpl implements PasswordValidationPolicy {
+class PasswordValidationPolicyImpl implements PasswordValidationPolicy {
 
     private static final String RESTRICTION = "1) Be between 8 and 40 characters long\n" +
             "2) Contain at least one digit.\n" +

@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.config;
+package com.jarqprog.personapi.configuration;
 
 public interface PersonApiConstants {
 

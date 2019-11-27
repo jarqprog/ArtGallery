@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.domains.contact.controller;
+package com.jarqprog.personapi.rest;
 
 import com.jarqprog.commonapi.constants.ApiConstants;
 import com.jarqprog.personapi.domains.contact.ContactService;

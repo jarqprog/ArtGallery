@@ -1,5 +1,6 @@
 module api.person {
     exports com.jarqprog.personapi.domains.contact;
+    exports com.jarqprog.personapi.domains.contact.dto;
     exports com.jarqprog.personapi.domains.user;
     exports com.jarqprog.personapi.domains.user.dto;
     exports com.jarqprog.personapi.domains.roleUser;

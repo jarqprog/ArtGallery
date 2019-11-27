@@ -8,7 +8,6 @@ import com.jarqprog.domainperson.contact.ContactData;
 import com.jarqprog.domainperson.contact.DomainContact;
 import com.jarqprog.personapi.domains.contact.dto.ApiContactDTO;
 import com.jarqprog.personapi.domains.contact.dto.ContactThin;
-import com.jarqprog.personapi.domains.contact.validation.ContactValidator;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,15 +25,15 @@ public class ContactServiceImpl implements ContactService {
 
     @NonNull private final ContactRepository contactRepository;
     @NonNull private final DtoConverter dtoConverter;
-    @NonNull private final ContactValidator contactValidator;
+    @NonNull private final ContactValidation contactValidation;
 
     @Autowired
     public ContactServiceImpl(@NonNull ContactRepository contactRepository,
                               @NonNull DtoConverter dtoConverter,
-                              @NonNull ContactValidator contactValidator) {
+                              @NonNull ContactValidation contactValidation) {
         this.contactRepository = contactRepository;
         this.dtoConverter = dtoConverter;
-        this.contactValidator = contactValidator;
+        this.contactValidation = contactValidation;
     }
 
     @Override
@@ -69,7 +68,7 @@ public class ContactServiceImpl implements ContactService {
     public long addContact(@NonNull final ContactData contactData) {
         preventCreatingExistingContact(contactData.getId());
 
-        contactValidator.validateOnCreation(contactData);
+        contactValidation.validateOnCreation(contactData);
 
         final Contact contact = DomainContact.createWith()
                 .firstName(contactData.getFirstName())
@@ -88,7 +87,7 @@ public class ContactServiceImpl implements ContactService {
         if (id != contactData.getId()) {
             throw new IllegalArgumentException("different contact's IDs were given");
         }
-        contactValidator.validateOnUpdate(contactData);
+        contactValidation.validateOnUpdate(contactData);
         validateContactExists(id);
 
         final Contact contact = DomainContact.createWith()

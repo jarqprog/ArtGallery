@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.domains.user.controller;
+package com.jarqprog.personapi.rest;
 
 import com.jarqprog.commonapi.constants.ApiConstants;
 import com.jarqprog.personapi.domains.user.UserService;
@@ -19,7 +19,7 @@ import static com.jarqprog.commonapi.constants.OutputMode.FAT;
 
 @RestController
 @RequestMapping(ApiConstants.BASE_URL_PATH + "users")
-public class UserController {
+class UserController {
 
     @NonNull private final UserService userService;
 

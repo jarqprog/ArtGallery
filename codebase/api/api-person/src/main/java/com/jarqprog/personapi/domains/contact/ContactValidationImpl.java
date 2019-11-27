@@ -1,17 +1,13 @@
-package com.jarqprog.personapi.domains.contact.validation;
+package com.jarqprog.personapi.domains.contact;
 
 import com.jarqprog.domainperson.contact.ContactData;
-import com.jarqprog.personapi.domains.contact.policy.EmailValidationPolicy;
-import com.jarqprog.personapi.domains.contact.policy.NamesValidationPolicy;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 
-@Component
-public class ContactValidatorImpl implements ContactValidator {
+
+class ContactValidationImpl implements ContactValidation {
 
     @NonNull
     private final EmailValidationPolicy emailValidationPolicy;
@@ -20,9 +16,8 @@ public class ContactValidatorImpl implements ContactValidator {
     private final NamesValidationPolicy namesValidationPolicy;
 
 
-    @Autowired
-    public ContactValidatorImpl(@NonNull final EmailValidationPolicy emailValidationPolicy,
-                                @NonNull final NamesValidationPolicy namesValidationPolicy) {
+    ContactValidationImpl(@NonNull final EmailValidationPolicy emailValidationPolicy,
+                                 @NonNull final NamesValidationPolicy namesValidationPolicy) {
         this.emailValidationPolicy = emailValidationPolicy;
         this.namesValidationPolicy = namesValidationPolicy;
     }

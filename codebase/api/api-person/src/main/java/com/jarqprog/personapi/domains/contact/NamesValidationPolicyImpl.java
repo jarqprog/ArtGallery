@@ -1,11 +1,9 @@
-package com.jarqprog.personapi.domains.contact.policy;
-
-import org.springframework.stereotype.Component;
+package com.jarqprog.personapi.domains.contact;
 
 import java.util.regex.Pattern;
 
-@Component
-public class NamesValidationPolicyImpl implements NamesValidationPolicy {
+
+class NamesValidationPolicyImpl implements NamesValidationPolicy {
 
     private static final String RESTRICTION = "1) can only start and end with letter\n" +
             "2) length is between 1 and 25 characters\n" +

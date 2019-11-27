@@ -1,9 +1,9 @@
-package com.jarqprog.personapi.domains.contact.validation;
+package com.jarqprog.personapi.domains.contact;
 
 import com.jarqprog.domainperson.contact.ContactData;
 import lombok.NonNull;
 
-public interface ContactValidator {
+interface ContactValidation {
 
     void validateOnCreation(final @NonNull ContactData contactData);
     void validateOnUpdate(final @NonNull ContactData contactData);

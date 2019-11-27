@@ -1,10 +1,9 @@
-package com.jarqprog.personapi.config;
+package com.jarqprog.personapi.configuration;
 
 import com.jarqprog.commonapi.components.BCryptProvider;
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.components.DtoConverterImpl;
 import com.jarqprog.commonapi.components.MapperProviderImpl;
-import com.jarqprog.personapi.database.PersonDatabaseConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,8 +26,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Optional;
 
-import static com.jarqprog.personapi.config.PersonApiConstants.BASE_PACKAGE;
-import static com.jarqprog.personapi.config.PersonApiConstants.BASE_PACKAGE_WILD_CARD;
+import static com.jarqprog.personapi.configuration.PersonApiConstants.BASE_PACKAGE;
+import static com.jarqprog.personapi.configuration.PersonApiConstants.BASE_PACKAGE_WILD_CARD;
 
 
 @Configuration
@@ -36,7 +35,7 @@ import static com.jarqprog.personapi.config.PersonApiConstants.BASE_PACKAGE_WILD
 @EnableJpaAuditing
 @EnableJpaRepositories(basePackages = BASE_PACKAGE_WILD_CARD)
 @ComponentScan(BASE_PACKAGE)
-public class Config implements WebMvcConfigurer {
+public class ModuleConfig implements WebMvcConfigurer {
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
@@ -46,7 +45,7 @@ public class Config implements WebMvcConfigurer {
     }
 
     @Bean
-    protected DataSource dataSource(@Autowired PersonDatabaseConfig databaseConfig) {
+    protected DataSource dataSource(@Autowired ConfigDatabase databaseConfig) {
         assert databaseConfig != null;
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(databaseConfig.getDriverClass());
@@ -58,7 +57,7 @@ public class Config implements WebMvcConfigurer {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Autowired DataSource dataSource,
-                                                                       @Autowired PersonDatabaseConfig databaseConfig) {
+                                                                       @Autowired ConfigDatabase databaseConfig) {
         assert dataSource != null;
         assert databaseConfig != null;
         LocalContainerEntityManagerFactoryBean em

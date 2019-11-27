@@ -9,7 +9,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
-import static com.jarqprog.personapi.config.PersonApiConstants.BASE_PACKAGE;
+import static com.jarqprog.personapi.configuration.PersonApiConstants.BASE_PACKAGE;
 
 public class Application implements WebApplicationInitializer {
 

@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.database;
+package com.jarqprog.personapi.configuration;
 
 
 import org.springframework.context.annotation.Profile;
@@ -11,7 +11,7 @@ import static com.jarqprog.commonapi.constants.ApiConstants.HERO_PROFILE;
 
 @Component
 @Profile(HERO_PROFILE)
-public class PostgresConfig implements PersonDatabaseConfig {
+class ConfigPostgres implements ConfigDatabase {
 
     private final static String DRIVER_CLASS = "org.postgresql.Driver";
     private final static String URL = System.getenv("JDBC_DATABASE_URL");

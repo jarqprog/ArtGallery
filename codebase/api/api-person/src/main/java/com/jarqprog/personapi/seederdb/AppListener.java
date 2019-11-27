@@ -10,7 +10,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import static com.jarqprog.commonapi.constants.ApiConstants.*;
-import static com.jarqprog.personapi.database.PersonDatabaseConfig.DATABASE_NAME;
 
 @Component
 @Profile({DEV_PROFILE, TEST_PROFILE, HERO_PROFILE})
@@ -34,7 +33,7 @@ public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
             return;
         }
         logger.info("********************************************");
-        logger.info("#### Populating database {}", DATABASE_NAME);
+        logger.info("#### Populating database");
         seedingPersonDomain.populateDb();
         logger.info("#### Database prepared");
         logger.info("********************************************");

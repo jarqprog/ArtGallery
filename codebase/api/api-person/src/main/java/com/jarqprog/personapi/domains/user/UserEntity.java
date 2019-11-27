@@ -47,16 +47,7 @@ public class UserEntity extends DomainEntity implements User {
     @JoinColumn(name = "contact_entity_id")
     private ContactEntity contactEntity;
 
-    public UserEntity(@NonNull UserEntity user) {
-        this.contactEntity = user.getContactEntity();
-        this.login = user.getLogin();
-        this.password = user.getPassword();
-        this.enabled = user.getEnabled();
-        this.tokenExpired = user.getTokenExpired();
-    }
-
     private UserEntity(final User user) {
-
         this(user.getId(),
             user.getVersion(),
             user.getLogin(),

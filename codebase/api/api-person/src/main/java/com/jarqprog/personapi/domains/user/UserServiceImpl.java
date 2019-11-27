@@ -16,7 +16,6 @@ import com.jarqprog.personapi.domains.roleUser.RoleUserRepository;
 import com.jarqprog.personapi.domains.user.dto.ApiUserDTO;
 import com.jarqprog.personapi.domains.user.dto.UserFat;
 import com.jarqprog.personapi.domains.user.dto.UserThin;
-import com.jarqprog.personapi.domains.user.validation.passwordValidation.PasswordValidator;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
