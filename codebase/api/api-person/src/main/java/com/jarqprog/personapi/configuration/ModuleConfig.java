@@ -4,6 +4,8 @@ import com.jarqprog.commonapi.components.BCryptProvider;
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.components.DtoConverterImpl;
 import com.jarqprog.commonapi.components.MapperProviderImpl;
+import com.jarqprog.personapi.contact.ContactService;
+import com.jarqprog.personapi.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -96,5 +98,11 @@ public class ModuleConfig implements WebMvcConfigurer {
           SecurityContextHolder.getContext().getAuthentication().getName()
          */
         return () -> Optional.ofNullable("auditorProvider");
+    }
+
+    @Bean
+    SeedingPersonDomain seedingPersonDomain(@Autowired ContactService contactService,
+                                            @Autowired UserService userService) {
+        return new SeedingPersonDomainImpl(contactService, userService);
     }
 }

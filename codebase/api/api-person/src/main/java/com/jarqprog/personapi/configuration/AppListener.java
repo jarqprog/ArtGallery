@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.seederdb;
+package com.jarqprog.personapi.configuration;
 
 import lombok.NonNull;
 import org.slf4j.Logger;
@@ -13,7 +13,7 @@ import static com.jarqprog.commonapi.constants.ApiConstants.*;
 
 @Component
 @Profile({DEV_PROFILE, TEST_PROFILE, HERO_PROFILE})
-public class AppListener implements ApplicationListener<ContextRefreshedEvent> {
+class AppListener implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(AppListener.class);
 

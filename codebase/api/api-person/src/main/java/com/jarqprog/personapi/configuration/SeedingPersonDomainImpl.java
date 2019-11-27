@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.seederdb;
+package com.jarqprog.personapi.configuration;
 
 
 import com.jarqprog.domainperson.SystemRole;
@@ -8,13 +8,11 @@ import com.jarqprog.domainperson.contact.DomainContact;
 import com.jarqprog.domainperson.user.DomainUser;
 import com.jarqprog.domainperson.user.User;
 import com.jarqprog.domainperson.user.UserData;
-import com.jarqprog.personapi.domains.contact.ContactService;
-import com.jarqprog.personapi.domains.user.UserService;
+import com.jarqprog.personapi.contact.ContactService;
+import com.jarqprog.personapi.user.UserService;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -23,16 +21,15 @@ import java.util.List;
 import static com.jarqprog.commonapi.constants.InitPersonDomainData.*;
 
 
-@Component
-public class SeedingPersonDomainImpl implements SeedingPersonDomain {
+class SeedingPersonDomainImpl implements SeedingPersonDomain {
 
     private static final Logger logger = LoggerFactory.getLogger(SeedingPersonDomainImpl.class);
 
     @NonNull private final ContactService contactService;
     @NonNull private final UserService userService;
 
-    @Autowired
-    public SeedingPersonDomainImpl(@NonNull ContactService contactService, @NonNull UserService userService) {
+
+    SeedingPersonDomainImpl(@NonNull ContactService contactService, @NonNull UserService userService) {
         this.contactService = contactService;
         this.userService = userService;
     }
