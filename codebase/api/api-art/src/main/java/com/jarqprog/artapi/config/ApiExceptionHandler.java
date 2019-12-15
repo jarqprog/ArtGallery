@@ -1,4 +1,4 @@
-package com.jarqprog.personapi.configuration;
+package com.jarqprog.artapi.config;
 
 import com.jarqprog.commonapi.components.HttpExceptionDTO;
 import com.jarqprog.commonapi.components.HttpExceptionInfo;
