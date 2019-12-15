@@ -11,4 +11,6 @@ public interface ApiConstants {
     String PROD_PROFILE = "prod";
     String TEST_PROFILE = "test";
     String HERO_PROFILE = "hero";//Heroku
+
+    String JSON_LOCAL_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 }
