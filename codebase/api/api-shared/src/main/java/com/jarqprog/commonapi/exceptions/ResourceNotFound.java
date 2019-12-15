@@ -5,13 +5,13 @@ import com.jarqprog.commonapi.absmodel.DomainEntity;
 
 import javax.persistence.EntityNotFoundException;
 
-public class ResourceNotFoundException extends EntityNotFoundException {
+public class ResourceNotFound extends EntityNotFoundException {
 
-    public ResourceNotFoundException(Class<? extends DomainEntity> clazz, long entityId) {
+    public ResourceNotFound(Class<? extends DomainEntity> clazz, long entityId) {
         super(String.format("Resource %s with ID=%s not found", clazz.getSimpleName(), entityId));
     }
 
-    public ResourceNotFoundException(Class<? extends DomainEntity> clazz) {
+    public ResourceNotFound(Class<? extends DomainEntity> clazz) {
         super(String.format("Resource %s not found", clazz.getSimpleName()));
     }
 }
