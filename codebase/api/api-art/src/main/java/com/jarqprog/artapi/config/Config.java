@@ -5,6 +5,7 @@ import com.jarqprog.commonapi.components.BCryptProvider;
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.components.DtoConverterImpl;
 import com.jarqprog.commonapi.components.MapperProviderImpl;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,8 +46,7 @@ public class Config implements WebMvcConfigurer {
     }
 
     @Bean
-    protected DataSource dataSource(@Autowired ArtDatabaseConfig databaseConfig) {
-        assert databaseConfig != null;
+    protected DataSource dataSource(@NonNull @Autowired ArtDatabaseConfig databaseConfig) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(databaseConfig.getDriverClass());
         dataSource.setUrl(databaseConfig.getUrl());
@@ -56,10 +56,8 @@ public class Config implements WebMvcConfigurer {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Autowired DataSource dataSource,
-                                                                       @Autowired ArtDatabaseConfig databaseConfig) {
-        assert dataSource != null;
-        assert databaseConfig != null;
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@NonNull @Autowired DataSource dataSource,
+                                                                       @NonNull @Autowired ArtDatabaseConfig databaseConfig) {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);

@@ -12,7 +12,7 @@ import com.jarqprog.artdomain.picture.Picture;
 import com.jarqprog.artdomain.picture.PictureData;
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceAlreadyExists;
-import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
+import com.jarqprog.commonapi.exceptions.ResourceNotFound;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -124,16 +124,16 @@ public class PictureServiceImpl implements PictureService {
 
     private AuthorEntity findAuthorById(long authorId) {
         return authorRepository
-                .findById(authorId).orElseThrow(() -> new ResourceNotFoundException(AuthorEntity.class, authorId));
+                .findById(authorId).orElseThrow(() -> new ResourceNotFound(AuthorEntity.class, authorId));
     }
 
     private com.jarqprog.artapi.domains.picture.PictureEntity findById(long id) {
-        return pictureRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(com.jarqprog.artapi.domains.picture.PictureEntity.class, id));
+        return pictureRepository.findById(id).orElseThrow(() -> new ResourceNotFound(com.jarqprog.artapi.domains.picture.PictureEntity.class, id));
     }
 
     private void validatePictureExists(long pictureId) {
         if (!pictureRepository.existsById(pictureId)) {
-            throw new ResourceNotFoundException(PictureEntity.class, pictureId);
+            throw new ResourceNotFound(PictureEntity.class, pictureId);
         }
     }
 
