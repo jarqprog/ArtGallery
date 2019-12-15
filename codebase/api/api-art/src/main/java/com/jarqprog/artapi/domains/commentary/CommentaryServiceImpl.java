@@ -6,13 +6,13 @@ import com.jarqprog.artapi.domains.commentary.dto.CommentaryThin;
 import com.jarqprog.artapi.domains.commentary.validation.CommentaryValidator;
 import com.jarqprog.artapi.domains.picture.PictureEntity;
 import com.jarqprog.artapi.domains.picture.PictureRepository;
-import com.jarqprog.artdomain.model.commentary.Commentary;
-import com.jarqprog.artdomain.model.commentary.CommentaryData;
-import com.jarqprog.artdomain.model.commentary.DomainCommentary;
-import com.jarqprog.artdomain.model.picture.Picture;
+import com.jarqprog.artdomain.commentary.Commentary;
+import com.jarqprog.artdomain.commentary.CommentaryData;
+import com.jarqprog.artdomain.commentary.DomainCommentary;
+import com.jarqprog.artdomain.picture.Picture;
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceAlreadyExists;
-import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
+import com.jarqprog.commonapi.exceptions.ResourceNotFound;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,19 +141,19 @@ public class CommentaryServiceImpl implements CommentaryService {
     @Override
     public void validateCommentaryExists(long pictureId, long commentaryId) {
         if (!commentaryRepository.existsByIdAndPictureEntityId(commentaryId, pictureId)) {
-            throw new ResourceNotFoundException(com.jarqprog.artapi.domains.commentary.CommentaryEntity.class, commentaryId);
+            throw new ResourceNotFound(com.jarqprog.artapi.domains.commentary.CommentaryEntity.class, commentaryId);
         }
     }
 
     private com.jarqprog.artapi.domains.commentary.CommentaryEntity findById(long id) {
         return commentaryRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(CommentaryEntity.class, id));
+                .orElseThrow(() -> new ResourceNotFound(CommentaryEntity.class, id));
     }
 
     private PictureEntity findPictureById(long pictureId) {
         return pictureRepository
                 .findById(pictureId)
-                .orElseThrow(() -> new ResourceNotFoundException(PictureEntity.class, pictureId));
+                .orElseThrow(() -> new ResourceNotFound(PictureEntity.class, pictureId));
     }
 
     private void preventCreatingAlreadyExistingCommentary(CommentaryData commentaryData) {

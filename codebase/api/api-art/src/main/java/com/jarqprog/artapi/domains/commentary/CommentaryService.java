@@ -2,7 +2,7 @@ package com.jarqprog.artapi.domains.commentary;
 
 
 import com.jarqprog.artapi.domains.commentary.dto.ApiCommentaryDTO;
-import com.jarqprog.artdomain.model.commentary.CommentaryData;
+import com.jarqprog.artdomain.commentary.CommentaryData;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 

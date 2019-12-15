@@ -1,6 +1,6 @@
 package com.jarqprog.artapi.domains.commentary.validation;
 
-import com.jarqprog.artdomain.model.commentary.CommentaryData;
+import com.jarqprog.artdomain.commentary.CommentaryData;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

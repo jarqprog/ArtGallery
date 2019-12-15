@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.picture;
 
 import com.jarqprog.artapi.domains.picture.dto.ApiPictureDTO;
-import com.jarqprog.artdomain.model.picture.PictureData;
+import com.jarqprog.artdomain.picture.PictureData;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 

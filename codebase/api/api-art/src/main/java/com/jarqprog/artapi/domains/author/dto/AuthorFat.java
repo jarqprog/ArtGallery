@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.author.dto;
 
 import com.jarqprog.commonapi.absmodel.ApiDomainDTO;
-import com.jarqprog.artdomain.model.author.Author;
+import com.jarqprog.artdomain.author.Author;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

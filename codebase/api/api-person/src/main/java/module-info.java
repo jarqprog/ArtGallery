@@ -1,10 +1,11 @@
 module api.person {
-    exports com.jarqprog.personapi.domains.contact;
-    exports com.jarqprog.personapi.domains.user;
-    exports com.jarqprog.personapi.domains.user.dto;
-    exports com.jarqprog.personapi.domains.roleUser;
+    exports com.jarqprog.personapi.contact;
+    exports com.jarqprog.personapi.contact.dto;
+    exports com.jarqprog.personapi.user;
+    exports com.jarqprog.personapi.user.dto;
+    exports com.jarqprog.personapi.roleUser;
 
-    requires api.common;
+    requires api.shared;
     requires domain.person;
 
     requires lombok;
@@ -33,4 +34,5 @@ module api.person {
     requires spring.jdbc;
     requires javax.servlet.api;
     requires modelmapper;
+    requires domain.shared;
 }

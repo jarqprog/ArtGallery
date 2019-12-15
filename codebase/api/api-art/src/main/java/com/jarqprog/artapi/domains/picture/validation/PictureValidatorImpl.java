@@ -1,6 +1,6 @@
 package com.jarqprog.artapi.domains.picture.validation;
 
-import com.jarqprog.artdomain.model.picture.PictureData;
+import com.jarqprog.artdomain.picture.PictureData;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;

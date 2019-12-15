@@ -14,7 +14,7 @@
 
     <modules>
         <module>api-art</module>
-        <module>api-common</module>
+        <module>api-shared</module>
         <module>api-person</module>
     </modules>
 

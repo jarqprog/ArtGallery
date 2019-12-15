@@ -1,7 +1,7 @@
 package com.jarqprog.artapi.domains.picture.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.jarqprog.artdomain.model.picture.PictureDTO;
+import com.jarqprog.artdomain.picture.PictureDTO;
 
 
 @JsonDeserialize(as= PictureThin.class)

@@ -1,7 +1,7 @@
 package com.jarqprog.web.security.userDetails;
 
 
-import com.jarqprog.domainperson.model.user.DomainUser;
+import com.jarqprog.domainperson.user.DomainUser;
 import com.jarqprog.web.service.DummyUserService;
 import lombok.NonNull;
 import org.slf4j.Logger;

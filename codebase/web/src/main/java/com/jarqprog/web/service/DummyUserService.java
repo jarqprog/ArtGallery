@@ -1,7 +1,7 @@
 package com.jarqprog.web.service;
 
-import com.jarqprog.domainperson.model.contact.DomainContact;
-import com.jarqprog.domainperson.model.user.DomainUser;
+import com.jarqprog.domainperson.contact.DomainContact;
+import com.jarqprog.domainperson.user.DomainUser;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

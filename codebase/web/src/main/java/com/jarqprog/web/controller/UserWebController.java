@@ -1,7 +1,7 @@
 package com.jarqprog.web.controller;
 
 
-import com.jarqprog.domainperson.model.contact.ContactData;
+import com.jarqprog.domainperson.contact.ContactData;
 import com.jarqprog.web.service.DummyUserService;
 import lombok.NonNull;
 import org.slf4j.Logger;

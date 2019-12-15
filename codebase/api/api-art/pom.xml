@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>com.jarqprog</groupId>
-            <artifactId>api-common</artifactId>
+            <artifactId>api-shared</artifactId>
             <version>${global.version}</version>
             <scope>compile</scope>
         </dependency>

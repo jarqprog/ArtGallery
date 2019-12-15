@@ -2,12 +2,12 @@ package com.jarqprog.artapi.domains.author;
 
 import com.jarqprog.artapi.domains.author.dto.ApiAuthorDTO;
 import com.jarqprog.artapi.domains.author.dto.AuthorThin;
-import com.jarqprog.artdomain.model.author.Author;
-import com.jarqprog.artdomain.model.author.AuthorData;
-import com.jarqprog.artdomain.model.author.DomainAuthor;
+import com.jarqprog.artdomain.author.Author;
+import com.jarqprog.artdomain.author.AuthorData;
+import com.jarqprog.artdomain.author.DomainAuthor;
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceAlreadyExists;
-import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
+import com.jarqprog.commonapi.exceptions.ResourceNotFound;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,7 +108,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private AuthorEntity findById(long id) {
         return authorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(AuthorEntity.class, id));
+                .orElseThrow(() -> new ResourceNotFound(AuthorEntity.class, id));
     }
 
     private void preventCreatingAlreadyExistingAuthor(AuthorData authorData) {
@@ -126,7 +126,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     private void validateAuthorExists(long authorId) {
         if (!authorRepository.existsById(authorId)) {
-            throw new ResourceNotFoundException(AuthorEntity.class, authorId);
+            throw new ResourceNotFound(AuthorEntity.class, authorId);
         }
     }
 }

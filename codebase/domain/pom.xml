@@ -14,7 +14,7 @@
     <modules>
         <module>domain-art</module>
         <module>domain-person</module>
-        <module>domain-common</module>
+        <module>domain-shared</module>
     </modules>
 
 </project>
