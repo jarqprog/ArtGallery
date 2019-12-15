@@ -1,7 +1,7 @@
 package com.jarqprog.personapi.roleUser;
 
 import com.jarqprog.commonapi.components.DtoConverter;
-import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
+import com.jarqprog.commonapi.exceptions.ResourceNotFound;
 import com.jarqprog.domainperson.SystemRole;
 import com.jarqprog.domainperson.user.UserData;
 import com.jarqprog.domainperson.roleuser.DomainRoleUser;
@@ -57,7 +57,7 @@ public class RoleUserServiceImpl implements RoleUserService {
         }
 
         UserEntity userEntity = userRepository.findUserByLogin(userData.getLogin())
-                .orElseThrow(() -> new ResourceNotFoundException(UserEntity.class, userData.getId()));
+                .orElseThrow(() -> new ResourceNotFound(UserEntity.class, userData.getId()));
 
         RoleUser roleUser = DomainRoleUser.createWith()
                 .role(role)

@@ -1,6 +1,6 @@
 package com.jarqprog.personapi.readuser;
 
-import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
+import com.jarqprog.commonapi.exceptions.ResourceNotFound;
 import com.jarqprog.domainperson.SystemRole;
 import com.jarqprog.domainperson.roleuser.RoleUser;
 import com.jarqprog.domainperson.user.DomainUser;
@@ -57,7 +57,7 @@ public class ReadUserServiceImpl implements ReadUserService {
     private User retrieveByUserLogin(final UserLoginDTO userLoginDTO) {
         return userRepository.findUserByLoginAndPassword(userLoginDTO.login(), userLoginDTO.password())
                 .map(DomainUser::fromUser)
-                .orElseThrow(() -> new ResourceNotFoundException(UserEntity.class));
+                .orElseThrow(() -> new ResourceNotFound(UserEntity.class));
     }
 
     private Set<SystemRole> retrieveRolesByUserLogin(final UserLoginDTO userLoginDTO) {

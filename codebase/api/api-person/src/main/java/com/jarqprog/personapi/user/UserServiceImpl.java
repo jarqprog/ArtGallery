@@ -2,7 +2,7 @@ package com.jarqprog.personapi.user;
 
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceAlreadyExists;
-import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
+import com.jarqprog.commonapi.exceptions.ResourceNotFound;
 import com.jarqprog.domainperson.SystemRole;
 import com.jarqprog.domainperson.user.DomainUser;
 import com.jarqprog.domainperson.user.User;
@@ -160,28 +160,28 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(UserEntity.class, id));
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFound(UserEntity.class, id));
     }
 
     private ContactEntity findContactById(Long contactId) {
         return contactRepository
-                .findById(contactId).orElseThrow(() -> new ResourceNotFoundException(ContactEntity.class, contactId));
+                .findById(contactId).orElseThrow(() -> new ResourceNotFound(ContactEntity.class, contactId));
     }
 
     private UserEntity findByLogin(String login) {
         logger.info("Trying to find User by login {}", login);
-        return userRepository.findUserByLogin(login).orElseThrow(() -> new ResourceNotFoundException(UserEntity.class));
+        return userRepository.findUserByLogin(login).orElseThrow(() -> new ResourceNotFound(UserEntity.class));
     }
 
     private void validateUserExists(long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new ResourceNotFoundException(UserEntity.class, userId);
+            throw new ResourceNotFound(UserEntity.class, userId);
         }
     }
 
     private void validateContactExists(long contactId) {
         if (!contactRepository.existsById(contactId)) {
-            throw new ResourceNotFoundException(ContactEntity.class, contactId);
+            throw new ResourceNotFound(ContactEntity.class, contactId);
         }
     }
 

@@ -2,7 +2,7 @@ package com.jarqprog.personapi.contact;
 
 import com.jarqprog.commonapi.components.DtoConverter;
 import com.jarqprog.commonapi.exceptions.ResourceAlreadyExists;
-import com.jarqprog.commonapi.exceptions.ResourceNotFoundException;
+import com.jarqprog.commonapi.exceptions.ResourceNotFound;
 import com.jarqprog.domainperson.contact.Contact;
 import com.jarqprog.domainperson.contact.ContactData;
 import com.jarqprog.domainperson.contact.DomainContact;
@@ -111,12 +111,12 @@ public class ContactServiceImpl implements ContactService {
     }
 
     private ContactEntity findById(Long id) {
-        return contactRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ContactEntity.class, id));
+        return contactRepository.findById(id).orElseThrow(() -> new ResourceNotFound(ContactEntity.class, id));
     }
 
     private void validateContactExists(long contactId) {
         if (!contactRepository.existsById(contactId)) {
-            throw new ResourceNotFoundException(ContactEntity.class, contactId);
+            throw new ResourceNotFound(ContactEntity.class, contactId);
         }
     }
 

@@ -23,7 +23,7 @@ public class UserLoginController {
     }
 
     @PostMapping()
-    public ApiReadUserDTO login(@RequestBody UserLoginDTOImpl userLogin) {
+    public ApiReadUserDTO login(@RequestBody ApiUserLoginDTO userLogin) {
         return readUserService.getReadUserByLogin(userLogin);
     }
 }
