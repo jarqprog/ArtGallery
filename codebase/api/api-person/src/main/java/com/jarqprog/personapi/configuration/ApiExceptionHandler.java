@@ -27,11 +27,6 @@ class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<HttpExceptionDTO> handleResourceAlreadyExists(Exception ex, WebRequest request) {
         return handleException(ex, HttpStatus.BAD_REQUEST);
     }
-//
-//    @ExceptionHandler(IllegalArgumentException.class)
-//    public ResponseEntity<HttpExceptionDTO> handleIncorrectArguments(Exception ex, WebRequest request) {
-//        return handleException(ex, HttpStatus.BAD_REQUEST);
-//    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<HttpExceptionDTO> handleInternalException(Exception ex, WebRequest request) {
