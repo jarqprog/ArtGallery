@@ -6,7 +6,7 @@
         link to heroku: https://galleryofart-person.herokuapp.com/
 
     art-api - REST api handling art domain (authors, pictures, commentaries...)
-        link to heroku: https://galleryofart-art.herokuapp.com/
+        link to heroku: https://galleryofart-arts.herokuapp.com/
 
     web application
         link to heroku: https://galleryofart-web.herokuapp.com/
