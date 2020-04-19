@@ -1,3 +1,4 @@
+Depricated
 # Art Gallery is a distributed system to support online gallery.
 
     It is written in modular Java with Spring framework. At the moment there are under development:
