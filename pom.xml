@@ -19,7 +19,7 @@
     <java.version>12</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
-    <spring.version>5.1.5.RELEASE</spring.version>
+    <spring.version>5.3.18</spring.version>
     <logback.version>1.2.3</logback.version>
     <jackson.version>2.9.7</jackson.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
